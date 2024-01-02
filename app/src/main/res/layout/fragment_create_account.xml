@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/allBackgroundColor"
+        tools:context=".ui.fragment.auth.CreateAccountFragment">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/createAccountBackPressed"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/gg_sans_bold"
+                android:text="Next, create an account"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/createAccountBackPressed" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:padding="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gg_sans_bold"
+                    android:text="USERNAME"
+                    android:textColor="@color/secondary1Color"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/userNameEditTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/secondary1Color"
+                    app:hintEnabled="false">
+
+                    <EditText
+                        android:id="@+id/userNameEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_edit_text"
+                        android:fontFamily="@font/gg_sans_semi_bold"
+                        android:paddingStart="20dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="12dp"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:endIconMode="clear_text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+                        app:singleLine="true">
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip1"
+                            android:clickable="true"
+                            android:textAppearance="@style/chipText"
+                            android:backgroundTint="@color/allBackgroundColor2"
+                            android:layout_width="wrap_content"
+                            android:fontFamily="@font/gg_sans_bold"
+                            android:textColor="@color/secondary1Color"
+                            android:layout_height="wrap_content"
+                            />
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip2"
+                            android:clickable="true"
+                            android:textAppearance="@style/chipText"
+                            android:backgroundTint="@color/allBackgroundColor2"
+                            android:layout_width="wrap_content"
+                            android:fontFamily="@font/gg_sans_bold"
+                            android:textColor="@color/secondary1Color"
+                            android:layout_height="wrap_content"/>
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip3"
+                            android:clickable="true"
+                            android:textAppearance="@style/chipText"
+                            android:backgroundTint="@color/allBackgroundColor2"
+                            android:layout_width="wrap_content"
+                            android:fontFamily="@font/gg_sans_bold"
+                            android:textColor="@color/secondary1Color"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gg_sans_bold"
+                    android:text="GENDER"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/secondary1Color"
+                    android:textSize="14sp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/maleLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_selected"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/maleImage"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/ic_male" />
+
+                        <TextView
+                            android:id="@+id/maleText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gg_sans_bold"
+                            android:text="Male"
+                            android:textColor="@color/secondary1Color"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:id="@+id/femaleLayout"
+                        android:background="@drawable/custom_selected"
+                        android:padding="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/maleLayout"
+                        app:layout_constraintStart_toEndOf="@+id/maleLayout"
+                        app:layout_constraintTop_toTopOf="@+id/maleLayout">
+                        <ImageView
+                            android:id="@+id/femaleImage"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_female"
+                            android:adjustViewBounds="true"/>
+                        <TextView
+                            android:textSize="11sp"
+                            android:fontFamily="@font/gg_sans_bold"
+                            android:id="@+id/femaleText"
+                            android:textColor="@color/secondary1Color"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Female"/>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/gg_sans_bold"
+                    android:text="PASSWORD"
+                    android:textColor="@color/secondary1Color"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordEditTextError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/secondary1Color"
+                    app:hintEnabled="false">
+
+                    <EditText
+                        android:id="@+id/passwordEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_edit_text"
+                        android:fontFamily="@font/gg_sans_semi_bold"
+                        android:inputType="textPassword"
+                        android:paddingStart="20dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="12dp"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:endIconMode="password_toggle" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <include
+                    android:id="@+id/clickDobFragment"
+                    layout="@layout/progress_btn_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

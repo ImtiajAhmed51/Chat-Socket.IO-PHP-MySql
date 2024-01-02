@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/allBackgroundColor"
+        tools:context=".ui.fragment.auth.NumberEmailFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/enterNumberEmailBackPressed"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/gg_sans_bold"
+                android:text="Enter number or email"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/enterNumberEmailBackPressed" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:padding="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/segmented_bg"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                    <RadioButton
+                        android:id="@+id/numberRadio"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="1.5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/segmented_checked"
+                        android:button="@null"
+                        android:checked="true"
+                        android:fontFamily="@font/gg_sans_bold"
+                        android:gravity="center"
+                        android:text="Number"
+                        android:textColor="@color/white" />
+
+                    <RadioButton
+                        android:id="@+id/emailRadio"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginStart="1.5dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/segmented_checked"
+                        android:button="@null"
+                        android:fontFamily="@font/gg_sans_bold"
+                        android:gravity="center"
+                        android:text="Email"
+                        android:textColor="@color/white" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/headTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gg_sans_bold"
+
+                    android:textColor="@color/secondary1Color"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/numberEmailEditTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    app:boxStrokeWidth="0dp"
+
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconTint="@color/secondary1Color"
+                    app:hintEnabled="false">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_edit_text">
+
+                        <TextView
+                            android:id="@+id/prefixTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/numberEmailEditText"
+                            android:layout_alignBottom="@id/numberEmailEditText"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/gg_sans_bold"
+                            android:gravity="center"
+                            android:text="+880"
+                            android:textColor="@color/secondary1Color"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+
+
+                        <EditText
+                            android:id="@+id/numberEmailEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toEndOf="@+id/prefixTextView"
+                            android:fontFamily="@font/gg_sans_semi_bold"
+                            android:paddingStart="20dp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="12dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/secondary1Color"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <include
+                    android:id="@+id/clickNameFragment"
+                    layout="@layout/progress_btn_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+
+                    />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>
