@@ -78,9 +78,6 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
 
     public void setCardBackgroundColor(int color) {
             binding.userDrawerCardView.setCardBackgroundColor(color);
-
-
-
     }
 
     @Override

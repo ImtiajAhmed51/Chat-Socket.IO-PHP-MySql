@@ -122,14 +122,13 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/addRequestClick"
-                    android:layout_width="28dp"
-                    android:layout_height="21dp"
-                    android:background="@drawable/first_custom_button"
+                    android:layout_width="33dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/segmented_bg"
                     android:clickable="true"
                     android:drawableEnd="@drawable/add_user"
                     android:focusable="true"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="8dp"
+                    android:paddingEnd="10dp"
                     app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
                     app:layout_constraintEnd_toEndOf="@+id/linearLayout"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

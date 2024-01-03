@@ -1,11 +1,18 @@
 package com.example.chat.model;
 
 public class User {
-    private String userId, userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage;
+    private String userId, userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole;
     private boolean isOnline, userVerified, userSecurity;
     private boolean isButtonEnabled;
 
-    // Getter and setter for the button state
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
     public boolean isButtonEnabled() {
         return isButtonEnabled;
     }
@@ -43,7 +50,7 @@ public class User {
                 String userGender,
                 Boolean userVerified,
                 String userAccountOpenTime,
-                Boolean userSecurity) {
+                Boolean userSecurity,String userRole) {
 
         this.userId = userId;
         this.userDisplayName = userDisplayName;
@@ -56,6 +63,7 @@ public class User {
         this.userVerified = userVerified;
         this.userAccountOpenTime = userAccountOpenTime;
         this.userSecurity = userSecurity;
+        this.userRole=userRole;
 
     }
 
@@ -213,7 +221,8 @@ public class User {
                 && getUserPicture().equals(otherUser.getUserPicture())
                 && getUserGender().equals(otherUser.getUserGender())
                 && isUserVerified()==otherUser.isUserVerified()
-                && isUserSecurity()==otherUser.isUserSecurity();
+                && isUserSecurity()==otherUser.isUserSecurity()
+                && getUserRole().equals(otherUser.getUserRole());
 
     }
 

@@ -21,8 +21,11 @@ import com.example.chat.databinding.FragmentProfileBinding;
 import com.example.chat.model.User;
 import com.example.chat.ui.viewmodel.UserViewModel;
 
-public class ProfileFragment extends Fragment {
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
+public class ProfileFragment extends Fragment {
     private UserViewModel userViewModel;
     private FragmentProfileBinding binding;
 
@@ -34,11 +37,12 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            binding.profileUserCoverImage.setRenderEffect(RenderEffect.createBlurEffect(100, 100, Shader.TileMode.MIRROR));
+        }
         userViewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
         setBottomMargin(binding.profileFragmentMainContainer, getNavigationBarHeight());
         super.onViewCreated(view, savedInstanceState);
-
-
         userViewModel.getUserLiveData().observe(getActivity(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
@@ -47,17 +51,45 @@ public class ProfileFragment extends Fragment {
                 }
                 Glide.with(getActivity()).load(getResource(user.getUserPicture())).into(binding.profileUserImage);
                 Glide.with(getActivity()).load(getResource(user.getUserPicture())).into(binding.profileUserCoverImage);
-
                 binding.userProfileDisplayName.setText(user.getUserDisplayName());
                 binding.userProfileUserId.setText(user.getUserId());
+                binding.userProfileVerification.setVisibility(user.isUserVerified() ? View.VISIBLE : View.GONE);
+                binding.userProfilePrivacy.setImageResource(user.isUserSecurity() ? R.drawable.lock : R.drawable.unlock);
                 binding.userProfileUserName.setText(user.getUserName());
-
+                binding.userProfileOwner.setVisibility(user.getUserRole().equals("ADMIN") ? View.VISIBLE : View.GONE);
+                binding.userProfileDeveloper.setVisibility(user.getUserRole().equals("ADMIN") ? View.VISIBLE : View.GONE);
+                String formattedUserDob = user.getUserDob();
+                formattedUserDob = formatDate(formattedUserDob, "dd/MM/yyyy", "MMM d, yyyy");
+                binding.userProfileDOBText.setText(formattedUserDob);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    String dobString = user.getUserDob();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate dob = LocalDate.parse(dobString, formatter);
+                    Period age = Period.between(dob, LocalDate.now());
+                    String ageText = String.format("%d years", age.getYears());
+                    if (age.getMonths() != 0) {
+                        ageText += String.format(" %d months", age.getMonths());
+                    }
+                    if (age.getDays() != 0) {
+                        ageText += String.format(" %d days", age.getDays());
+                    }
+                    binding.userProfileAgeText.setText(ageText);
+                }
+                String formattedUserAccountOpenTime = user.getUserAccountOpenTime();
+                formattedUserAccountOpenTime = formatDate(formattedUserAccountOpenTime, "yyyy-MM-dd HH:mm:ss", "MMM d, yyyy");
+                binding.userProfileOpeningDate.setText(formattedUserAccountOpenTime);
             }
         });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            binding.profileUserCoverImage.setRenderEffect(RenderEffect.createBlurEffect(100, 100, Shader.TileMode.MIRROR));
-        }
+    }
 
+    private static String formatDate(String inputDateString, String inputFormat, String outputFormat) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern(inputFormat);
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern(outputFormat);
+            LocalDate date = LocalDate.parse(inputDateString, inputFormatter);
+            return date.format(outputFormatter);
+        }
+        return ""; // Handle the case for lower Android versions if needed
     }
 
     private Object getResource(String userPicture) {

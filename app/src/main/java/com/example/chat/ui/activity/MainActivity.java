@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private UserViewModel userViewModel;
     private AddUserViewModel addUserViewModel;
-    private static final long REFRESH_INTERVAL = 1000;
+    private static final long REFRESH_INTERVAL = 2000;
     private Handler handler;
     private ArrayList<User> userList = new ArrayList<>();
     private Runnable refreshDataRunnable;
@@ -104,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
         boolean userVerified = receivedData.getString("userVerified").equals("Yes");
         String userAccountOpenTime = receivedData.getString("userAccountOpenTime");
         boolean userSecurity = receivedData.getString("userSecurity").equals("Yes");
-        return new User(userId, userDisplayName, userName, userDob, userEmail, userNumber, userPicture, userGender, userVerified, userAccountOpenTime, userSecurity);
+        String userRole=receivedData.getString("userRole");
+        return new User(userId, userDisplayName, userName, userDob, userEmail, userNumber, userPicture, userGender, userVerified, userAccountOpenTime, userSecurity,userRole);
     }
 
     private void refreshData() {

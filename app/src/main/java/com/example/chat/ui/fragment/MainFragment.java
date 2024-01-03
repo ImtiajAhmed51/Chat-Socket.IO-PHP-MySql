@@ -54,21 +54,18 @@ public class MainFragment extends Fragment {
                 AddUserFragment addUserFragment = (AddUserFragment) viewAdapter.getFragment(2);
                 if (position == 0) {
                     int color = (int) argbEvaluator.evaluate(positionOffset, getColor(0), getColor(1));
-                    int color1 = getColor(2);
                     homeFragment.setCardBackgroundColor(color);
-                    userDrawerFragment.setCardBackgroundColor(color1);
+                    userDrawerFragment.setCardBackgroundColor(color);
                     addUserFragment.setCardBackgroundColor(color);
                 } else if (position == 1) {
                     int color = (int) argbEvaluator.evaluate(positionOffset, getColor(1), getColor(2));
-                    int color1 = getColor(0);
                     homeFragment.setCardBackgroundColor(color);
-                    userDrawerFragment.setCardBackgroundColor(color1);
+                    userDrawerFragment.setCardBackgroundColor(color);
                     addUserFragment.setCardBackgroundColor(color);
                 } else if (position == 2) {
                     int color = (int) argbEvaluator.evaluate(positionOffset, getColor(0), getColor(1));
-                    int color1 = getColor(2);
                     homeFragment.setCardBackgroundColor(color);
-                    userDrawerFragment.setCardBackgroundColor(color1);
+                    userDrawerFragment.setCardBackgroundColor(color);
                     addUserFragment.setCardBackgroundColor(color);
                 }
             }

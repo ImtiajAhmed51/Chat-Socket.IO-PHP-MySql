@@ -51,6 +51,7 @@
                         android:id="@+id/tvProfileImageCardView"
                         android:layout_width="52dp"
                         android:layout_height="52dp"
+
                         app:cardBackgroundColor="@color/transparent"
                         app:cardCornerRadius="250dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,6 +65,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
                             android:layout_margin="4dp"
                             app:cardCornerRadius="250dp"
                             card_view:cardElevation="0dp">
