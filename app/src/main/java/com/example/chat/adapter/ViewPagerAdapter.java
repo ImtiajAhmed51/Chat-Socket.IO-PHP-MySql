@@ -15,7 +15,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     private List<String> lt = new ArrayList<>();
     private Activity activity;
     private float leftFragmentWidthPixels;
-    private float rightFragmentWidthPixels;
 
     public ViewPagerAdapter(FragmentManager manager, Activity activity) {
         super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -41,16 +40,13 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public void addFragment(Fragment fragment, String title) {
         lf.add(fragment);
         lt.add(title);
-        this.leftFragmentWidthPixels = dpToScreenWidthFraction(78);
-        this.rightFragmentWidthPixels = dpToScreenWidthFraction(300);
+        this.leftFragmentWidthPixels = dpToScreenWidthFraction(74);
     }
 
     @Override
     public float getPageWidth(int page) {
         if (page == 0) {
             return leftFragmentWidthPixels;
-        } else if (page == 2) {
-            return rightFragmentWidthPixels;
         } else {
             return super.getPageWidth(page);
         }
@@ -65,11 +61,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return lf.size();
     }
-
-    public Fragment getFragment(int position) {
-        return lf.get(position);
-    }
-
     private float dpToScreenWidthFraction(float dpValue) {
         float pixels = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,

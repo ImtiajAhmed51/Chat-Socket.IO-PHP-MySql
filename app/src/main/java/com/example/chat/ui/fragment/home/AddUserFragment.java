@@ -16,6 +16,7 @@ import com.example.chat.model.User;
 import com.example.chat.ui.viewmodel.AddUserViewModel;
 import com.example.chat.ui.viewmodel.UserViewModel;
 import com.example.chat.utils.BackgroundWorker;
+import com.example.chat.utils.DimensionUtils;
 import com.example.chat.utils.EncryptionUtils;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class AddUserFragment extends Fragment implements ClickListener {
         super.onViewCreated(view, savedInstanceState);
         addUserViewModel = new ViewModelProvider(getActivity()).get(AddUserViewModel.class);
         userViewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
+        setTopMargin(binding.addUserRelativeLayout, DimensionUtils.getStatusBarHeight(getActivity()));
         userAdapter = new UserAdapter(requireActivity(), new ArrayList<>(), this, 2);
         binding.userRecyclerView.setAdapter(userAdapter);
         addUserViewModel.getUserListLiveData().observe(getActivity(), new Observer<ArrayList<User>>() {
@@ -68,6 +70,11 @@ public class AddUserFragment extends Fragment implements ClickListener {
             }
         });
     }
+    private void setTopMargin(ViewGroup viewGroup, int topMargin) {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewGroup.getLayoutParams();
+        params.topMargin = topMargin;
+        viewGroup.setLayoutParams(params);
+    }
     private int findUserIndex(List<User> userList, String userId) {
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getUserId().equals(userId)) {
@@ -75,10 +82,6 @@ public class AddUserFragment extends Fragment implements ClickListener {
             }
         }
         return -1;
-    }
-    public void setCardBackgroundColor(int color) {
-
-            binding.groupCardView.setCardBackgroundColor(color);
     }
     private void toastMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();

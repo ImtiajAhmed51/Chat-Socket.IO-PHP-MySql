@@ -1,59 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
     xmlns:tools="http://schemas.android.com/tools">
-    <RelativeLayout
-        android:id="@+id/addUserMainContainer"
-        android:layout_width="300dp"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.home.AddUserFragment"
-        android:background="@color/allBackgroundColor2">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/groupCardView"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/addUserRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            app:cardBackgroundColor="@color/allBackgroundColor2"
-            app:cardCornerRadius="8dp"
-            card_view:cardElevation="0dp">
-            <RelativeLayout
+            android:background="@color/allBackgroundColor6"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/gg_sans_semi_bold"
+                android:text="Add Friends"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_below="@+id/textView"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:spanCount="1"
+                tools:itemCount="10"
+                tools:listitem="@layout/add_user" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/gg_sans_semi_bold"
-                    android:text="Add Users"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"/>
+        </RelativeLayout>
+    </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/userRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/textView"
-                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    app:spanCount="1"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/add_user" />
-
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-    </RelativeLayout>
 </layout>

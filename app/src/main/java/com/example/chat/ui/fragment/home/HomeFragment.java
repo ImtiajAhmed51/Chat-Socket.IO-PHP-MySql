@@ -35,12 +35,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Clic
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-    public void setCardBackgroundColor(int color){
-            binding.homeCardView.setCardBackgroundColor(color);
-
-
-
-    }
 
     @Override
     public void onClick(View view) {

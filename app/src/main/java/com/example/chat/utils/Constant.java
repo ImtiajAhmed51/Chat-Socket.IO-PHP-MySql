@@ -1,4 +1,5 @@
 package com.example.chat.utils;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Patterns;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.example.chat.R;
 import com.example.chat.model.User;
 import com.example.chat.model.ValidationResult;
 
@@ -46,6 +48,17 @@ public class Constant {
     private static final String DATA_ID = "userId";
     private static final String DATA_KEY = "mainKey";
     private static final String DATA_PASS = "userPassword";
+
+    public static final int[] TAB_ICONS = new int[]{
+            R.drawable.users,
+            R.drawable.home,
+            R.drawable.add_users
+    };
+    public static final String[] TAB_TEXTS = new String[]{
+            "Users",
+            "Home",
+            "Add User"
+    };
 
     public static void setDataAs(Context context, String userId,String mainKey, String userPassword, boolean status) {
         SharedPreferences.Editor editor = getSharePref(context).edit();

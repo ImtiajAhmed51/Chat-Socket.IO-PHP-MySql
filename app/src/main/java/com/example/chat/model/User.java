@@ -4,6 +4,8 @@ public class User {
     private String userId, userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole;
     private boolean isOnline, userVerified, userSecurity;
     private boolean isButtonEnabled;
+    public User user;
+
 
     public String getUserRole() {
         return userRole;
@@ -50,7 +52,8 @@ public class User {
                 String userGender,
                 Boolean userVerified,
                 String userAccountOpenTime,
-                Boolean userSecurity,String userRole) {
+                Boolean userSecurity,
+                String userRole) {
 
         this.userId = userId;
         this.userDisplayName = userDisplayName;
@@ -203,11 +206,7 @@ public class User {
         return ((User) anObject).getUserId().equals(getUserId());
     }
     public boolean allEquals(Object obj){
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj == null || getClass() != obj.getClass()) {
+        if (!(obj instanceof User)) {
             return false;
         }
 
@@ -218,6 +217,7 @@ public class User {
                 && getUserDob().equals(otherUser.getUserDob())
                 && getUserEmail().equals(otherUser.getUserEmail())
                 && getUserNumber().equals(otherUser.getUserNumber())
+                && getUserAccountOpenTime().equals(otherUser.getUserAccountOpenTime())
                 && getUserPicture().equals(otherUser.getUserPicture())
                 && getUserGender().equals(otherUser.getUserGender())
                 && isUserVerified()==otherUser.isUserVerified()

@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             addUserViewModel = new ViewModelProvider(this).get(AddUserViewModel.class);
             fragmentViewModel = new ViewModelProvider(this).get(FragmentViewModel.class);
             if (fragmentViewModel.isFragmentListEmpty()) {
+
                 List<Fragment> fragmentList = new ArrayList<>();
                 fragmentList.add(new UserDrawerFragment());
                 fragmentList.add(new HomeFragment());
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 User user = decryptUserData(receivedData);
                 userViewModel.setUserLive(user);
-                toastMessage(user.getUserDisplayName());
             } catch (Exception ignored) {
             }
         }
@@ -174,9 +174,12 @@ public class MainActivity extends AppCompatActivity {
             JSONObject jsonResponse = new JSONObject((String) output);
             if (jsonResponse.getBoolean("success")) {
                 User user=decryptUserData(jsonResponse);
-                if(!user.allEquals(userViewModel.getUserLiveData())){
-                    userViewModel.setUserLive(user);
+                if (userViewModel.getUserLiveData() != null){
+                    if(!user.allEquals(userViewModel.getUserLiveData().getValue())){
+                        userViewModel.setUserLive(user);
+                    }
                 }
+
                 showAllUser();
             } else {
                 toastMessage(jsonResponse.getString("message"));

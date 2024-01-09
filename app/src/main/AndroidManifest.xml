@@ -34,11 +34,13 @@
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
-            android:configChanges="uiMode"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activity.AuthActivity"
-            android:configChanges="uiMode"
+            android:configChanges="uiMode|orientation"
+            android:screenOrientation="portrait"
             android:exported="false"/>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

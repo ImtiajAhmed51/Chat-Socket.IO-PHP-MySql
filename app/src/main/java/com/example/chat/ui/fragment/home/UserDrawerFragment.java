@@ -22,6 +22,7 @@ import com.example.chat.model.User;
 import com.example.chat.ui.activity.AuthActivity;
 import com.example.chat.ui.viewmodel.UserViewModel;
 import com.example.chat.utils.Constant;
+import com.example.chat.utils.DimensionUtils;
 
 public class UserDrawerFragment extends Fragment implements View.OnClickListener {
     private FragmentUserDrawerBinding binding;
@@ -40,7 +41,7 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userViewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
-        binding.logOutClick.setOnClickListener(this);
+        setTopMargin(binding.userDrawerLinearLayout, DimensionUtils.getStatusBarHeight(getActivity()));
         binding.userProfileClick.setOnClickListener(this);
         userViewModel.getUserLiveData().observe(getActivity(), new Observer<User>() {
             @Override
@@ -49,6 +50,11 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
 
             }
         });
+    }
+    private void setTopMargin(ViewGroup viewGroup, int topMargin) {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewGroup.getLayoutParams();
+        params.topMargin = topMargin;
+        viewGroup.setLayoutParams(params);
     }
 
     private Object getResource(String userPicture) {
@@ -76,17 +82,10 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    public void setCardBackgroundColor(int color) {
-            binding.userDrawerCardView.setCardBackgroundColor(color);
-    }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == binding.logOutClick.getId()) {
-            Constant.clearData(getActivity());
-            startActivity(new Intent(getActivity(), AuthActivity.class));
-            requireActivity().finish();
-        } else if (view.getId() == binding.userProfileClick.getId()) {
+        if (view.getId() == binding.userProfileClick.getId()) {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_mainFragment_to_profileFragment);
         }
     }
