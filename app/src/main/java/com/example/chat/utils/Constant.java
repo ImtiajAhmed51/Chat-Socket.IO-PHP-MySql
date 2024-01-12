@@ -51,7 +51,7 @@ public class Constant {
 
     public static final int[] TAB_ICONS = new int[]{
             R.drawable.users,
-            R.drawable.home,
+            R.drawable.chat,
             R.drawable.add_users
     };
     public static final String[] TAB_TEXTS = new String[]{

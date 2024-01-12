@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:background="@drawable/dialog_background"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <ImageView
             android:layout_width="50dp"
@@ -20,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:fontFamily="@font/gg_sans_bold"
             android:layout_marginTop="5dp"
+            android:fontFamily="@font/gg_sans_bold"
             android:text="Change Online Status"
             android:textColor="@color/white"
             android:textSize="17sp" />
@@ -79,6 +80,7 @@
                         android:textSize="15sp" />
 
                     <RadioButton
+                        android:id="@+id/userActiveStatusOnline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -116,6 +118,7 @@
                         android:textSize="15sp" />
 
                     <RadioButton
+                        android:id="@+id/userActiveStatusIdle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -152,6 +155,7 @@
                         android:textSize="15sp" />
 
                     <RadioButton
+                        android:id="@+id/userActiveStatusDND"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -174,7 +178,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
-                        android:src="@drawable/offline" />
+                        android:src="@drawable/invisible" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -188,6 +192,7 @@
                         android:textSize="15sp" />
 
                     <RadioButton
+                        android:id="@+id/userActiveStatusInvisible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"

@@ -105,7 +105,20 @@ public class MainActivity extends AppCompatActivity {
         String userAccountOpenTime = receivedData.getString("userAccountOpenTime");
         boolean userSecurity = receivedData.getString("userSecurity").equals("Yes");
         String userRole=receivedData.getString("userRole");
-        return new User(userId, userDisplayName, userName, userDob, userEmail, userNumber, userPicture, userGender, userVerified, userAccountOpenTime, userSecurity,userRole);
+        String userActiveStatus=receivedData.getString("userActiveStatus");
+        return new User(userId,
+                        userDisplayName,
+                        userName,
+                        userDob,
+                        userEmail,
+                        userNumber,
+                        userPicture,
+                        userGender,
+                        userVerified,
+                        userAccountOpenTime,
+                        userSecurity,
+                        userRole,
+                        userActiveStatus);
     }
 
     private void refreshData() {

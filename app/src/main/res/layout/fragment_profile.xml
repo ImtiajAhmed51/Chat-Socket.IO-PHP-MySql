@@ -83,15 +83,13 @@
                 card_view:cardElevation="0dp">
 
                 <ImageView
-                    android:id="@+id/drawerUserImage"
+                    android:id="@+id/profileUserActiveStatus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:elevation="0dp"
-                    android:importantForAccessibility="no"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/offline" />
+                    android:scaleType="centerCrop" />
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,11 +1,17 @@
 package com.example.chat.model;
 
 public class User {
-    private String userId, userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole;
+    private String userId, userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole,userActiveStatus;
     private boolean isOnline, userVerified, userSecurity;
     private boolean isButtonEnabled;
-    public User user;
 
+    public String getUserActiveStatus() {
+        return userActiveStatus;
+    }
+
+    public void setUserActiveStatus(String userActiveStatus) {
+        this.userActiveStatus = userActiveStatus;
+    }
 
     public String getUserRole() {
         return userRole;
@@ -53,7 +59,8 @@ public class User {
                 Boolean userVerified,
                 String userAccountOpenTime,
                 Boolean userSecurity,
-                String userRole) {
+                String userRole,
+                String userActiveStatus) {
 
         this.userId = userId;
         this.userDisplayName = userDisplayName;
@@ -67,6 +74,7 @@ public class User {
         this.userAccountOpenTime = userAccountOpenTime;
         this.userSecurity = userSecurity;
         this.userRole=userRole;
+        this.userActiveStatus=userActiveStatus;
 
     }
 
@@ -222,7 +230,8 @@ public class User {
                 && getUserGender().equals(otherUser.getUserGender())
                 && isUserVerified()==otherUser.isUserVerified()
                 && isUserSecurity()==otherUser.isUserSecurity()
-                && getUserRole().equals(otherUser.getUserRole());
+                && getUserRole().equals(otherUser.getUserRole())
+                && getUserActiveStatus().equals(otherUser.getUserActiveStatus());
 
     }
 
