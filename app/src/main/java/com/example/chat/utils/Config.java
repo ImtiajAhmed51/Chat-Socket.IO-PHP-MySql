@@ -8,5 +8,6 @@ public class Config {
     public static final String CHANGE_PICTURE_URL = "https://imtiajahmed.com/Chat/changePicture.php";
     public static final String SHOW_ALL_USER_URL = "https://imtiajahmed.com/Chat/showAllUser.php";
     public static final String ADD_REQUEST_USER_URL = "https://imtiajahmed.com/Chat/addRequest.php";
+    public static final String USER_ACTIVE_STATUS_CHANGE_URL = "https://imtiajahmed.com/Chat/userActiveStatusChange.php";
     public static final String SOCKET_URL = "https://socket-io-server-p1k7.onrender.com";
 }

@@ -1,5 +1,8 @@
 package com.example.chat.ui.fragment.home;
 
+import static com.example.chat.utils.Constant.isValidBangladeshiPhoneNumber;
+import static com.example.chat.utils.Constant.isValidEmail;
+
 import android.content.Intent;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
@@ -9,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +27,13 @@ import com.example.chat.databinding.FragmentProfileBinding;
 import com.example.chat.model.User;
 import com.example.chat.ui.activity.AuthActivity;
 import com.example.chat.ui.viewmodel.UserViewModel;
+import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
+import com.example.chat.utils.EncryptionUtils;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -134,12 +142,77 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         RadioButton dND = view.findViewById(R.id.userActiveStatusDND);
         RadioButton invisible = view.findViewById(R.id.userActiveStatusInvisible);
         RadioButton[] radioButtons = {online, idle, dND, invisible};
+
         int checker = getUserActiveStatus(Objects.requireNonNull(userViewModel.getUserLiveData().getValue()).getUserActiveStatus());
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i].setChecked(checker == i);
         }
+
+        for (int i = 0; i < radioButtons.length; i++) {
+            final int index = i;
+            radioButtons[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    boolean checked = ((RadioButton) view).isChecked();
+                    if (checked) {
+                        userActiveStatusChange(getUserActiveStatusValue(index));
+                        updateRadioButtonsState(radioButtons, index);
+                    }
+                }
+            });
+        }
+
         dialog.setContentView(view);
         dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    // Method to update the state of radio buttons based on the selected index
+    private void updateRadioButtonsState(RadioButton[] radioButtons, int selectedIndex) {
+        for (int i = 0; i < radioButtons.length; i++) {
+            radioButtons[i].setChecked(i == selectedIndex);
+        }
+    }
+
+    // Method to get the corresponding user active status value based on the index
+    private String getUserActiveStatusValue(int index) {
+        switch (index) {
+            case 0:
+                return "Online";
+            case 1:
+                return "Idle";
+            case 2:
+                return "DND";
+            case 3:
+                return "Invisible";
+            default:
+                return "";
+        }
+    }
+
+    private void userActiveStatusChange(String status) {
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this::userActiveStatusChangeResponse);
+        try {
+            String userId = Constant.getDataId(requireActivity());
+            backgroundWorker.execute("UserActiveStatusChange", EncryptionUtils.encrypt(userId), status);
+        } catch (Exception e) {
+            toastMessage(e.getMessage());
+        }
+    }
+
+    private void userActiveStatusChangeResponse(Object output) {
+        try {
+            JSONObject jsonResponse = new JSONObject((String) output);
+            if (jsonResponse.getBoolean("success")) {
+                dialog.dismiss();
+                //login();
+            } else {
+//                binding.saveChooseProfilePictureClick.setClickable(true);
+//                progressButton.buttonSet("Next");
+//                toastMessage(jsonResponse.getString("message"));
+            }
+        } catch (Exception e) {
+            toastMessage(e.getMessage());
+        }
     }
 
     private int getNavigationBarHeight() {
@@ -212,5 +285,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 return R.drawable.invisible;
         }
         return R.drawable.circular_border;
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }
