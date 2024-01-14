@@ -4,8 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -23,8 +21,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
     private ProgressButton progressButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentWelcomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -34,7 +31,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         binding.emailFragmentClick.setOnClickListener(this);
         binding.loginButtonClick.setOnClickListener(this);
-        this.progressButton = new ProgressButton(getContext(), binding.emailFragmentClick);
+        this.progressButton = new ProgressButton(requireActivity(), binding.emailFragmentClick);
         progressButton.buttonSet("Register");
 
     }

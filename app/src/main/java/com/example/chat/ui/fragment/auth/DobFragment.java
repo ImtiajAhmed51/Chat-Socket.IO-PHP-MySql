@@ -30,7 +30,7 @@ public class DobFragment extends Fragment implements View.OnClickListener {
     private String name="", mainVal="", userName="", password="", gen="", dob="";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDobBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -54,7 +54,7 @@ public class DobFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initializeViews() {
-        progressButton = new ProgressButton(getContext(), binding.clickProfilePictureFragment);
+        progressButton = new ProgressButton(requireActivity(), binding.clickProfilePictureFragment);
         progressButton.buttonSet("Create an account");
 
         String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
@@ -86,7 +86,7 @@ public class DobFragment extends Fragment implements View.OnClickListener {
         Calendar minAgeCalendar = Calendar.getInstance();
         minAgeCalendar.add(Calendar.YEAR, -18);
         Calendar currentDate = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view, year, month, dayOfMonth) -> {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireActivity(), (view, year, month, dayOfMonth) -> {
             Calendar selectedDate = Calendar.getInstance();
             selectedDate.set(year, month, dayOfMonth);
             if (selectedDate.before(minAgeCalendar)) {
@@ -166,6 +166,6 @@ public class DobFragment extends Fragment implements View.OnClickListener {
     }
 
     private void toastMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

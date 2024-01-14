@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
-    private List<Fragment> lf = new ArrayList<>();
-    private List<String> lt = new ArrayList<>();
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<String> fragmentTitle = new ArrayList<>();
     private Activity activity;
     private float leftFragmentWidthPixels;
 
@@ -22,25 +22,25 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     public List<Fragment> getLf() {
-        return lf;
+        return fragmentList;
     }
 
     public void setLf(List<Fragment> lf) {
-        this.lf = lf;
+        this.fragmentList = lf;
     }
 
     public List<String> getLt() {
-        return lt;
+        return fragmentTitle;
     }
 
     public void setLt(List<String> lt) {
-        this.lt = lt;
+        this.fragmentTitle = lt;
     }
 
     public void addFragment(Fragment fragment, String title) {
-        lf.add(fragment);
-        lt.add(title);
-        this.leftFragmentWidthPixels = dpToScreenWidthFraction(74);
+        fragmentList.add(fragment);
+        fragmentTitle.add(title);
+        this.leftFragmentWidthPixels = dpToScreenWidthFraction();
     }
 
     @Override
@@ -54,23 +54,23 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return lf.get(position);
+        return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return lf.size();
+        return fragmentList.size();
     }
-    private float dpToScreenWidthFraction(float dpValue) {
+    private float dpToScreenWidthFraction() {
         float pixels = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                dpValue,
+                (float) 74,
                 activity.getResources().getDisplayMetrics());
         return pixels / (float) activity.getResources().getDisplayMetrics().widthPixels;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return lt.get(position);
+        return fragmentTitle.get(position);
     }
 }

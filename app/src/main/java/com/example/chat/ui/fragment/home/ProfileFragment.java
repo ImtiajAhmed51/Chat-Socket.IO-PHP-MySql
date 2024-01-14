@@ -1,8 +1,5 @@
 package com.example.chat.ui.fragment.home;
 
-import static com.example.chat.utils.Constant.isValidBangladeshiPhoneNumber;
-import static com.example.chat.utils.Constant.isValidEmail;
-
 import android.content.Intent;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
@@ -11,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -18,17 +16,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.chat.R;
+import com.example.chat.adapter.CustomAddUserAdapter;
 import com.example.chat.databinding.FragmentProfileBinding;
 import com.example.chat.model.User;
 import com.example.chat.ui.activity.AuthActivity;
 import com.example.chat.ui.viewmodel.UserViewModel;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
+import com.example.chat.utils.DimensionUtils;
 import com.example.chat.utils.EncryptionUtils;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -63,9 +63,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
         dialog = new BottomSheetDialog(requireActivity(), R.style.NoWiredStrapInNavigationBar);
         binding.onlineStatusChangeClick.setOnClickListener(this);
-        binding.userProfileLogout.setOnClickListener(this);
+        binding.userProfileLocation.setOnClickListener(this);
+
+        binding.userProfileSettings.setOnClickListener(this);
+       // binding.userProfileLogout.setOnClickListener(this);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        setBottomMargin(binding.userProfileLogout, getNavigationBarHeight());
+        Constant.setTopMargin(binding.userProfileSettingsTopMargin,DimensionUtils.getStatusBarHeight(requireActivity()));
+        Constant.setBottomMargin(binding.developerName, DimensionUtils.getNavigationBarHeight(requireActivity()));
     }
 
     private void observeUserData() {
@@ -113,25 +117,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         binding.userProfileAgeText.setText(ageText);
     }
 
-    private void setBottomMargin(ViewGroup viewGroup, int bottomMargin) {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewGroup.getLayoutParams();
-        params.bottomMargin = bottomMargin;
-        viewGroup.setLayoutParams(params);
-    }
-
     @Override
     public void onClick(View view) {
-        if (view.getId() == binding.userProfileLogout.getId()) {
-            logoutUser();
-        } else if (view.getId() == binding.onlineStatusChangeClick.getId()) {
+        if (view.getId() == binding.userProfileSettings.getId()) {
+            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_settingsFragment);
+        }
+        else if (view.getId() == binding.onlineStatusChangeClick.getId()) {
             showDialog();
             dialog.show();
+        } else if (view.getId() ==binding.userProfileLocation.getId()) {
+            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_locationFragment);
+
         }
     }
 
     private void logoutUser() {
-        Constant.clearData(getActivity());
-        startActivity(new Intent(getActivity(), AuthActivity.class));
+        Constant.clearData(requireActivity());
+        startActivity(new Intent(requireActivity(), AuthActivity.class));
         requireActivity().finish();
     }
 
@@ -165,15 +167,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         dialog.setContentView(view);
         dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
     }
-
-    // Method to update the state of radio buttons based on the selected index
     private void updateRadioButtonsState(RadioButton[] radioButtons, int selectedIndex) {
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i].setChecked(i == selectedIndex);
         }
     }
-
-    // Method to get the corresponding user active status value based on the index
     private String getUserActiveStatusValue(int index) {
         switch (index) {
             case 0:
@@ -203,25 +201,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         try {
             JSONObject jsonResponse = new JSONObject((String) output);
             if (jsonResponse.getBoolean("success")) {
-                dialog.dismiss();
-                //login();
-            } else {
-//                binding.saveChooseProfilePictureClick.setClickable(true);
-//                progressButton.buttonSet("Next");
-//                toastMessage(jsonResponse.getString("message"));
+                //dialog.dismiss();
             }
         } catch (Exception e) {
             toastMessage(e.getMessage());
         }
-    }
-
-    private int getNavigationBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
     }
 
     private static String formatDate(String inputDateString, String inputFormat) {

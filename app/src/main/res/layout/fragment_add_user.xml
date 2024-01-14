@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
             android:id="@+id/addUserRelativeLayout"
             android:layout_width="match_parent"
@@ -16,50 +17,30 @@
             android:background="@color/allBackgroundColor6"
             android:orientation="vertical">
 
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/titleAddFriends"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+            <Spinner
+                android:id="@+id/addUserSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#262630"
-                app:cardCornerRadius="25dp"
-                card_view:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="10dp"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp">
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/add_users"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:fontFamily="@font/gg_sans_extra_bold"
-                        android:text="Add Friends"
-                        android:textColor="#EAEAEA"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_main_bg"
+                android:dropDownWidth="wrap_content"
+                android:elevation="0dp"
+                android:popupBackground="@drawable/spinner_list_bg"
+                android:popupElevation="0dp"
+                android:spinnerMode="dropdown"
+                tools:listitem="@layout/spinner_custom_layout" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/titleAddFriends"
+                android:layout_below="@+id/addUserSpinner"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/titleAddFriends"
+                app:layout_constraintTop_toBottomOf="@+id/addUserSpinner"
                 app:spanCount="1"
                 tools:itemCount="10"
                 tools:listitem="@layout/add_user" />

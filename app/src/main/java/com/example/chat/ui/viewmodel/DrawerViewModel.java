@@ -13,7 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 
 public class DrawerViewModel extends AndroidViewModel {
-    private MutableLiveData<ArrayList<User>> userListLiveData;
+    private final MutableLiveData<ArrayList<User>> userListLiveData;
 
     public DrawerViewModel(@NonNull Application application) {
         super(application);

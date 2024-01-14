@@ -22,9 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -41,7 +39,6 @@ import com.example.chat.utils.EncryptionUtils;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.view.CropImageView;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -59,7 +56,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
     private String selectedImage = null;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChooseProfilePictureBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -81,7 +78,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                 binding.ProfileImageCardView7,
                 binding.ProfileImageCardView8
         );
-        progressButton = new ProgressButton(getContext(), binding.saveChooseProfilePictureClick);
+        progressButton = new ProgressButton(requireActivity(), binding.saveChooseProfilePictureClick);
         progressButton.buttonSet("Next");
         binding.saveChooseProfilePictureClick.setOnClickListener(this);
         binding.skipClick.setOnClickListener(this);
@@ -145,7 +142,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             pickImageFromGallery();
         }
 
-        if (view instanceof CardView) {
+        if (view instanceof CardView &&view.getId() != binding.addUserPicture.getId()) {
 
             resetBackgroundColors();
 
@@ -169,9 +166,9 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         } else if (requestCode == 69 && resultCode == -1) {
             Uri imageUriResultCrop = UCrop.getOutput(data);
             if (imageUriResultCrop != null) {
-                Bitmap image = uriToBitmap(getContext(), imageUriResultCrop);
+                Bitmap image = uriToBitmap(requireActivity(), imageUriResultCrop);
                 Bitmap image2 = getResizedBitmap(image, CropImageView.DEFAULT_IMAGE_TO_CROP_BOUNDS_ANIM_DURATION);
-                Glide.with(getActivity()).load(image2).into(binding.userProfileImage);
+                Glide.with(requireActivity()).load(image2).into(binding.userProfileImage);
                 selectedImage = bitmapToString(image2);
                 resetBackgroundColors();
             }
@@ -204,11 +201,11 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
     }
 
     private void startCrop(Uri uri) {
-        UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(getActivity().getCacheDir(), "SampleCropImg" + ".jpg")));
+        UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(requireActivity().getCacheDir(), "SampleCropImg" + ".jpg")));
         uCrop.withAspectRatio(1.0f, 1.0f);
         uCrop.withMaxResultSize(8000, 8000);
         uCrop.withOptions(getCropOptions());
-        uCrop.start(getContext(), this, 69);
+        uCrop.start(requireActivity(), this, 69);
     }
 
     private UCrop.Options getCropOptions() {
@@ -289,7 +286,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                     progressButton.buttonFinished();
                 }
 
-                Constant.setDataAs(getContext(), EncryptionUtils.decrypt(jsonResponse.getString("userId")), mainVal, pass, true);
+                Constant.setDataAs(requireActivity(), EncryptionUtils.decrypt(jsonResponse.getString("userId")), mainVal, pass, true);
                 startMainActivity(jsonResponse.toString());
             } else {
                 if (selectedImage != null) {
@@ -307,10 +304,10 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
     }
 
     private void startMainActivity(String jsonObject) {
-        Intent intent = new Intent(getContext(), MainActivity.class);
+        Intent intent = new Intent(requireActivity(), MainActivity.class);
         intent.putExtra("jsonObject", jsonObject);
         startActivity(intent);
-        getActivity().finish();
+        requireActivity().finish();
     }
 
     private void resetBackgroundColors() {
@@ -327,7 +324,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
     }
 
     private void toastMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void setClickListeners(CardView... cardViews) {

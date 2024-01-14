@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -36,7 +35,7 @@ public class NumberEmailFragment extends Fragment implements View.OnClickListene
     private NumberEmailViewModel numberEmailViewModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentNumberEmailBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -51,9 +50,9 @@ public class NumberEmailFragment extends Fragment implements View.OnClickListene
     }
 
     private void initViewModel() {
-        progressButton = new ProgressButton(getContext(), binding.clickNameFragment);
+        progressButton = new ProgressButton(requireActivity(), binding.clickNameFragment);
         progressButton.buttonSet("Next");
-        numberEmailViewModel = new ViewModelProvider(getActivity()).get(NumberEmailViewModel.class);
+        numberEmailViewModel = new ViewModelProvider(requireActivity()).get(NumberEmailViewModel.class);
     }
 
     private void setupListeners() {
@@ -195,6 +194,6 @@ public class NumberEmailFragment extends Fragment implements View.OnClickListene
     }
 
     private void toastMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

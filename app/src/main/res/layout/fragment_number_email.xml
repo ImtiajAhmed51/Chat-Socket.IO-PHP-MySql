@@ -18,8 +18,8 @@
                 android:layout_width="45dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="12dp"
-                android:paddingTop="9dp"
-                android:paddingBottom="9dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:src="@drawable/ic_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -64,10 +64,10 @@
                         android:id="@+id/numberRadio"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginStart="3dp"
+                        android:layout_marginTop="3dp"
                         android:layout_marginEnd="1.5dp"
+                        android:layout_marginBottom="3dp"
                         android:layout_weight="1"
                         android:background="@drawable/segmented_checked"
                         android:button="@null"
@@ -81,10 +81,10 @@
                         android:id="@+id/emailRadio"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginStart="1.5dp"
+                        android:layout_marginTop="3dp"
                         android:layout_marginEnd="3dp"
+                        android:layout_marginBottom="3dp"
                         android:layout_weight="1"
                         android:background="@drawable/segmented_checked"
                         android:button="@null"
@@ -163,9 +163,6 @@
                     />
 
             </LinearLayout>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </FrameLayout>
 </layout>

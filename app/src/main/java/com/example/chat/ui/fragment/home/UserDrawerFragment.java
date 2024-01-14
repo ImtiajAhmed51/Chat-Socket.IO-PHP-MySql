@@ -1,6 +1,5 @@
 package com.example.chat.ui.fragment.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,24 +12,22 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.chat.R;
 import com.example.chat.databinding.FragmentUserDrawerBinding;
 import com.example.chat.model.User;
-import com.example.chat.ui.activity.AuthActivity;
 import com.example.chat.ui.viewmodel.UserViewModel;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.DimensionUtils;
 
 public class UserDrawerFragment extends Fragment implements View.OnClickListener {
     private FragmentUserDrawerBinding binding;
-    private UserViewModel userViewModel;
 
     public UserDrawerFragment() {
 
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentUserDrawerBinding.inflate(inflater, container, false);
@@ -40,21 +37,16 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userViewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
-        setTopMargin(binding.userDrawerLinearLayout, DimensionUtils.getStatusBarHeight(getActivity()));
+        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        Constant.setTopMargin(binding.userDrawerLinearLayout, DimensionUtils.getStatusBarHeight(requireActivity()));
         binding.userProfileClick.setOnClickListener(this);
-        userViewModel.getUserLiveData().observe(getActivity(), new Observer<User>() {
+        userViewModel.getUserLiveData().observe(requireActivity(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                Glide.with(getActivity()).load(getResource(user.getUserPicture())).into(binding.drawerUserImage);
+                Glide.with(requireActivity()).load(getResource(user.getUserPicture())).into(binding.drawerUserImage);
 
             }
         });
-    }
-    private void setTopMargin(ViewGroup viewGroup, int topMargin) {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewGroup.getLayoutParams();
-        params.topMargin = topMargin;
-        viewGroup.setLayoutParams(params);
     }
 
     private Object getResource(String userPicture) {

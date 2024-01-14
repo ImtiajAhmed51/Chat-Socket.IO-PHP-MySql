@@ -47,9 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private AddUserViewModel addUserViewModel;
     private static final long REFRESH_INTERVAL = 2000;
     private Handler handler;
-    private ArrayList<User> userList = new ArrayList<>();
+    private final ArrayList<User> userList = new ArrayList<>();
     private Runnable refreshDataRunnable;
-    private FragmentViewModel fragmentViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
             addUserViewModel = new ViewModelProvider(this).get(AddUserViewModel.class);
-            fragmentViewModel = new ViewModelProvider(this).get(FragmentViewModel.class);
+            FragmentViewModel fragmentViewModel = new ViewModelProvider(this).get(FragmentViewModel.class);
             if (fragmentViewModel.isFragmentListEmpty()) {
 
                 List<Fragment> fragmentList = new ArrayList<>();
@@ -201,9 +200,9 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         } catch (Exception e) {
-            toastMessage(e.getMessage());
-            startActivity(new Intent(MainActivity.this, AuthActivity.class));
-            finish();
+//            toastMessage(e.getMessage());
+//            startActivity(new Intent(MainActivity.this, AuthActivity.class));
+//            finish();
         }
     }
 

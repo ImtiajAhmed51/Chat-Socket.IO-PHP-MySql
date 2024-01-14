@@ -14,10 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.example.chat.R;
 import com.example.chat.databinding.FragmentLoginBinding;
 import com.example.chat.model.ValidationResult;
 import com.example.chat.ui.activity.MainActivity;
@@ -26,7 +24,6 @@ import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.EncryptionUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.example.chat.utils.Constant.isValidBangladeshiPhoneNumber;
@@ -47,7 +44,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        progressButton = new ProgressButton(getContext(), binding.clickLoginFragment);
+        progressButton = new ProgressButton(requireActivity(), binding.clickLoginFragment);
         progressButton.buttonSet(LOGIN_BUTTON_TEXT);
         binding.clickLoginFragment.setOnClickListener(this);
         binding.loginBackPressed.setOnClickListener(this);
@@ -57,7 +54,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void setupTextChangeListeners() {
         binding.loginEmailNumberEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -65,12 +63,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
         });
 
         binding.passwordEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -78,13 +78,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
         });
     }
 
     private void handleEmailNumberTextChanged(CharSequence charSequence) {
         if (!charSequence.toString().equals("")) {
-
 
 
             if (charSequence.toString().length() >= 3 &&
@@ -139,7 +139,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-        hideKeyboard(getActivity());
+        hideKeyboard(requireActivity());
         binding.clickLoginFragment.setClickable(false);
         progressButton.buttonActivated();
 
@@ -166,10 +166,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 progressButton.buttonFinished();
                 binding.loginPasswordError.setError(null);
                 toastMessage(jsonResponse.getString("message") + EncryptionUtils.decrypt(jsonResponse.getString("userDisplayName")));
-                String mainValue=binding.loginEmailNumberEditText.getText().toString().trim();
-                String password=binding.passwordEditText.getText().toString().trim();
-                mainValue=isValidEmail(mainValue)?mainValue:"0"+mainValue;
-                Constant.setDataAs(getContext(), EncryptionUtils.decrypt(jsonResponse.getString("userId")), mainValue, password, true);
+                String mainValue = binding.loginEmailNumberEditText.getText().toString().trim();
+                String password = binding.passwordEditText.getText().toString().trim();
+                mainValue = isValidEmail(mainValue) ? mainValue : "0" + mainValue;
+                Constant.setDataAs(requireActivity(), EncryptionUtils.decrypt(jsonResponse.getString("userId")), mainValue, password, true);
                 startMainActivity(jsonResponse.toString());
             } else {
                 handleLoginErrorResponse(jsonResponse.getString("message"));
@@ -180,10 +180,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void startMainActivity(String jsonObject) {
-        Intent intent = new Intent(getContext(), MainActivity.class);
+        Intent intent = new Intent(requireActivity(), MainActivity.class);
         intent.putExtra("jsonObject", jsonObject);
         startActivity(intent);
-        getActivity().finish();
+        requireActivity().finish();
     }
 
     private void handleLoginErrorResponse(String errorMessage) {
@@ -199,7 +199,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void toastMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     public static void hideKeyboard(Activity activity) {

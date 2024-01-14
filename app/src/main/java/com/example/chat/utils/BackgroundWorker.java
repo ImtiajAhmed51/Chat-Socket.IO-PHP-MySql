@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class BackgroundWorker extends AsyncTask<String, String, String> {
     private final AsyncResponse asyncResponse;
-    private final String[] listKey = {"userId", "userDisplayName", "userName", "userDob", "userEmail", "userNumber", "userGender", "userPassword","userPicture","receiverUserId","userActiveStatus"};
+    private final String[] listKey = {"userId", "userDisplayName", "userName", "userDob", "userEmail", "userNumber", "userGender", "userPassword", "userPicture", "receiverUserId", "userActiveStatus"};
 
     public interface AsyncResponse {
         void onFinish(Object obj);
@@ -15,6 +15,7 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
     public BackgroundWorker(AsyncResponse asyncResponse) {
         this.asyncResponse = asyncResponse;
     }
+
     protected String doInBackground(String... params) {
         String type = params[0];
         String url = null;
@@ -74,10 +75,12 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
     protected void onPreExecute() {
         super.onPreExecute();
     }
+
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         this.asyncResponse.onFinish(s);
     }
+
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
     }

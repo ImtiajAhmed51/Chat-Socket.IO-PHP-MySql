@@ -21,6 +21,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/userProfileSettingsTopMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/userProfileSettings"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                app:cardBackgroundColor="#80000000"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="6dp"
+                    android:src="@drawable/settings" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
             android:layout_width="wrap_content"
@@ -97,7 +126,6 @@
             android:id="@+id/userDrawerCardView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             app:cardBackgroundColor="@color/allBackgroundColor4"
@@ -116,7 +144,6 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="4">
-
 
                 <ImageView
                     android:id="@+id/userProfileOwner"
@@ -151,14 +178,12 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -182,52 +207,62 @@
                         android:layout_marginEnd="15dp"
                         android:layout_marginBottom="15dp">
 
-                        <LinearLayout
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/onlineStatusChangeClick"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:clickable="true"
                             android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
+                            android:foreground="?selectableItemBackground"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardElevation="0dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <TextView
-                                android:id="@+id/userProfileDisplayName"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/gg_sans_extra_bold"
-                                android:text="Imtiaj Ahmed Anik"
-                                android:textColor="#EAEAEA"
-                                android:textSize="20sp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent">
 
-                            <TextView
-                                android:id="@+id/userProfileUserId"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:fontFamily="@font/gg_sans_extra_bold"
-                                android:text="#5131"
-                                android:textColor="@color/secondary1Color"
-                                android:textSize="20sp"
-                                app:layout_constraintBottom_toBottomOf="@+id/userProfileDisplayName"
+                                <TextView
+                                    android:id="@+id/userProfileDisplayName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gg_sans_extra_bold"
+                                    android:text="Imtiaj Ahmed Anik"
+                                    android:textColor="#EAEAEA"
+                                    android:textSize="20sp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                                app:layout_constraintStart_toEndOf="@+id/userProfileDisplayName"
-                                app:layout_constraintTop_toTopOf="@+id/userProfileDisplayName" />
+                                <TextView
+                                    android:id="@+id/userProfileUserId"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:fontFamily="@font/gg_sans_extra_bold"
+                                    android:text="#5131"
+                                    android:textColor="@color/secondary1Color"
+                                    android:textSize="20sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/userProfileDisplayName"
+                                    app:layout_constraintStart_toEndOf="@+id/userProfileDisplayName"
+                                    app:layout_constraintTop_toTopOf="@+id/userProfileDisplayName" />
 
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_marginStart="5dp"
-                                android:src="@drawable/downstatus"
-                                app:layout_constraintBottom_toBottomOf="@+id/userProfileUserId"
-                                app:layout_constraintStart_toEndOf="@+id/userProfileUserId"
-                                app:layout_constraintTop_toTopOf="@+id/userProfileUserId" />
-                        </LinearLayout>
+                                <ImageView
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@drawable/downstatus"
+                                    app:layout_constraintBottom_toBottomOf="@+id/userProfileUserId"
+                                    app:layout_constraintStart_toEndOf="@+id/userProfileUserId"
+                                    app:layout_constraintTop_toTopOf="@+id/userProfileUserId" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
 
                         <TextView
                             android:id="@+id/userProfileUserName"
@@ -269,7 +304,6 @@
                                     android:gravity="center"
                                     android:padding="10dp">
 
-
                                     <ImageView
                                         android:layout_width="18dp"
                                         android:layout_height="18dp"
@@ -306,7 +340,6 @@
                                     android:gravity="center"
                                     android:padding="10dp">
 
-
                                     <ImageView
                                         android:layout_width="18dp"
                                         android:layout_height="18dp"
@@ -322,14 +355,9 @@
                                         android:textSize="14sp" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
-
-
                         </LinearLayout>
-
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
-
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/userDrawerCardjView"
@@ -354,7 +382,6 @@
                             android:id="@+id/userProfileAboutMeView"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-
                             android:fontFamily="@font/gg_sans_semi_bold"
                             android:text="About Me"
                             android:textColor="#EAEAEA"
@@ -362,12 +389,10 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-
                         <TextView
                             android:id="@+id/userProfileAboutMeText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-
                             android:layout_marginTop="3dp"
                             android:fontFamily="@font/gg_sans_normal"
                             android:text="Computer Science And Engineering"
@@ -375,7 +400,6 @@
                             android:textSize="16sp"
                             app:layout_constraintStart_toStartOf="@+id/userProfileAboutMeView"
                             app:layout_constraintTop_toBottomOf="@+id/userProfileAboutMeView" />
-
 
                         <TextView
                             android:id="@+id/userProfileDOBView"
@@ -393,7 +417,6 @@
                             android:id="@+id/userProfileDOBText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-
                             android:layout_marginTop="3dp"
                             android:fontFamily="@font/gg_sans_normal"
                             android:text="Dec 9, 2024"
@@ -401,7 +424,6 @@
                             android:textSize="16sp"
                             app:layout_constraintStart_toStartOf="@+id/userProfileDOBView"
                             app:layout_constraintTop_toBottomOf="@+id/userProfileDOBView" />
-
 
                         <TextView
                             android:id="@+id/userProfileAgeText"
@@ -413,7 +435,6 @@
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="@+id/userProfileDOBText"
                             app:layout_constraintTop_toBottomOf="@+id/userProfileDOBText" />
-
 
                         <TextView
                             android:id="@+id/userProfileOpeningDateView"
@@ -431,7 +452,6 @@
                             android:id="@+id/userProfileOpeningDate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-
                             android:layout_marginTop="3dp"
                             android:fontFamily="@font/gg_sans_normal"
                             android:text="Dec 9, 2024"
@@ -484,7 +504,6 @@
                                 app:layout_constraintEnd_toStartOf="@+id/friendsListNext"
                                 app:layout_constraintTop_toTopOf="parent">
 
-
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:id="@+id/constraintLayout5"
                                     android:layout_width="wrap_content"
@@ -522,7 +541,6 @@
                                         </androidx.cardview.widget.CardView>
                                     </androidx.cardview.widget.CardView>
                                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:id="@+id/constraintLayout7"
@@ -562,7 +580,6 @@
                                         </androidx.cardview.widget.CardView>
                                     </androidx.cardview.widget.CardView>
                                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:id="@+id/constraintLayout8"
@@ -642,7 +659,6 @@
                                     </androidx.cardview.widget.CardView>
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -680,8 +696,6 @@
                                         </androidx.cardview.widget.CardView>
                                     </androidx.cardview.widget.CardView>
                                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <ImageView
@@ -695,13 +709,11 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/userProfileLogout"
+                    android:id="@+id/userProfileLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -710,7 +722,6 @@
                     android:foreground="?selectableItemBackground"
                     app:cardBackgroundColor="@color/allBackgroundColor4"
                     app:cardCornerRadius="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/userProfileFriend"
                     card_view:cardElevation="0dp">
 
@@ -727,20 +738,38 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginStart="10dp"
-                            android:src="@drawable/logout" />
+                            android:src="@drawable/location" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
                             android:fontFamily="@font/gg_sans_extra_bold"
-                            android:text="Log Out"
+                            android:text="Location"
                             android:textColor="#ca696f"
                             android:textSize="16sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
 
+                <LinearLayout
+                    android:id="@+id/developerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/userProfileLocation"
+                    app:layout_constraintStart_toStartOf="@+id/userProfileLocation"
+                    app:layout_constraintTop_toBottomOf="@+id/userProfileLocation">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gg_sans_normal"
+                        android:text="Developer by Imtiaj Ahmed"
+                        android:textColor="#B7B7B7"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

@@ -8,13 +8,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.chat.model.User;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentViewModel  extends AndroidViewModel {
-    private MutableLiveData<List<Fragment>> fragmentsLiveData;
+public class FragmentViewModel extends AndroidViewModel {
+    private final MutableLiveData<List<Fragment>> fragmentsLiveData;
 
     public FragmentViewModel(@NonNull Application application) {
         super(application);
@@ -28,6 +25,7 @@ public class FragmentViewModel  extends AndroidViewModel {
     public LiveData<List<Fragment>> getFragmentLiveData() {
         return fragmentsLiveData;
     }
+
     public boolean isFragmentListEmpty() {
         List<Fragment> fragments = fragmentsLiveData.getValue();
         return fragments == null || fragments.isEmpty();

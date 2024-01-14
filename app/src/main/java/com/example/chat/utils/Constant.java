@@ -1,13 +1,23 @@
 package com.example.chat.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.util.Patterns;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.example.chat.R;
 import com.example.chat.model.User;
@@ -60,7 +70,7 @@ public class Constant {
             "Add User"
     };
 
-    public static void setDataAs(Context context, String userId,String mainKey, String userPassword, boolean status) {
+    public static void setDataAs(Context context, String userId, String mainKey, String userPassword, boolean status) {
         SharedPreferences.Editor editor = getSharePref(context).edit();
         editor.putString(DATA_ID, userId);
         editor.putString(DATA_PASS, userPassword);
@@ -68,6 +78,17 @@ public class Constant {
         editor.putBoolean(DATA_LOGIN, status);
         editor.apply();
     }
+    public static void setTopMargin(ViewGroup viewGroup, int topMargin) {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewGroup.getLayoutParams();
+        params.topMargin = topMargin;
+        viewGroup.setLayoutParams(params);
+    }
+    public static void setBottomMargin(ViewGroup viewGroup, int bottomMargin) {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewGroup.getLayoutParams();
+        params.bottomMargin = bottomMargin;
+        viewGroup.setLayoutParams(params);
+    }
+
     public static ValidationResult isPasswordValid(String password) {
         Pattern specialCharPattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
         Pattern upperCasePattern = Pattern.compile("[A-Z ]");
@@ -103,18 +124,23 @@ public class Constant {
 
         return new ValidationResult(isValid, errorMessage.toString());
     }
+
     public static String getDataId(Context context) {
         return getSharePref(context).getString(DATA_ID, "");
     }
+
     public static String getDataMainKey(Context context) {
         return getSharePref(context).getString(DATA_KEY, "");
     }
+
     public static String getDataPass(Context context) {
         return getSharePref(context).getString(DATA_PASS, "");
     }
+
     public static boolean getDataLogin(Context context) {
         return getSharePref(context).getBoolean(DATA_LOGIN, false);
     }
+
     public static void clearData(Context context) {
         SharedPreferences.Editor editor = getSharePref(context).edit();
         editor.remove(DATA_ID);
@@ -123,16 +149,36 @@ public class Constant {
         editor.remove(DATA_KEY);
         editor.apply();
     }
+
     public static SharedPreferences getSharePref(Context context) {
         return context.getSharedPreferences("Share", Activity.MODE_PRIVATE);
     }
+
     public static boolean isValidBangladeshiPhoneNumber(String phoneNumber) {
         return phoneNumber.matches("^\\+?(88)?0?1[3456789]\\d{8}$");
     }
+
     public static boolean isValidEmail(String email) {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
-
+    @SuppressLint("HardwareIds")
+    public static String getSystemDetail(Context context) {
+        return "Brand: " + Build.BRAND + "\n" +
+                "DeviceID: " + Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) + "\n" +
+                "Model: " + Build.MODEL + "\n" +
+                "ID: " + Build.ID + "\n" +
+                "SDK: " + Build.VERSION.SDK_INT + "\n" +
+                "Manufacture: " + Build.MANUFACTURER + "\n" +
+                "Brand: " + Build.BRAND + "\n" +
+                "User: " + Build.USER + "\n" +
+                "Type: " + Build.TYPE + "\n" +
+                "Base: " + Build.VERSION_CODES.BASE + "\n" +
+                "Incremental: " + Build.VERSION.INCREMENTAL + "\n" +
+                "Board: " + Build.BOARD + "\n" +
+                "Host: " + Build.HOST + "\n" +
+                "FingerPrint: " + Build.FINGERPRINT + "\n" +
+                "Version Code: " + Build.VERSION.RELEASE;
+    }
 
 
     public static void getBitmapImage(Activity activity, Bitmap path, ImageView imageView) {
@@ -156,8 +202,6 @@ public class Constant {
         );
         return image;
     }
-
-
 
 
     public static <T> ArrayList<T> removeDuplicates(ArrayList<T> list) {

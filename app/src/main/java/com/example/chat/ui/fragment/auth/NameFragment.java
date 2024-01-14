@@ -4,14 +4,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.example.chat.R;
 import com.example.chat.databinding.FragmentNameBinding;
@@ -24,12 +22,9 @@ public class NameFragment extends Fragment implements View.OnClickListener {
     private FragmentNameBinding binding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentNameBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -39,7 +34,7 @@ public class NameFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         binding.clickCreateAccountFragment.setOnClickListener(this);
         binding.nameBackPressed.setOnClickListener(this);
-        this.progressButton = new ProgressButton(getContext(), binding.clickCreateAccountFragment);
+        this.progressButton = new ProgressButton(requireActivity(), binding.clickCreateAccountFragment);
         progressButton.buttonSet("Next");
         getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, result) -> {
             if (result.containsKey("name")) {

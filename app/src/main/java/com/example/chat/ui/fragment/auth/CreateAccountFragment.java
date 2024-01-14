@@ -21,7 +21,6 @@ import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.EncryptionUtils;
 import com.google.android.material.chip.Chip;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class CreateAccountFragment extends Fragment implements View.OnClickListe
     }
 
     private void initializeViews() {
-        progressButton = new ProgressButton(getContext(), binding.clickDobFragment);
+        progressButton = new ProgressButton(requireActivity(), binding.clickDobFragment);
         progressButton.buttonSet("Next");
     }
 
