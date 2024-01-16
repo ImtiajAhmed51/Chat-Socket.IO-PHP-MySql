@@ -64,9 +64,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         dialog = new BottomSheetDialog(requireActivity(), R.style.NoWiredStrapInNavigationBar);
         binding.onlineStatusChangeClick.setOnClickListener(this);
         binding.userProfileLocation.setOnClickListener(this);
+        binding.profileUserImageClick.setOnClickListener(this);
 
         binding.userProfileSettings.setOnClickListener(this);
-       // binding.userProfileLogout.setOnClickListener(this);
+        binding.userProfileFriends.setOnClickListener(this);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         Constant.setTopMargin(binding.userProfileSettingsTopMargin,DimensionUtils.getStatusBarHeight(requireActivity()));
         Constant.setBottomMargin(binding.developerName, DimensionUtils.getNavigationBarHeight(requireActivity()));
@@ -127,15 +128,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             dialog.show();
         } else if (view.getId() ==binding.userProfileLocation.getId()) {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_locationFragment);
-
+        }else if (view.getId()==binding.userProfileFriends.getId()){
+            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_friendsFragment);
+        }else if (view.getId()==binding.profileUserImageClick.getId()){
+            showDialog();
+            dialog.show();
         }
     }
 
-    private void logoutUser() {
-        Constant.clearData(requireActivity());
-        startActivity(new Intent(requireActivity(), AuthActivity.class));
-        requireActivity().finish();
-    }
+
 
     private void showDialog() {
         View view = getLayoutInflater().inflate(R.layout.online_status_layout, null, false);

@@ -15,6 +15,7 @@
         <item name="android:windowLightNavigationBar">false</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/gg_sans_bold</item>
@@ -26,11 +27,18 @@
     </style>
 
 
-
     <style name="NoWiredStrapInNavigationBar" parent="@style/Theme.Design.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
 
         <item name="android:navigationBarColor">@color/allBackgroundColor6</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/fade_in_center</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_center</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
 </resources>
