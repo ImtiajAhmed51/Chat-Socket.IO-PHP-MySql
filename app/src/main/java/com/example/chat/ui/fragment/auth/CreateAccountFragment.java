@@ -56,7 +56,8 @@ public class CreateAccountFragment extends Fragment implements View.OnClickListe
         } else if (genText.equals("Female")) {
             femaleSelect();
         }
-
+        binding.userNameEditTextLayout.setErrorIconDrawable(0);
+        binding.passwordEditTextError.setErrorIconDrawable(0);
         ArrayList<String> usernames = generateUsernames(name);
         Chip[] chips = {binding.chip1, binding.chip2, binding.chip3};
         setChipTextAndClickListeners(usernames, chips);

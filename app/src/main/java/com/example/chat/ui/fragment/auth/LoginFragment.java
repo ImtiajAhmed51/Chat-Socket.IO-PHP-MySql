@@ -45,6 +45,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         progressButton = new ProgressButton(requireActivity(), binding.clickLoginFragment);
+        binding.loginPasswordError.setErrorIconDrawable(0);
+
         progressButton.buttonSet(LOGIN_BUTTON_TEXT);
         binding.clickLoginFragment.setOnClickListener(this);
         binding.loginBackPressed.setOnClickListener(this);
@@ -117,6 +119,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (!inputText.equals("")) {
             ValidationResult result = isPasswordValid(inputText);
             binding.loginPasswordError.setError(result.isValid() ? null : result.getMessage());
+
         } else {
             binding.loginPasswordError.setError(null);
         }
