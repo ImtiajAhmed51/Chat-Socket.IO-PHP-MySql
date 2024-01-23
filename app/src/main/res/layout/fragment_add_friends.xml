@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/allBackgroundColor2"
-        tools:context=".ui.fragment.home.FriendsFragment">
-
+        tools:context=".ui.fragment.home.AddFriendsFragment">
         <RelativeLayout
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
@@ -20,18 +19,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <RelativeLayout
-                android:id="@+id/FriendsFragmentMargin"
+                android:id="@+id/addFriendsFragmentMargin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 tools:ignore="UselessParent">
-
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/friendsBackPressed"
+                    android:id="@+id/addFriendsBackPressed"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="10dp"
@@ -45,7 +42,6 @@
                     card_view:cardBackgroundColor="@color/transparent"
                     card_view:cardCornerRadius="50dp"
                     card_view:cardElevation="0dp">
-
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -53,47 +49,43 @@
                         android:importantForAccessibility="no"
                         android:src="@drawable/back" />
                 </androidx.cardview.widget.CardView>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/friendsBackPressed"
-                    android:layout_alignBottom="@+id/friendsBackPressed"
+                    android:layout_alignTop="@+id/addFriendsBackPressed"
+                    android:layout_alignBottom="@+id/addFriendsBackPressed"
                     android:fontFamily="@font/gg_sans_extra_bold"
                     android:gravity="center"
-                    android:text="Friends"
+                    android:text="Add Friends"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/addFriendsPressed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/friendsBackPressed"
-                    android:layout_alignBottom="@+id/friendsBackPressed"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?selectableItemBackground"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    card_view:cardBackgroundColor="@color/transparent"
-                    card_view:cardCornerRadius="50dp"
-                    card_view:cardElevation="0dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:fontFamily="@font/gg_sans_extra_bold"
-                        android:text="Add Friends"
-                        android:textColor="@color/purple_500"
-                        android:textSize="16sp" />
-                </androidx.cardview.widget.CardView>
             </RelativeLayout>
         </RelativeLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            app:cardBackgroundColor="#27272f"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addFriendsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+                app:spanCount="1"
+                tools:itemCount="10"
+                tools:listitem="@layout/add_user" />
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -37,12 +37,17 @@ public class User {
                 String userDisplayName,
                 String userName,
                 String userPicture,
-                Boolean userVerified, Boolean isButtonEnabled) {
+                Boolean userVerified,
+                String userRole,
+                String userActiveStatus,
+                Boolean isButtonEnabled) {
         this.userId = userId;
         this.userDisplayName = userDisplayName;
         this.userName = userName;
         this.userPicture = userPicture;
         this.userVerified = userVerified;
+        this.userRole=userRole;
+        this.userActiveStatus=userActiveStatus;
         this.isButtonEnabled = isButtonEnabled;
 
     }
@@ -235,21 +240,18 @@ public class User {
 
     }
 
-    public boolean customEqual(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj == null || getClass() != obj.getClass()) {
+    public boolean addFriendsUserEqual(Object obj) {
+        if (!(obj instanceof User)) {
             return false;
         }
 
         User otherUser = (User) obj;
-
-        // Compare individual fields for equality
         return userId.equals(otherUser.userId)
+                && userDisplayName.equals(otherUser.userDisplayName)
                 && userName.equals(otherUser.userName)
                 && userPicture.equals(otherUser.userPicture)
-                && userVerified == otherUser.userVerified;
+                && userVerified == otherUser.userVerified
+                && userRole.equals(otherUser.userRole)
+                && userActiveStatus.equals(otherUser.userActiveStatus);
     }
 }

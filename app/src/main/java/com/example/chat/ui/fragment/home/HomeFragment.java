@@ -17,10 +17,6 @@ import com.example.chat.model.User;
 public class HomeFragment extends Fragment implements View.OnClickListener, ClickListener {
     private FragmentHomeBinding binding;
 
-    public HomeFragment() {
-
-    }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

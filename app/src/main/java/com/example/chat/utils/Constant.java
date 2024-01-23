@@ -62,13 +62,53 @@ public class Constant {
     public static final int[] TAB_ICONS = new int[]{
             R.drawable.users,
             R.drawable.chat,
-            R.drawable.add_users
+            R.drawable.add_user_down
     };
     public static final String[] TAB_TEXTS = new String[]{
             "Users",
             "Home",
             "Add User"
     };
+
+    public static Object getResource(String userPicture) {
+        switch (userPicture) {
+            case "1":
+                return R.drawable.frame1;
+            case "2":
+                return R.drawable.frame2;
+            case "3":
+                return R.drawable.frame3;
+            case "4":
+                return R.drawable.frame4;
+            case "5":
+                return R.drawable.frame5;
+            case "6":
+                return R.drawable.frame6;
+            case "7":
+                return R.drawable.frame7;
+            case "8":
+                return R.drawable.frame8;
+            case "null":
+                return R.drawable.logo;
+            default:
+                return userPicture;
+        }
+    }
+
+
+    public static int getUserActiveStatusResource(String userPicture) {
+        switch (userPicture) {
+            case "Online":
+                return R.drawable.online;
+            case "Idle":
+                return R.drawable.idle;
+            case "DND":
+                return R.drawable.dnd;
+            case "Invisible":
+                return R.drawable.invisible;
+        }
+        return R.drawable.circular_border;
+    }
 
     public static void setDataAs(Context context, String userId, String mainKey, String userPassword, boolean status) {
         SharedPreferences.Editor editor = getSharePref(context).edit();

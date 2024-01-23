@@ -17,34 +17,6 @@
             android:background="@color/allBackgroundColor6"
             android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/addUserSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_main_bg"
-                android:dropDownWidth="wrap_content"
-                android:elevation="0dp"
-                android:popupBackground="@drawable/spinner_list_bg"
-                android:popupElevation="0dp"
-                android:spinnerMode="dropdown"
-                tools:listitem="@layout/spinner_custom_layout" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/userRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/addUserSpinner"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/addUserSpinner"
-                app:spanCount="1"
-                tools:itemCount="10"
-                tools:listitem="@layout/add_user" />
-
         </RelativeLayout>
     </LinearLayout>
 

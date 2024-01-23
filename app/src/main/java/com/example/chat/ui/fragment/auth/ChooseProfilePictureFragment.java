@@ -36,6 +36,7 @@ import com.example.chat.ui.design.ProgressButton;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.EncryptionUtils;
+import com.example.chat.utils.PermissionUtils;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.view.CropImageView;
 
@@ -51,7 +52,6 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
     private FragmentChooseProfilePictureBinding binding;
     private String userId = "", mainVal, pass;
     private ProgressButton progressButton;
-    private static final int REQUEST_STORAGE_PERMISSION = 2;
     private static final int PICK_IMAGE = 1;
     private String selectedImage = null;
 
@@ -61,13 +61,10 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         binding = FragmentChooseProfilePictureBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeArguments();
-
-        // Set click listeners for all profile image card views
         setClickListeners(
                 binding.ProfileImageCardView1,
                 binding.ProfileImageCardView2,
@@ -84,7 +81,6 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         binding.skipClick.setOnClickListener(this);
         binding.addUserPicture.setOnClickListener(this);
     }
-
     private void initializeArguments() {
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -93,11 +89,9 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             pass = arguments.getString("pass");
         }
     }
-
     @Override
     public void onClick(View view) {
         int selectedImageResource = 0;
-
         if (view.getId() == binding.ProfileImageCardView1.getId()) {
             selectedImage = "1";
             selectedImageResource = R.drawable.frame1;
@@ -142,7 +136,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             pickImageFromGallery();
         }
 
-        if (view instanceof CardView &&view.getId() != binding.addUserPicture.getId()) {
+        if (view instanceof CardView && view.getId() != binding.addUserPicture.getId()) {
 
             resetBackgroundColors();
 
@@ -221,37 +215,35 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         options.setToolbarTitle("Crop Image");
         return options;
     }
-
     public void pickImageFromGallery() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (PermissionUtils.hasStoragePermissions(requireActivity())) {
+            // Permissions already granted, proceed with your code
             startImagePicker();
         } else {
-            requestStoragePermission();
+            // Permissions not granted, request them
+            PermissionUtils.requestStoragePermissions(this);
         }
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PermissionUtils.REQUEST_STORAGE_PERMISSIONS) {
+            // Check if both permissions were granted
+            if (grantResults.length > 1 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                toastMessage("Permission to access storage is required to pick an image.");
+                pickImageFromGallery();
+            } else {
+                toastMessage("Permission to access storage is required to pick an image.");
+            }
+        }
+    }
     private void startImagePicker() {
         Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
         startActivityForResult(pickIntent, PICK_IMAGE);
     }
-
-    private void requestStoragePermission() {
-        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_STORAGE_PERMISSION && grantResults.length > 0 &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-            startImagePicker();
-        } else {
-            toastMessage("Permission to access storage is required to pick an image.");
-        }
-    }
-
     private void login() {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this::processLoginResponse);
         try {
@@ -262,7 +254,6 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             toastMessage(e.getMessage());
         }
     }
-
     private void processChangePictureResponse(Object output) {
         try {
             JSONObject jsonResponse = new JSONObject((String) output);
@@ -277,7 +268,6 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             toastMessage(e.getMessage());
         }
     }
-
     private void processLoginResponse(Object output) {
         try {
             JSONObject jsonResponse = new JSONObject((String) output);
@@ -285,7 +275,6 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                 if (selectedImage != null) {
                     progressButton.buttonFinished();
                 }
-
                 Constant.setDataAs(requireActivity(), EncryptionUtils.decrypt(jsonResponse.getString("userId")), mainVal, pass, true);
                 startMainActivity(jsonResponse.toString());
             } else {
@@ -294,39 +283,36 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                     progressButton.buttonSet("Next");
                 }
                 Navigation.findNavController(requireView()).navigate(R.id.action_chooseProfilePictureFragment_to_welcomeFragment);
-
-
                 toastMessage(jsonResponse.getString("message"));
             }
         } catch (Exception e) {
             toastMessage(e.getMessage());
         }
     }
-
     private void startMainActivity(String jsonObject) {
         Intent intent = new Intent(requireActivity(), MainActivity.class);
         intent.putExtra("jsonObject", jsonObject);
         startActivity(intent);
         requireActivity().finish();
     }
-
     private void resetBackgroundColors() {
         CardView[] cardViews = {
-                binding.ProfileImageCardView1, binding.ProfileImageCardView2,
-                binding.ProfileImageCardView3, binding.ProfileImageCardView4,
-                binding.ProfileImageCardView5, binding.ProfileImageCardView6,
-                binding.ProfileImageCardView7, binding.ProfileImageCardView8
+                binding.ProfileImageCardView1,
+                binding.ProfileImageCardView2,
+                binding.ProfileImageCardView3,
+                binding.ProfileImageCardView4,
+                binding.ProfileImageCardView5,
+                binding.ProfileImageCardView6,
+                binding.ProfileImageCardView7,
+                binding.ProfileImageCardView8
         };
-
         for (CardView cardView : cardViews) {
             cardView.setCardBackgroundColor(getResources().getColor(R.color.transparent));
         }
     }
-
     private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
-
     private void setClickListeners(CardView... cardViews) {
         for (CardView cardView : cardViews) {
             cardView.setOnClickListener(this);

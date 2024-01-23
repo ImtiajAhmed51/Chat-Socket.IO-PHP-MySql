@@ -22,6 +22,7 @@ import com.example.chat.utils.DimensionUtils;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
     private FragmentSettingsBinding binding;
+    private Dialog customDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -44,7 +45,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         if (view.getId()==binding.settingsBackPressed.getId()){
             requireActivity().onBackPressed();
         }else if (view.getId()==binding.userSettingsLogOut.getId()){
-            Dialog customDialog = new Dialog(requireActivity());
+            customDialog = new Dialog(requireActivity());
             customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             customDialog.setContentView(R.layout.logout_dialog);
 
@@ -70,6 +71,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
     private void logoutUser() {
+        customDialog.dismiss();
         Constant.clearData(requireActivity());
         startActivity(new Intent(requireActivity(), AuthActivity.class));
         requireActivity().finish();

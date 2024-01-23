@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,15 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         Constant.setTopMargin(binding.FriendsFragmentMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
         binding.friendsBackPressed.setOnClickListener(this);
+        binding.addFriendsPressed.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId()==binding.friendsBackPressed.getId()){
             requireActivity().onBackPressed();
+        } else if (view.getId()==binding.addFriendsPressed.getId()) {
+            Navigation.findNavController(requireView()).navigate(R.id.action_friendsFragment_to_addFriendsFragment);
         }
     }
 }

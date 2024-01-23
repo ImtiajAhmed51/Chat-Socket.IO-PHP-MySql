@@ -20,12 +20,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.chat.R;
 import com.example.chat.databinding.FragmentLocationBinding;
 import com.example.chat.databinding.FragmentSettingsBinding;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.DimensionUtils;
+import com.example.chat.utils.NetworkUtils;
+import com.example.chat.utils.PermissionUtils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,7 +43,7 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Handler handler = new Handler();
     private Runnable runnable;
-    int delay = 2000;
+    private int delay = 2000;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,16 +59,59 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
         binding.deviceInformationText.setText(Constant.getSystemDetail(requireActivity()));
         binding.locationBackPressed.setOnClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            getLocations();
+
+        if (PermissionUtils.hasAccessFineLocationPermission(requireActivity())) {
+            performActionWithLocationPermission();
         } else {
             binding.openMap.setVisibility(View.INVISIBLE);
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            PermissionUtils.requestAccessFineLocationPermission(this);
+        }
+
+
+        // Check for READ_PHONE_STATE permission
+        if (PermissionUtils.hasReadPhoneStatePermission(requireActivity())) {
+            // Permission already granted, proceed with your code
+            performActionWithPhoneStatePermission();
+        } else {
+            // Permission not granted, request it
+            PermissionUtils.requestReadPhoneStatePermission(this);
+        }
+    }
+    private void performActionWithPhoneStatePermission() {
+        binding.networkConnectionText.setText(NetworkUtils.getConnectionQuality(requireActivity()));
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PermissionUtils.REQUEST_READ_PHONE_STATE) {
+            // Check if the READ_PHONE_STATE permission was granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with your code
+                toastMessage("Read Phone State Permission Granted");
+                performActionWithPhoneStatePermission();
+            } else {
+                toastMessage("Read Phone State Permission Denied");
+            }
+        } else if (requestCode == PermissionUtils.REQUEST_ACCESS_FINE_LOCATION) {
+            // Check if the ACCESS_FINE_LOCATION permission was granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with your location-related code
+                toastMessage("Location Permission Granted");
+                performActionWithLocationPermission();
+            } else {
+                toastMessage("Location Permission Denied");
+            }
         }
     }
 
 
-    private void getLocations() {
+    private void toastMessage(String message){
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+    private void performActionWithLocationPermission() {
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -116,13 +162,14 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
             }
         });
     }
+
     @Override
     public void onResume() {
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
                 handler.postDelayed(runnable, delay);
-
-                getLocations();
+                performActionWithPhoneStatePermission();
+                performActionWithLocationPermission();
 
             }
         }, delay);

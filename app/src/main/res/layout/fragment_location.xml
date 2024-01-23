@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content">
 
 
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/locationBackPressed"
                     android:layout_width="35dp"
@@ -76,6 +77,47 @@
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                app:cardBackgroundColor="@color/allBackgroundColor4"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/gg_sans_extra_bold"
+                        android:gravity="center"
+                        android:text="Network Connection"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/networkConnectionText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/gg_sans_medium"
+                        android:gravity="center"
+                        android:textColor="#E8E8E8"
+                        android:textSize="13sp" />
+
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -272,8 +314,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="16dp"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    tools:context=".MainActivity">
+                    android:orientation="vertical">
 
 
 

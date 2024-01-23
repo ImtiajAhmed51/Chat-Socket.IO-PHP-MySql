@@ -39,13 +39,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private UserViewModel userViewModel;
     private AddUserViewModel addUserViewModel;
-    private static final long REFRESH_INTERVAL = 2000;
+    private static final long REFRESH_INTERVAL = 500;
     private Handler handler;
     private final ArrayList<User> userList = new ArrayList<>();
     private Runnable refreshDataRunnable;
@@ -153,8 +154,9 @@ public class MainActivity extends AppCompatActivity {
             userList.clear();
             for (int i = 0; i < jsonArr.length(); i++) {
                 JSONObject jsonObj = jsonArr.getJSONObject(i);
-                userList.add(0, new User(EncryptionUtils.decrypt(jsonObj.getString("userId")), EncryptionUtils.decrypt(jsonObj.getString("userDisplayName")), EncryptionUtils.decrypt(jsonObj.getString("userName")), jsonObj.getString("userPicture"), jsonObj.getString("userVerified").equals("Yes"), true));
+                userList.add(0, new User(EncryptionUtils.decrypt(jsonObj.getString("userId")), EncryptionUtils.decrypt(jsonObj.getString("userDisplayName")), EncryptionUtils.decrypt(jsonObj.getString("userName")), jsonObj.getString("userPicture"), jsonObj.getString("userVerified").equals("Yes"),jsonObj.getString("userRole"),jsonObj.getString("userActiveStatus"), true));
             }
+            Collections.shuffle(userList);
             //userList = removeDuplicates(userList);
             addUserViewModel.setUserList(userList);
         } catch (Exception e) {

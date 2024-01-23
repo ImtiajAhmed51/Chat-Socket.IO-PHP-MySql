@@ -24,9 +24,6 @@ import com.example.chat.utils.DimensionUtils;
 public class UserDrawerFragment extends Fragment implements View.OnClickListener {
     private FragmentUserDrawerBinding binding;
 
-    public UserDrawerFragment() {
-
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
