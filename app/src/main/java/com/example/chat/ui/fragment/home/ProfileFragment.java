@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         Glide.with(requireActivity()).load(Constant.getResource(user.getUserPicture())).into(binding.profileUserImage);
         Glide.with(requireActivity()).load(Constant.getResource(user.getUserPicture())).into(binding.profileUserCoverImage);
         binding.userProfileDisplayName.setText(user.getUserDisplayName());
-        binding.userProfileUserId.setText(user.getUserId());
+        binding.userProfileUserId.setText("#"+String.valueOf(user.getUserId()));
         binding.userProfileVerification.setVisibility(user.isUserVerified() ? View.VISIBLE : View.GONE);
         binding.userProfilePrivacy.setImageResource(user.isUserSecurity() ? R.drawable.lock : R.drawable.unlock);
         binding.userProfileUserName.setText(user.getUserName());

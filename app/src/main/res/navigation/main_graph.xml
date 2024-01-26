@@ -67,5 +67,17 @@
     <fragment
         android:id="@+id/addFriendsFragment"
         android:name="com.example.chat.ui.fragment.home.AddFriendsFragment"
-        android:label="AddFriendsFragment" />
+        android:label="AddFriendsFragment" >
+        <action
+            android:id="@+id/action_addFriendsFragment_to_requestsFragment"
+            app:destination="@id/requestsFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"/>
+    </fragment>
+    <fragment
+        android:id="@+id/requestsFragment"
+        android:name="com.example.chat.ui.fragment.home.RequestsFragment"
+        android:label="RequestsFragment" />
 </navigation>

@@ -176,9 +176,9 @@ public class NumberEmailFragment extends Fragment implements View.OnClickListene
                 progressButton.buttonFinished();
                 Bundle data = new Bundle();
                 binding.numberEmailEditTextLayout.setError(null);
-                String mailVal = binding.numberEmailEditText.getText().toString().trim();
-                mailVal = isValidEmail(mailVal) ? mailVal : "0" + mailVal;
-                data.putString("mainVal", mailVal);
+                String mainVal = binding.numberEmailEditText.getText().toString().trim();
+                mainVal = isValidEmail(mainVal) ? mainVal : "0" + mainVal;
+                data.putString("mainVal", mainVal);
                 getParentFragmentManager().setFragmentResult("requestKey", data);
                 Navigation.findNavController(requireView()).navigate(R.id.action_numberEmailFragment_to_nameFragment, data);
             } else {

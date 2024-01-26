@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_item"
         android:layout_width="match_parent"
@@ -10,13 +10,15 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackground"
-        app:cardBackgroundColor="#27272f"
+        app:cardBackgroundColor="@color/transparent"
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/userConnectedOnClick"
                 android:layout_width="match_parent"
@@ -26,6 +28,7 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="10dp">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="wrap_content"
@@ -33,6 +36,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
                     <ImageView
                         android:id="@+id/userRole"
                         android:layout_width="0dp"
@@ -43,6 +47,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/tvProfileImageCardView"
                         app:layout_constraintStart_toStartOf="@+id/tvProfileImageCardView"
                         app:layout_constraintTop_toTopOf="@+id/tvProfileImageCardView" />
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/tvProfileImageCardView"
                         android:layout_width="40dp"
@@ -59,6 +64,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
                             android:layout_margin="4dp"
                             app:cardCornerRadius="250dp"
                             card_view:cardElevation="0dp">
@@ -76,11 +84,12 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout4"
+                    android:id="@+id/activeStatusLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
+                    android:visibility="gone"
                     android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
                     app:layout_constraintEnd_toEndOf="@+id/constraintLayout2">
 
@@ -148,7 +157,6 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/gg_sans_extra_bold"
                                 android:maxLines="1"
-
                                 android:text="Imtiaj Ahmed Anik"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
@@ -211,12 +219,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:clickable="true"
-                            android:foreground="?selectableItemBackground"
                             android:focusable="true"
+                            android:foreground="?selectableItemBackground"
                             app:cardBackgroundColor="#373a43"
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -227,7 +234,6 @@
                                 android:fontFamily="@font/gg_sans_bold"
                                 android:text="Add"
                                 android:textColor="#b9babf" />
-
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
                 </LinearLayout>

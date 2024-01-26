@@ -80,8 +80,16 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         addUserBinding.addUserDisplayName.setText(currentItem.getUserDisplayName());
         addUserBinding.allUserVerifiedId.setVisibility(currentItem.isUserVerified() ? View.VISIBLE : View.GONE);
         addUserBinding.userRole.setVisibility(currentItem.getUserRole().equals("ADMIN") ? View.VISIBLE : View.INVISIBLE);
-        addUserBinding.addUserNameAndUserId.setText(currentItem.getUserName() + currentItem.getUserId());
-        addUserBinding.addFriendsUserActiveStatus.setImageResource(Constant.getUserActiveStatusResource(currentItem.getUserActiveStatus()));
+
+        if(!currentItem.isUserSecurity()){
+            addUserBinding.addUserNameAndUserId.setText(currentItem.getUserName() + "#"+String.valueOf(currentItem.getUserId()));
+            addUserBinding.activeStatusLayout.setVisibility(View.VISIBLE);
+            addUserBinding.addFriendsUserActiveStatus.setImageResource(Constant.getUserActiveStatusResource(currentItem.getUserActiveStatus()));
+        }else{
+            addUserBinding.addUserNameAndUserId.setText("");
+            addUserBinding.activeStatusLayout.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

@@ -110,8 +110,8 @@ public class DobFragment extends Fragment implements View.OnClickListener {
         }
         binding.clickProfilePictureFragment.setClickable(false);
         progressButton.buttonActivated();
-        int randomNumber = new Random().nextInt(10000);
-        String userId = String.format("#%04d", randomNumber);
+        Random random = new Random();
+        String userId = String.valueOf((1000 + random.nextInt(9000)));
         BackgroundWorker backgroundWorker = new BackgroundWorker(this::processCreateAccountResponse);
 
         try {

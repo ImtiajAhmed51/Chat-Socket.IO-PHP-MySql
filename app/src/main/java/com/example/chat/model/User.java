@@ -1,9 +1,10 @@
 package com.example.chat.model;
 
 public class User {
-    private String userId, userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole,userActiveStatus;
+    private  long id,userId;
+    private String  userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole,userActiveStatus;
     private boolean isOnline, userVerified, userSecurity;
-    private boolean isButtonEnabled;
+    private boolean isButtonEnabled=true;
 
     public String getUserActiveStatus() {
         return userActiveStatus;
@@ -29,18 +30,28 @@ public class User {
         isButtonEnabled = buttonEnabled;
     }
 
-    public User(String userId) {
+    public User(long userId) {
         this.userId = userId;
     }
 
-    public User(String userId,
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public User(long id, long userId,
                 String userDisplayName,
                 String userName,
                 String userPicture,
                 Boolean userVerified,
                 String userRole,
                 String userActiveStatus,
+                Boolean userSecurity,
                 Boolean isButtonEnabled) {
+        this.id=id;
         this.userId = userId;
         this.userDisplayName = userDisplayName;
         this.userName = userName;
@@ -48,12 +59,13 @@ public class User {
         this.userVerified = userVerified;
         this.userRole=userRole;
         this.userActiveStatus=userActiveStatus;
+        this.userSecurity=userSecurity;
         this.isButtonEnabled = isButtonEnabled;
 
     }
 
 
-    public User(String userId,
+    public User(long userId,
                 String userDisplayName,
                 String userName,
                 String userDob,
@@ -83,11 +95,11 @@ public class User {
 
     }
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -216,7 +228,7 @@ public class User {
         if (!(anObject instanceof User)) {
             return false;
         }
-        return ((User) anObject).getUserId().equals(getUserId());
+        return ((User) anObject).getUserId()==(getUserId());
     }
     public boolean allEquals(Object obj){
         if (!(obj instanceof User)) {
@@ -224,7 +236,7 @@ public class User {
         }
 
         User otherUser = (User) obj;
-        return  getUserId().equals(otherUser.getUserId())
+        return  getUserId()==(otherUser.getUserId())
                 &&  getUserDisplayName().equals(otherUser.getUserDisplayName())
                 && getUserName().equals(otherUser.getUserName())
                 && getUserDob().equals(otherUser.getUserDob())
@@ -246,12 +258,13 @@ public class User {
         }
 
         User otherUser = (User) obj;
-        return userId.equals(otherUser.userId)
+        return userId==(otherUser.userId)
                 && userDisplayName.equals(otherUser.userDisplayName)
                 && userName.equals(otherUser.userName)
                 && userPicture.equals(otherUser.userPicture)
                 && userVerified == otherUser.userVerified
                 && userRole.equals(otherUser.userRole)
-                && userActiveStatus.equals(otherUser.userActiveStatus);
+                && userActiveStatus.equals(otherUser.userActiveStatus)
+                && userSecurity==otherUser.userSecurity;
     }
 }

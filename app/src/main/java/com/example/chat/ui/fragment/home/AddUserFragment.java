@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.chat.databinding.FragmentAddUserBinding;
 
-public class AddUserFragment extends Fragment {
+public class AddUserFragment extends Fragment  {
     private FragmentAddUserBinding binding;
 
     @Override
