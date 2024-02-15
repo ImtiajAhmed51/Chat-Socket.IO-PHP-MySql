@@ -1,21 +1,20 @@
 package com.example.chat.ui.fragment.home;
-
-import static com.example.chat.utils.Constant.isValidEmail;
-
+import static com.example.chat.utils.Constant.binarySearch;
+import static com.example.chat.utils.Constant.findInsertionIndex;
+import static com.example.chat.utils.Constant.introSort;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.chat.R;
 import com.example.chat.adapter.UserAdapter;
 import com.example.chat.databinding.FragmentAddFriendsBinding;
@@ -27,19 +26,35 @@ import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.DimensionUtils;
 import com.example.chat.utils.EncryptionUtils;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 
 public class AddFriendsFragment extends Fragment implements ClickListener, View.OnClickListener {
     private FragmentAddFriendsBinding binding;
     private UserAdapter userAdapter;
+    private ArrayList<User> userList=new ArrayList<>();
     private UserViewModel userViewModel;
+    private AddUserViewModel addUserViewModel;
+    private static final long REFRESH_INTERVAL = 2000;
+    private Handler handler;
+    private Runnable refreshDataRunnable;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addUserViewModel = new ViewModelProvider(this).get(AddUserViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userAdapter = new UserAdapter(requireActivity(),new ArrayList<>(), this, 2);
+        handler = new Handler(Looper.getMainLooper());
+        refreshDataRunnable = this::refreshData;
+        handler.post(refreshDataRunnable);
+    }
+    private void refreshData() {
+
+        showAllUser();
+        handler.postDelayed(refreshDataRunnable, REFRESH_INTERVAL);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +70,6 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
         binding.addFriendsBackPressed.setOnClickListener(this);
         binding.sentRequestsClick.setOnClickListener(this);
         binding.friendRequestsClick.setOnClickListener(this);
-        AddUserViewModel addUserViewModel = new ViewModelProvider(requireActivity()).get(AddUserViewModel.class);
-        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userAdapter = new UserAdapter(requireActivity(),new ArrayList<>(), this, 2);
 
         binding.addFriendsRecyclerView.setAdapter(userAdapter);
         addUserViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
@@ -100,42 +112,40 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
             }
         });
     }
-    private int findInsertionIndex(ArrayList<User> list, long targetUserId) {
-        int low = 0;
-        int high = list.size() - 1;
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-
-            if (list.get(mid).getUserId() == targetUserId) {
-                return mid; // Element found, return the index
-            } else if (list.get(mid).getUserId() < targetUserId) {
-                low = mid + 1; // Search in the right half
-            } else {
-                high = mid - 1; // Search in the left half
-            }
+    private void showAllUser() {
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this::showAllUserResponse);
+        try {
+            backgroundWorker.execute("ShowAllUser", EncryptionUtils.encrypt(String.valueOf(userViewModel.getUserLiveData().getValue().getUserId())));
+        } catch (Exception e) {
+            toastMessage(e.getMessage());
         }
-
-        return low; // Element not found, return the insertion index
     }
-    private static int binarySearch(ArrayList<User> list, long target) {
-        int low = 0;
-        int high = list.size() - 1;
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-
-            if (list.get(mid).getUserId() == target) {
-                return mid; // Target found, return the index
-            } else if (list.get(mid).getUserId() < target) {
-                low = mid + 1; // Search in the right half
-            } else {
-                high = mid - 1; // Search in the left half
+    private void showAllUserResponse(Object output) {
+        try {
+            JSONArray jsonArr = new JSONArray((String) output);
+            userList.clear();
+            for (int i = 0; i < jsonArr.length(); i++) {
+                JSONObject jsonObj = jsonArr.getJSONObject(i);
+                userList.add(0, new User(jsonObj.getInt("id"),
+                        Integer.parseInt(EncryptionUtils.decrypt(jsonObj.getString("userId"))),
+                        EncryptionUtils.decrypt(jsonObj.getString("userDisplayName")),
+                        EncryptionUtils.decrypt(jsonObj.getString("userName")),
+                        jsonObj.getString("userPicture"),
+                        jsonObj.getString("userVerified").equals("Yes"),
+                        jsonObj.getString("userRole"),
+                        jsonObj.getString("userActiveStatus"),
+                        jsonObj.getString("userSecurity").equals("Yes"),
+                        true));
             }
+            introSort(userList);
+            addUserViewModel.setUserList(userList);
+        } catch (Exception e) {
+            toastMessage(e.getMessage());
         }
-
-        return -1; // Target not found
     }
+
 
 
     private void toastMessage(String message) {
@@ -143,8 +153,10 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
     }
 
     @Override
-    public void onClickItem(User user, int position, int type) {
-        performBackgroundWork(String.valueOf(userViewModel.getUserLiveData().getValue().getUserId()),String.valueOf(user.getUserId()));
+    public void onClickItem(User user, int position, int type,int buttonType) {
+        if(type==2){
+            performBackgroundWork(String.valueOf(userViewModel.getUserLiveData().getValue().getUserId()),String.valueOf(user.getUserId()));
+        }
     }
 
     private void performBackgroundWork(String senderUserId, String receiverUserId) {
@@ -173,6 +185,18 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(refreshDataRunnable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(refreshDataRunnable, REFRESH_INTERVAL);
+    }
+
+    @Override
     public void onClick(View view) {
         if (view.getId() == binding.addFriendsBackPressed.getId()) {
             requireActivity().onBackPressed();
@@ -182,10 +206,10 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
             String title = null;
             int type=0;
             if(view.getId()==binding.sentRequestsClick.getId()){
-                type=1;
+                type=3;
                 title="Sent Requests";
             } else if (view.getId()==binding.friendRequestsClick.getId()) {
-                type=2;
+                type=4;
                 title="Friend Requests";
             }
             data.putString("title", title);

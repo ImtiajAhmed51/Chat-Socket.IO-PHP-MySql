@@ -39,6 +39,10 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return new UserViewHolder(DrawerUserBinding.inflate(inflater, parent, false));
             case 2:
                 return new AddUserViewHolder(AddUserBinding.inflate(inflater, parent, false));
+            case 3:
+                return new AddUserViewHolder(AddUserBinding.inflate(inflater, parent, false));
+            case 4:
+                return new AddUserViewHolder(AddUserBinding.inflate(inflater, parent, false));
             default:
                 throw new IllegalArgumentException("Invalid view type");
         }
@@ -58,6 +62,12 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case 2:
                 bindAddUserViewHolder((AddUserViewHolder) holder, currentItem);
                 break;
+            case 3:
+                bindAddUserViewHolder((AddUserViewHolder) holder, currentItem);
+                break;
+            case 4:
+                bindAddUserViewHolder((AddUserViewHolder) holder, currentItem);
+                break;
             default:
                 throw new IllegalArgumentException("Invalid view type");
         }
@@ -69,13 +79,46 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void bindAddUserViewHolder(AddUserViewHolder holder, User currentItem) {
         AddUserBinding addUserBinding = holder.addUserBinding;
-        addUserBinding.addRequestClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.INVISIBLE);
-        addUserBinding.addRequestClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type);
-            }
-        });
+        if(type==2){
+            addUserBinding.cancelClick.setVisibility(View.GONE);
+            addUserBinding.acceptClick.setVisibility(View.GONE);
+            addUserBinding.addRequestClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.GONE);
+            addUserBinding.addRequestClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                }
+            });
+        } else if (type==3) {
+            addUserBinding.cancelClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.GONE);
+            addUserBinding.acceptClick.setVisibility(View.GONE);
+            addUserBinding.addRequestClick.setVisibility(View.GONE);
+            addUserBinding.cancelClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                }
+            });
+        }else if (type==4){
+            addUserBinding.cancelClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.GONE);
+            addUserBinding.acceptClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.GONE);
+            addUserBinding.addRequestClick.setVisibility(View.GONE);
+            addUserBinding.acceptClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,1);
+                }
+            });
+            addUserBinding.cancelClick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                }
+            });
+
+        }
+
+
         Glide.with(activity).load(Constant.getResource(currentItem.getUserPicture())).into(addUserBinding.addUserPicture);
         addUserBinding.addUserDisplayName.setText(currentItem.getUserDisplayName());
         addUserBinding.allUserVerifiedId.setVisibility(currentItem.isUserVerified() ? View.VISIBLE : View.GONE);

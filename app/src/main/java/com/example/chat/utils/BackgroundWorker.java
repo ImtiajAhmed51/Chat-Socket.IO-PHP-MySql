@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class BackgroundWorker extends AsyncTask<String, String, String> {
     private final AsyncResponse asyncResponse;
-    private final String[] listKey = {"userId", "userDisplayName", "userName", "userDob", "userEmail", "userNumber", "userGender", "userPassword", "userPicture", "receiverUserId", "userActiveStatus"};
+    private final String[] listKey = {"userId", "userDisplayName", "userName", "userDob", "userEmail", "userNumber", "userGender", "userPassword", "userPicture", "receiverUserId", "userActiveStatus","friendId"};
 
     public interface AsyncResponse {
         void onFinish(Object obj);
@@ -57,6 +57,10 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                 url = Config.SHOW_ALL_USER_URL;
                 data.put(this.listKey[0], params[1]);
                 break;
+            case "PendingRequestShowAllUser":
+                url = Config.PENDING_REQUEST_ALL_USER_URL;
+                data.put(this.listKey[0], params[1]);
+                break;
             case "AddRequestUser":
                 url = Config.ADD_REQUEST_USER_URL;
                 data.put(this.listKey[0], params[1]);
@@ -66,6 +70,23 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                 url = Config.USER_ACTIVE_STATUS_CHANGE_URL;
                 data.put(this.listKey[0], params[1]);
                 data.put(this.listKey[10], params[2]);
+                break;
+            case "PendingRequestCancelUser":
+                url = Config.PENDING_REQUEST_CANCEL_USER_URL;
+                data.put(this.listKey[11], params[1]);
+                break;
+            case "SentRequestShowAllUser":
+                url = Config.SENT_REQUEST_ALL_USER_URL;
+                data.put(this.listKey[0], params[1]);
+                break;
+            case "SentRequestCancelUser":
+                url = Config.SENT_REQUEST_CANCEL_USER_URL;
+                data.put(this.listKey[11], params[1]);
+                break;
+
+            case "SentRequestAcceptUser":
+                url = Config.SENT_REQUEST_ACCEPT_USER_URL;
+                data.put(this.listKey[11], params[1]);
                 break;
 
         }

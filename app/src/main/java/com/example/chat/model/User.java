@@ -265,6 +265,7 @@ public class User {
                 && userVerified == otherUser.userVerified
                 && userRole.equals(otherUser.userRole)
                 && userActiveStatus.equals(otherUser.userActiveStatus)
-                && userSecurity==otherUser.userSecurity;
+                && userSecurity==otherUser.userSecurity
+                && isButtonEnabled==otherUser.isButtonEnabled;
     }
 }

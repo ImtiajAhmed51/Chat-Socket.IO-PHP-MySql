@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 
@@ -109,6 +110,129 @@ public class Constant {
         }
         return R.drawable.circular_border;
     }
+
+    public static void introSort(ArrayList<User> list) {
+        int maxDepth = (int) (2 * Math.log(list.size()) / Math.log(2));
+        introSort(list, 0, list.size() - 1, maxDepth);
+    }
+
+    private static void introSort(ArrayList<User> list, int low, int high, int maxDepth) {
+        if (low < high) {
+            if (maxDepth == 0) {
+                heapSort(list, low, high);
+            } else {
+                int pivotIndex = partition(list, low, high);
+                introSort(list, low, pivotIndex, maxDepth - 1);
+                introSort(list, pivotIndex + 1, high, maxDepth - 1);
+            }
+        } else {
+            insertionSort(list, low, high);
+        }
+    }
+
+    private static void heapSort(ArrayList<User> list, int low, int high) {
+        int n = high - low + 1;
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(list, n, i, low);
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            Collections.swap(list, low, low + i);
+            heapify(list, i, 0, low);
+        }
+    }
+
+    private static void heapify(ArrayList<User> list, int n, int i, int low) {
+        int largest = i;
+        int leftChild = 2 * i + 1;
+        int rightChild = 2 * i + 2;
+        if (leftChild < n && list.get(low + leftChild).getUserId() > list.get(low + largest).getUserId()) {
+            largest = leftChild;
+        }
+        if (rightChild < n && list.get(low + rightChild).getUserId() > list.get(low + largest).getUserId()) {
+            largest = rightChild;
+        }
+        if (largest != i) {
+            Collections.swap(list, low + i, low + largest);
+            heapify(list, n, largest, low);
+        }
+    }
+
+    private static int partition(ArrayList<User> list, int low, int high) {
+        User pivot = list.get(low);
+        int i = low - 1;
+        int j = high + 1;
+
+        while (true) {
+            do {
+                i++;
+            } while (list.get(i).getUserId() < pivot.getUserId());
+
+            do {
+                j--;
+            } while (list.get(j).getUserId() > pivot.getUserId());
+
+            if (i >= j) {
+                return j;
+            }
+
+            Collections.swap(list, i, j);
+        }
+    }
+
+    private static void insertionSort(ArrayList<User> list, int low, int high) {
+        // Implement insertion sort logic here
+        for (int i = low + 1; i <= high; i++) {
+            User key =  list.get(i);
+            int j = i - 1;
+
+            while (j >= low && list.get(j).getUserId() > key.getUserId()) {
+                list.set(j + 1, list.get(j));
+                j--;
+            }
+
+            list.set(j + 1, key);
+        }
+    }
+
+
+
+    public static int findInsertionIndex(ArrayList<User> list, long targetUserId) {
+        int low = 0;
+        int high = list.size() - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (list.get(mid).getUserId() == targetUserId) {
+                return mid; // Element found, return the index
+            } else if (list.get(mid).getUserId() < targetUserId) {
+                low = mid + 1; // Search in the right half
+            } else {
+                high = mid - 1; // Search in the left half
+            }
+        }
+
+        return low; // Element not found, return the insertion index
+    }
+    public static int binarySearch(ArrayList<User> list, long target) {
+        int low = 0;
+        int high = list.size() - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (list.get(mid).getUserId() == target) {
+                return mid; // Target found, return the index
+            } else if (list.get(mid).getUserId() < target) {
+                low = mid + 1; // Search in the right half
+            } else {
+                high = mid - 1; // Search in the left half
+            }
+        }
+
+        return -1; // Target not found
+    }
+
 
     public static void setDataAs(Context context, String userId, String mainKey, String userPassword, boolean status) {
         SharedPreferences.Editor editor = getSharePref(context).edit();

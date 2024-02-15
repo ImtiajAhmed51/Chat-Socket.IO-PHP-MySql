@@ -10,7 +10,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackground"
-        app:cardBackgroundColor="@color/transparent"
+        app:cardBackgroundColor="#27272f"
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="true">
@@ -64,10 +64,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            android:layout_margin="4dp"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
-                            android:layout_margin="4dp"
                             app:cardCornerRadius="250dp"
                             card_view:cardElevation="0dp">
 
@@ -87,9 +87,9 @@
                     android:id="@+id/activeStatusLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="2dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
                     app:layout_constraintEnd_toEndOf="@+id/constraintLayout2">
 
@@ -115,7 +115,6 @@
                     </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -130,7 +129,7 @@
                         android:id="@+id/linearLayout7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
+                        android:layout_weight="5"
                         android:orientation="vertical"
                         android:weightSum="2"
                         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
@@ -169,8 +168,6 @@
                                 android:layout_marginStart="5dp"
                                 android:src="@drawable/verified"
                                 android:visibility="gone" />
-
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -195,23 +192,59 @@
                                 android:text="ImtiajAhmedAnik#5131"
                                 android:textColor="#AEAEAE"
                                 android:textSize="13sp" />
-
-
                         </LinearLayout>
-
-
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linearLayout8"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="16"
+                        android:layout_weight="15"
                         android:gravity="end"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cancelClick"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:visibility="gone"
+                            app:cardBackgroundColor="#373a43"
+                            app:cardCornerRadius="25dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/cancel" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/acceptClick"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:clickable="true"
+                            android:layout_marginStart="10dp"
+                            android:focusable="true"
+                            android:foreground="?selectableItemBackground"
+                            android:visibility="gone"
+                            app:cardBackgroundColor="#373a43"
+                            app:cardCornerRadius="25dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="4dp"
+                                android:src="@drawable/check" />
+                        </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/addRequestClick"
@@ -221,9 +254,11 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
+                            android:visibility="gone"
                             app:cardBackgroundColor="#373a43"
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

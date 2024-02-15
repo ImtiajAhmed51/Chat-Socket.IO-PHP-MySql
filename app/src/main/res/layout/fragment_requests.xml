@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:background="@color/allBackgroundColor2"
         tools:context=".ui.fragment.home.RequestsFragment">
+
         <RelativeLayout
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
@@ -19,6 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <RelativeLayout
                 android:id="@+id/requestsFragmentMargin"
                 android:layout_width="match_parent"
@@ -27,6 +29,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 tools:ignore="UselessParent">
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/requestsBackPressed"
                     android:layout_width="35dp"
@@ -42,6 +45,7 @@
                     card_view:cardBackgroundColor="@color/transparent"
                     card_view:cardCornerRadius="50dp"
                     card_view:cardElevation="0dp">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -49,6 +53,7 @@
                         android:importantForAccessibility="no"
                         android:src="@drawable/back" />
                 </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:id="@+id/requestsTitle"
                     android:layout_width="match_parent"
@@ -62,57 +67,34 @@
                     android:textSize="18sp" />
             </RelativeLayout>
         </RelativeLayout>
-        <androidx.core.widget.NestedScrollView
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/requestsCardViewMargin"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            app:cardBackgroundColor="#27272f"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
-            <ScrollView
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addFriendsRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:scrollbars="none"
-                >
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp">
-
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/requestsCardViewMargin"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        app:cardBackgroundColor="#27272f"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/addFriendsRecyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-                            app:spanCount="1"
-                            tools:itemCount="10"
-                            tools:listitem="@layout/add_user" />
-                    </androidx.cardview.widget.CardView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </ScrollView>
-        </androidx.core.widget.NestedScrollView>
-
-
-
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+                app:spanCount="1"
+                tools:itemCount="10"
+                tools:listitem="@layout/add_user" />
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

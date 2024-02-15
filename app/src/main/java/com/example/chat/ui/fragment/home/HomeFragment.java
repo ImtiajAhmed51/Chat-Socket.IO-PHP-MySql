@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Clic
     }
 
     @Override
-    public void onClickItem(User user, int position, int type) {
+    public void onClickItem(User user, int position, int type,int buttonType) {
 
     }
 }
