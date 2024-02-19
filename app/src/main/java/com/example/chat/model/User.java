@@ -2,7 +2,7 @@ package com.example.chat.model;
 
 public class User {
     private  long id,userId;
-    private String  userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole,userActiveStatus;
+    private String  userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole,userActiveStatus,requestTime;
     private boolean isOnline, userVerified, userSecurity;
     private boolean isButtonEnabled=true;
 
@@ -60,6 +60,38 @@ public class User {
         this.userRole=userRole;
         this.userActiveStatus=userActiveStatus;
         this.userSecurity=userSecurity;
+        this.isButtonEnabled = isButtonEnabled;
+
+    }
+
+
+    public String getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(String requestTime) {
+        this.requestTime = requestTime;
+    }
+
+    public User(long id, long userId,
+                String userDisplayName,
+                String userName,
+                String userPicture,
+                Boolean userVerified,
+                String userRole,
+                String userActiveStatus,
+                Boolean userSecurity, String requestTime,
+                Boolean isButtonEnabled) {
+        this.id=id;
+        this.userId = userId;
+        this.userDisplayName = userDisplayName;
+        this.userName = userName;
+        this.userPicture = userPicture;
+        this.userVerified = userVerified;
+        this.userRole=userRole;
+        this.userActiveStatus=userActiveStatus;
+        this.userSecurity=userSecurity;
+        this.requestTime=requestTime;
         this.isButtonEnabled = isButtonEnabled;
 
     }

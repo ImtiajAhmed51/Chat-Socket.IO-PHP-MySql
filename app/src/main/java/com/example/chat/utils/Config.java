@@ -8,6 +8,7 @@ public class Config {
     public static final String LOGIN_URL = main_URL + "login.php";
     public static final String CHANGE_PICTURE_URL = main_URL + "changePicture.php";
     public static final String SHOW_ALL_USER_URL = main_URL + "showAllUser.php";
+    public static final String FRIENDS_SHOW_ALL_USER_URL = main_URL + "friendsAllUser.php";
     public static final String PENDING_REQUEST_ALL_USER_URL = main_URL + "pendingRequest.php";
     public static final String SENT_REQUEST_ALL_USER_URL = main_URL + "sentRequest.php";
     public static final String ADD_REQUEST_USER_URL = main_URL + "addRequest.php";

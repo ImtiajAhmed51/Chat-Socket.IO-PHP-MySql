@@ -4,12 +4,16 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp">
         <ImageView
+            android:id="@+id/drawerUserActiveStatus"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="visible"
             android:src="@drawable/circular_border"
             app:layout_constraintBottom_toBottomOf="@+id/tvProfileImageCardView"
             app:layout_constraintEnd_toEndOf="@+id/tvProfileImageCardView"
@@ -17,8 +21,8 @@
             app:layout_constraintTop_toTopOf="@+id/tvProfileImageCardView" />
         <androidx.cardview.widget.CardView
             android:id="@+id/tvProfileImageCardView"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             app:cardBackgroundColor="@color/transparent"
             app:cardCornerRadius="250dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,6 +34,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
                 android:layout_margin="4dp"
                 app:cardCornerRadius="250dp"
                 card_view:cardElevation="0dp">

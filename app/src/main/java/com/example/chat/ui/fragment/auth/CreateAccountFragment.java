@@ -117,6 +117,13 @@ public class CreateAccountFragment extends Fragment implements View.OnClickListe
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        binding.clickDobFragment.setClickable(true);
+        progressButton.buttonSet("Next");
+    }
+
     private void setChipTextAndClickListeners(ArrayList<String> usernames, Chip[] chips) {
         for (int i = 0; i < chips.length; i++) {
             chips[i].setText(usernames.get(chips.length - 1 - i));
@@ -141,9 +148,11 @@ public class CreateAccountFragment extends Fragment implements View.OnClickListe
             binding.userNameEditTextLayout.setError(jsonResponse.getBoolean("success") ? "Available" : "UserName Use");
             userNameChecker = jsonResponse.getBoolean("success");
         } catch (Exception ex) {
+
             ex.printStackTrace();
         }
     }
+
 
     private ArrayList<String> generateUsernames(String fullName) {
         ArrayList<String> usernames = new ArrayList<>();
@@ -195,7 +204,6 @@ public class CreateAccountFragment extends Fragment implements View.OnClickListe
         binding.clickDobFragment.setClickable(false);
         progressButton.buttonActivated();
         progressButton.buttonFinished();
-        binding.clickDobFragment.setClickable(false);
 
         Bundle data = new Bundle();
         data.putString("mainVal", mainVal);

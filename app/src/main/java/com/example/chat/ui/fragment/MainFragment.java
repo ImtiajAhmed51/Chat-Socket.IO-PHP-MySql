@@ -28,9 +28,7 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -40,7 +38,6 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fragmentViewModel = new ViewModelProvider(requireActivity()).get(FragmentViewModel.class);
         viewAdapter = new ViewPagerAdapter(getChildFragmentManager(), requireActivity());
-
         setUpViewPager();
     }
 

@@ -57,6 +57,10 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                 url = Config.SHOW_ALL_USER_URL;
                 data.put(this.listKey[0], params[1]);
                 break;
+            case "FriendsShowAllUser":
+                url = Config.FRIENDS_SHOW_ALL_USER_URL;
+                data.put(this.listKey[0], params[1]);
+                break;
             case "PendingRequestShowAllUser":
                 url = Config.PENDING_REQUEST_ALL_USER_URL;
                 data.put(this.listKey[0], params[1]);

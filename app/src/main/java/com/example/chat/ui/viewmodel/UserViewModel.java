@@ -9,20 +9,23 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.chat.model.User;
 
+import java.util.ArrayList;
+
 public class UserViewModel extends AndroidViewModel {
-    private final MutableLiveData<User> userLiveData;
+    private final MutableLiveData<ArrayList<User>> userListLiveData;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
-        userLiveData = new MutableLiveData<>();
+        userListLiveData = new MutableLiveData<>();
     }
 
-    public void setUserLive(User user) {
-        userLiveData.setValue(user);
+    public void setUserList(ArrayList<User> userList) {
+        userListLiveData.setValue(userList);
     }
 
-    public LiveData<User> getUserLiveData() {
-        return userLiveData;
+    public LiveData<ArrayList<User>> getUserListLiveData() {
+        return userListLiveData;
     }
+
 
 }

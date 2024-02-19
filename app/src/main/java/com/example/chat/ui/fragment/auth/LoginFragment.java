@@ -152,7 +152,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             String phoneNumberParam = isValidBangladeshiPhoneNumber(mainKey) ? EncryptionUtils.encrypt("0" + mainKey) : EncryptionUtils.encrypt("");
             backgroundWorker.execute("Login", emailParam, phoneNumberParam, EncryptionUtils.encrypt(pass));
         } catch (Exception e) {
-            toastMessage(e.getMessage());
+            handleLoginError(e.getMessage());
         }
     }
 

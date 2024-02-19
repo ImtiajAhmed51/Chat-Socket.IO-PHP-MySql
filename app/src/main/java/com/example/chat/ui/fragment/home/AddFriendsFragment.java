@@ -20,8 +20,8 @@ import com.example.chat.adapter.UserAdapter;
 import com.example.chat.databinding.FragmentAddFriendsBinding;
 import com.example.chat.inter.ClickListener;
 import com.example.chat.model.User;
-import com.example.chat.ui.viewmodel.AddUserViewModel;
 import com.example.chat.ui.viewmodel.UserViewModel;
+import com.example.chat.ui.viewmodel.OwnViewModel;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.DimensionUtils;
@@ -34,8 +34,8 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
     private FragmentAddFriendsBinding binding;
     private UserAdapter userAdapter;
     private ArrayList<User> userList=new ArrayList<>();
+    private OwnViewModel ownViewModel;
     private UserViewModel userViewModel;
-    private AddUserViewModel addUserViewModel;
     private static final long REFRESH_INTERVAL = 2000;
     private Handler handler;
     private Runnable refreshDataRunnable;
@@ -43,8 +43,8 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addUserViewModel = new ViewModelProvider(this).get(AddUserViewModel.class);
-        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
         userAdapter = new UserAdapter(requireActivity(),new ArrayList<>(), this, 2);
         handler = new Handler(Looper.getMainLooper());
         refreshDataRunnable = this::refreshData;
@@ -72,7 +72,7 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
         binding.friendRequestsClick.setOnClickListener(this);
 
         binding.addFriendsRecyclerView.setAdapter(userAdapter);
-        addUserViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
+        userViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
@@ -116,7 +116,7 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
     private void showAllUser() {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this::showAllUserResponse);
         try {
-            backgroundWorker.execute("ShowAllUser", EncryptionUtils.encrypt(String.valueOf(userViewModel.getUserLiveData().getValue().getUserId())));
+            backgroundWorker.execute("ShowAllUser", EncryptionUtils.encrypt(String.valueOf(ownViewModel.getUserLiveData().getValue().getUserId())));
         } catch (Exception e) {
             toastMessage(e.getMessage());
         }
@@ -140,7 +140,7 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
                         true));
             }
             introSort(userList);
-            addUserViewModel.setUserList(userList);
+            userViewModel.setUserList(userList);
         } catch (Exception e) {
             toastMessage(e.getMessage());
         }
@@ -154,8 +154,8 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
 
     @Override
     public void onClickItem(User user, int position, int type,int buttonType) {
-        if(type==2){
-            performBackgroundWork(String.valueOf(userViewModel.getUserLiveData().getValue().getUserId()),String.valueOf(user.getUserId()));
+        if(type==2&&buttonType==0){
+            performBackgroundWork(String.valueOf(ownViewModel.getUserLiveData().getValue().getUserId()),String.valueOf(user.getUserId()));
         }
     }
 
@@ -174,7 +174,7 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
             if (jsonResponse.getBoolean("success")) {
 
                 //int position = userAdapter.getData().indexOf(new User(Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("receiverUserId")))));
-               int position=binarySearch(userAdapter.getData(),Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("receiverUserId"))));
+                int position=binarySearch(userAdapter.getData(),Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("receiverUserId"))));
                 userAdapter.getData().get(position).setButtonEnabled(false);
                 userAdapter.notifyDataSetChanged();
             } else {

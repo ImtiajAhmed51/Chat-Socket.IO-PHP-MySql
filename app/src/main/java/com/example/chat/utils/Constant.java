@@ -4,16 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,12 +17,12 @@ import com.example.chat.R;
 import com.example.chat.model.User;
 import com.example.chat.model.ValidationResult;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 
@@ -70,6 +64,43 @@ public class Constant {
             "Home",
             "Add User"
     };
+    public static String getTimeAgo(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date pastDate = dateFormat.parse(dateString);
+            long currentTime = System.currentTimeMillis();
+            long timeDifference = currentTime - pastDate.getTime();
+
+            if (timeDifference < 0) {
+                // Handle future dates
+                return "In the future";
+            }
+
+            long seconds = timeDifference / 1000;
+            long minutes = seconds / 60;
+            long hours = minutes / 60;
+            long days = hours / 24;
+            long months = days / 30;
+            long years = months / 12;
+
+            if (years > 0) {
+                return years == 1 ? "1y" : years + "y";
+            } else if (months >= 1 && months <= 11) {
+                return months == 1 ? "1mo" : months + "mo";
+            } else if (days > 0) {
+                return days == 1 ? "1d" : days + "d";
+            } else if (hours > 0) {
+                return hours == 1 ? "1h" : hours + "h";
+            } else if (minutes > 0) {
+                return minutes == 1 ? "1m" : minutes + "m";
+            } else {
+                return seconds == 1 ? "1s" : seconds + "s";
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Invalid date";
+        }
+    }
 
     public static Object getResource(String userPicture) {
         switch (userPicture) {
@@ -107,6 +138,20 @@ public class Constant {
                 return R.drawable.dnd;
             case "Invisible":
                 return R.drawable.invisible;
+        }
+        return R.drawable.circular_border;
+    }
+
+    public static int getUserActiveStatus(String userPicture) {
+        switch (userPicture) {
+            case "Online":
+                return R.drawable.circular_border_green;
+            case "Idle":
+                return R.drawable.circular_border_yellow;
+            case "DND":
+                return R.drawable.circular_border_red;
+            case "Invisible":
+                return R.drawable.circular_border_ash;
         }
         return R.drawable.circular_border;
     }
@@ -161,76 +206,59 @@ public class Constant {
         User pivot = list.get(low);
         int i = low - 1;
         int j = high + 1;
-
         while (true) {
             do {
                 i++;
             } while (list.get(i).getUserId() < pivot.getUserId());
-
             do {
                 j--;
             } while (list.get(j).getUserId() > pivot.getUserId());
-
             if (i >= j) {
                 return j;
             }
-
             Collections.swap(list, i, j);
         }
     }
-
     private static void insertionSort(ArrayList<User> list, int low, int high) {
-        // Implement insertion sort logic here
         for (int i = low + 1; i <= high; i++) {
             User key =  list.get(i);
             int j = i - 1;
-
             while (j >= low && list.get(j).getUserId() > key.getUserId()) {
                 list.set(j + 1, list.get(j));
                 j--;
             }
-
             list.set(j + 1, key);
         }
     }
-
-
-
     public static int findInsertionIndex(ArrayList<User> list, long targetUserId) {
         int low = 0;
         int high = list.size() - 1;
-
         while (low <= high) {
             int mid = low + (high - low) / 2;
-
             if (list.get(mid).getUserId() == targetUserId) {
-                return mid; // Element found, return the index
+                return mid;
             } else if (list.get(mid).getUserId() < targetUserId) {
-                low = mid + 1; // Search in the right half
+                low = mid + 1;
             } else {
-                high = mid - 1; // Search in the left half
+                high = mid - 1;
             }
         }
-
-        return low; // Element not found, return the insertion index
+        return low;
     }
     public static int binarySearch(ArrayList<User> list, long target) {
         int low = 0;
         int high = list.size() - 1;
-
         while (low <= high) {
             int mid = low + (high - low) / 2;
-
             if (list.get(mid).getUserId() == target) {
-                return mid; // Target found, return the index
+                return mid;
             } else if (list.get(mid).getUserId() < target) {
-                low = mid + 1; // Search in the right half
+                low = mid + 1;
             } else {
-                high = mid - 1; // Search in the left half
+                high = mid - 1;
             }
         }
-
-        return -1; // Target not found
+        return -1;
     }
 
 

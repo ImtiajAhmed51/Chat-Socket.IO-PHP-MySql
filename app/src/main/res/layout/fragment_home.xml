@@ -1,12 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-    <RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeMainContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/allBackgroundColor6"
         tools:context=".ui.fragment.home.HomeFragment">
+        <RelativeLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/allBackgroundColor2"
+            android:elevation="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/homeFragmentMargin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                tools:ignore="UselessParent">
+
+
+
+                <TextView
+                    android:id="@+id/requestsTitle"
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gg_sans_extra_bold"
+                    android:gravity="center"
+                    android:text="Messages"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addFriendsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:spanCount="1"
+            card_view:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+            tools:itemCount="10"
+            tools:listitem="@layout/user_messages" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

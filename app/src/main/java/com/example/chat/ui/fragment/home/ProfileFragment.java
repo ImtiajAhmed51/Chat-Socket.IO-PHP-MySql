@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -21,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.chat.R;
 import com.example.chat.databinding.FragmentProfileBinding;
 import com.example.chat.model.User;
+import com.example.chat.ui.viewmodel.OwnViewModel;
 import com.example.chat.ui.viewmodel.UserViewModel;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
@@ -34,23 +38,29 @@ import org.json.JSONObject;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     private FragmentProfileBinding binding;
-    private UserViewModel userViewModel;
+    private OwnViewModel ownViewModel;
     private BottomSheetDialog dialog;
+    private ConstraintLayout[] userLayout;
+    private ImageView[] userImage;
+    private UserViewModel userViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initUI();
         observeUserData();
     }
+
     private void initUI() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             binding.profileUserCoverImage.setRenderEffect(RenderEffect.createBlurEffect(100, 100, Shader.TileMode.MIRROR));
@@ -61,12 +71,36 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         binding.profileUserImageClick.setOnClickListener(this);
         binding.userProfileSettings.setOnClickListener(this);
         binding.userProfileFriends.setOnClickListener(this);
+        ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        Constant.setTopMargin(binding.userProfileSettingsTopMargin,DimensionUtils.getStatusBarHeight(requireActivity()));
+        Constant.setTopMargin(binding.userProfileSettingsTopMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
         Constant.setBottomMargin(binding.developerName, DimensionUtils.getNavigationBarHeight(requireActivity()));
+        userLayout = new ConstraintLayout[]{binding.constraintLayoutImage1,
+                binding.constraintLayoutImage2,
+                binding.constraintLayoutImage3,
+                binding.constraintLayoutImage4,
+                binding.constraintLayoutImage5};
+        userImage = new ImageView[]{binding.userImage1,
+                binding.userImage2,
+                binding.userImage3,
+                binding.userImage4,
+                binding.userImage5};
     }
+
     private void observeUserData() {
-        userViewModel.getUserLiveData().observe(requireActivity(), user -> {
+
+        userViewModel.getUserListLiveData().observe(requireActivity(), users -> {
+            if (getActivity() != null) {
+                int size = Math.min(users.size(), 5);
+                for (int i = 0; i < size; i++) {
+                    userLayout[i].setVisibility(View.VISIBLE);
+                    Glide.with(requireContext()).load(Constant.getResource(users.get(i).getUserPicture())).into(userImage[i]);
+                }
+                for (int j = size; j < 5; j++)
+                    userLayout[j].setVisibility(View.GONE);
+            }
+        });
+        ownViewModel.getUserLiveData().observe(requireActivity(), user -> {
             if (getActivity() != null) {
                 updateUI(user);
             }
@@ -77,20 +111,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         Glide.with(requireActivity()).load(Constant.getResource(user.getUserPicture())).into(binding.profileUserImage);
         Glide.with(requireActivity()).load(Constant.getResource(user.getUserPicture())).into(binding.profileUserCoverImage);
         binding.userProfileDisplayName.setText(user.getUserDisplayName());
-        binding.userProfileUserId.setText("#"+String.valueOf(user.getUserId()));
+        binding.userProfileUserId.setText("#" + String.valueOf(user.getUserId()));
         binding.userProfileVerification.setVisibility(user.isUserVerified() ? View.VISIBLE : View.GONE);
         binding.userProfilePrivacy.setImageResource(user.isUserSecurity() ? R.drawable.lock : R.drawable.unlock);
         binding.userProfileUserName.setText(user.getUserName());
         binding.userProfileOwner.setVisibility(user.getUserRole().equals("ADMIN") ? View.VISIBLE : View.GONE);
         binding.userProfileDeveloper.setVisibility(user.getUserRole().equals("ADMIN") ? View.VISIBLE : View.GONE);
         binding.profileUserActiveStatus.setImageResource(Constant.getUserActiveStatusResource(user.getUserActiveStatus()));
-        String formattedUserDob = formatDate(user.getUserDob(), "dd/MM/yyyy");
-        binding.userProfileDOBText.setText(formattedUserDob);
+        binding.userProfileDOBText.setText(formatDate(user.getUserDob(), "dd/MM/yyyy"));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             calculateAndSetAge(user.getUserDob());
         }
-        String formattedUserAccountOpenTime = formatDate(user.getUserAccountOpenTime(), "yyyy-MM-dd HH:mm:ss");
-        binding.userProfileOpeningDate.setText(formattedUserAccountOpenTime);
+        binding.userProfileOpeningDate.setText(formatDate(user.getUserAccountOpenTime(), "yyyy-MM-dd HH:mm:ss"));
         showDialog();
     }
 
@@ -102,7 +134,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String ageText = String.format("%d years", age.getYears());
         if (age.getMonths() != 0) {
             ageText += String.format(" %d months", age.getMonths());
-        }if (age.getDays() != 0) {
+        }
+        if (age.getDays() != 0) {
             ageText += String.format(" %d days", age.getDays());
         }
         binding.userProfileAgeText.setText(ageText);
@@ -112,15 +145,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view.getId() == binding.userProfileSettings.getId()) {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_settingsFragment);
-        }else if (view.getId() ==binding.userProfileLocation.getId()) {
+        } else if (view.getId() == binding.userProfileLocation.getId()) {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_locationFragment);
-        }else if (view.getId()==binding.userProfileFriends.getId()){
+        } else if (view.getId() == binding.userProfileFriends.getId()) {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_friendsFragment);
-        }else if (view.getId()==binding.profileUserImageClick.getId()||view.getId() == binding.onlineStatusChangeClick.getId()){
+        } else if (view.getId() == binding.profileUserImageClick.getId() || view.getId() == binding.onlineStatusChangeClick.getId()) {
             showDialog();
             dialog.show();
         }
     }
+
     private void showDialog() {
         View view = getLayoutInflater().inflate(R.layout.online_status_layout, null, false);
         RadioButton online = view.findViewById(R.id.userActiveStatusOnline);
@@ -129,7 +163,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         RadioButton invisible = view.findViewById(R.id.userActiveStatusInvisible);
         RadioButton[] radioButtons = {online, idle, dND, invisible};
 
-        int checker = getUserActiveStatus(Objects.requireNonNull(userViewModel.getUserLiveData().getValue()).getUserActiveStatus());
+        int checker = getUserActiveStatus(Objects.requireNonNull(ownViewModel.getUserLiveData().getValue()).getUserActiveStatus());
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i].setChecked(checker == i);
         }
@@ -150,11 +184,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         dialog.setContentView(view);
         dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
     }
+
     private void updateRadioButtonsState(RadioButton[] radioButtons, int selectedIndex) {
         for (int i = 0; i < radioButtons.length; i++) {
             radioButtons[i].setChecked(i == selectedIndex);
         }
     }
+
     private String getUserActiveStatusValue(int index) {
         switch (index) {
             case 0:
@@ -200,6 +236,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
         return "";
     }
+
     private int getUserActiveStatus(String userPicture) {
         switch (userPicture) {
             case "Online":
@@ -213,6 +250,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
         return -1;
     }
+
     private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }

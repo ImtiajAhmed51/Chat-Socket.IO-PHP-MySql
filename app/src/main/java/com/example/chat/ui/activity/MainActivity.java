@@ -1,5 +1,6 @@
 package com.example.chat.ui.activity;
 
+import static com.example.chat.utils.Constant.introSort;
 import static com.example.chat.utils.Constant.isValidEmail;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,12 +25,14 @@ import com.example.chat.model.User;
 import com.example.chat.ui.fragment.home.AddUserFragment;
 import com.example.chat.ui.fragment.home.HomeFragment;
 import com.example.chat.ui.fragment.home.UserDrawerFragment;
-import com.example.chat.ui.viewmodel.FragmentViewModel;
 import com.example.chat.ui.viewmodel.UserViewModel;
+import com.example.chat.ui.viewmodel.FragmentViewModel;
+import com.example.chat.ui.viewmodel.OwnViewModel;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.EncryptionUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,6 +41,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    private OwnViewModel ownViewModel;
+    private ArrayList<User> userList=new ArrayList<>();
     private UserViewModel userViewModel;
 
     private static final long REFRESH_INTERVAL = 2000;
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         String jsonString = getIntent().getStringExtra("jsonObject");
         try {
             userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+            ownViewModel = new ViewModelProvider(this).get(OwnViewModel.class);
             FragmentViewModel fragmentViewModel = new ViewModelProvider(this).get(FragmentViewModel.class);
             if (fragmentViewModel.isFragmentListEmpty()) {
                 List<Fragment> fragmentList = new ArrayList<>();
@@ -77,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             JSONObject receivedData = new JSONObject(jsonString);
             try {
                 User user = decryptUserData(receivedData);
-                userViewModel.setUserLive(user);
+                ownViewModel.setUserLive(user);
             } catch (Exception ignored) {
             }
         }
@@ -156,11 +162,12 @@ public class MainActivity extends AppCompatActivity {
             JSONObject jsonResponse = new JSONObject((String) output);
             if (jsonResponse.getBoolean("success")) {
                 User user = decryptUserData(jsonResponse);
-                if (userViewModel.getUserLiveData() != null) {
-                    if (!user.allEquals(userViewModel.getUserLiveData().getValue())) {
-                        userViewModel.setUserLive(user);
+                if (ownViewModel.getUserLiveData() != null) {
+                    if (!user.allEquals(ownViewModel.getUserLiveData().getValue())) {
+                        ownViewModel.setUserLive(user);
                     }
                 }
+                showAllUser();
             } else {
                 toastMessage(jsonResponse.getString("message"));
                 Constant.clearData(MainActivity.this);
@@ -171,6 +178,37 @@ public class MainActivity extends AppCompatActivity {
 //            toastMessage(e.getMessage());
 //            startActivity(new Intent(MainActivity.this, AuthActivity.class));
 //            finish();
+        }
+    }
+    private void showAllUser() {
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this::friendsShowAllUserResponse);
+        try {
+            backgroundWorker.execute("FriendsShowAllUser", EncryptionUtils.encrypt(String.valueOf(ownViewModel.getUserLiveData().getValue().getUserId())));
+        } catch (Exception e) {
+
+        }
+    }
+
+    private void friendsShowAllUserResponse(Object output) {
+        try {
+            JSONArray jsonArr = new JSONArray((String) output);
+            userList.clear();
+            for (int i = 0; i < jsonArr.length(); i++) {
+                JSONObject jsonObj = jsonArr.getJSONObject(i);
+                userList.add(0, new User(jsonObj.getInt("id"),
+                        Integer.parseInt(EncryptionUtils.decrypt(jsonObj.getString("userId"))),
+                        EncryptionUtils.decrypt(jsonObj.getString("userDisplayName")),
+                        EncryptionUtils.decrypt(jsonObj.getString("userName")),
+                        jsonObj.getString("userPicture"),
+                        jsonObj.getString("userVerified").equals("Yes"),
+                        jsonObj.getString("userRole"),
+                        jsonObj.getString("userActiveStatus"),
+                        jsonObj.getString("userSecurity").equals("Yes"),
+                        true));
+            }
+            introSort(userList);
+            userViewModel.setUserList(userList);
+        } catch (Exception e) {
         }
     }
 

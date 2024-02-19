@@ -21,8 +21,8 @@ import com.example.chat.adapter.UserAdapter;
 import com.example.chat.databinding.FragmentRequestsBinding;
 import com.example.chat.inter.ClickListener;
 import com.example.chat.model.User;
-import com.example.chat.ui.viewmodel.AddUserViewModel;
 import com.example.chat.ui.viewmodel.UserViewModel;
+import com.example.chat.ui.viewmodel.OwnViewModel;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.DimensionUtils;
@@ -32,7 +32,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class RequestsFragment extends Fragment implements View.OnClickListener, ClickListener {
     private FragmentRequestsBinding binding;
@@ -40,8 +39,8 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
     private int intType;
     private UserAdapter userAdapter;
     private ArrayList<User> userList=new ArrayList<>();
+    private OwnViewModel ownViewModel;
     private UserViewModel userViewModel;
-    private AddUserViewModel addUserViewModel;
     private static final long REFRESH_INTERVAL = 2000;
     private Handler handler;
     private Runnable refreshDataRunnable;
@@ -50,8 +49,8 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeArguments();
-        addUserViewModel = new ViewModelProvider(this).get(AddUserViewModel.class);
-        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
         userAdapter = new UserAdapter(requireActivity(),new ArrayList<>(), this, intType);
         handler = new Handler(Looper.getMainLooper());
         refreshDataRunnable = this::refreshData;
@@ -71,7 +70,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
     private void showAllUser(String type) {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this::showAllUserResponse);
         try {
-            backgroundWorker.execute(type, EncryptionUtils.encrypt(String.valueOf(userViewModel.getUserLiveData().getValue().getUserId())));
+            backgroundWorker.execute(type, EncryptionUtils.encrypt(String.valueOf(ownViewModel.getUserLiveData().getValue().getUserId())));
         } catch (Exception e) {
             toastMessage(e.getMessage());
         }
@@ -94,10 +93,11 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
                         jsonObj.getString("userSecurity").equals("Yes"),
+                        jsonObj.getString("requestTime"),
                         true));
             }
             introSort(userList);
-            addUserViewModel.setUserList(userList);
+            userViewModel.setUserList(userList);
         } catch (Exception e) {
             toastMessage(e.getMessage());
         }
@@ -126,7 +126,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
 
 
         binding.addFriendsRecyclerView.setAdapter(userAdapter);
-        addUserViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
+        userViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {

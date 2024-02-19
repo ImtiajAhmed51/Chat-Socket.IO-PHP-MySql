@@ -131,6 +131,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
 
         } else if (view.getId() == binding.skipClick.getId()) {
             selectedImage = null;
+            binding.skipClick.setClickable(false);
             login();
         } else if (view.getId() == binding.addUserPicture.getId()) {
             pickImageFromGallery();
@@ -251,6 +252,11 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             String phoneNumberParam = isValidBangladeshiPhoneNumber(mainVal) ? EncryptionUtils.encrypt(mainVal) : EncryptionUtils.encrypt("");
             backgroundWorker.execute("Login", emailParam, phoneNumberParam, EncryptionUtils.encrypt(pass));
         } catch (Exception e) {
+            if(selectedImage != null){
+                binding.saveChooseProfilePictureClick.setClickable(true);
+                progressButton.buttonSet("Next");
+            }
+            binding.skipClick.setClickable(true);
             toastMessage(e.getMessage());
         }
     }
@@ -265,6 +271,10 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                 toastMessage(jsonResponse.getString("message"));
             }
         } catch (Exception e) {
+            if(selectedImage != null){
+                binding.saveChooseProfilePictureClick.setClickable(true);
+                progressButton.buttonSet("Next");
+            }
             toastMessage(e.getMessage());
         }
     }
@@ -286,6 +296,11 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                 toastMessage(jsonResponse.getString("message"));
             }
         } catch (Exception e) {
+            if (selectedImage != null) {
+                binding.saveChooseProfilePictureClick.setClickable(true);
+                progressButton.buttonSet("Next");
+            }
+            binding.skipClick.setClickable(true);
             toastMessage(e.getMessage());
         }
     }

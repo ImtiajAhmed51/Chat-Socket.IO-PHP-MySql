@@ -165,6 +165,8 @@ public class NumberEmailFragment extends Fragment implements View.OnClickListene
             String encryptedPhoneNumber = isValidBangladeshiPhoneNumber(emailNumber) ? EncryptionUtils.encrypt("0" + emailNumber) : EncryptionUtils.encrypt("");
             backgroundWorker.execute("EmailNumberCheck", encryptedEmail, encryptedPhoneNumber);
         } catch (Exception e) {
+            binding.clickNameFragment.setClickable(true);
+            progressButton.buttonSet("Next");
             toastMessage(e.getMessage());
         }
     }
@@ -186,11 +188,16 @@ public class NumberEmailFragment extends Fragment implements View.OnClickListene
                 binding.clickNameFragment.setClickable(true);
                 progressButton.buttonSet("Next");
             }
-        } catch (JSONException e) {
-            toastMessage(e.getMessage());
         } catch (Exception ex) {
             toastMessage(ex.getMessage());
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        binding.clickNameFragment.setClickable(true);
+        progressButton.buttonSet("Next");
     }
 
     private void toastMessage(String message) {

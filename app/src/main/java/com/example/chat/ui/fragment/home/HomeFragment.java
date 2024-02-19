@@ -13,23 +13,23 @@ import android.view.ViewGroup;
 import com.example.chat.databinding.FragmentHomeBinding;
 import com.example.chat.inter.ClickListener;
 import com.example.chat.model.User;
+import com.example.chat.utils.Constant;
+import com.example.chat.utils.DimensionUtils;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, ClickListener {
     private FragmentHomeBinding binding;
 
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Constant.setTopMargin(binding.homeFragmentMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
     }
 
     @Override
