@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeMainContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/allBackgroundColor6"
         tools:context=".ui.fragment.home.HomeFragment">
+
         <RelativeLayout
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
@@ -29,23 +31,20 @@
                 android:layout_alignParentEnd="true"
                 tools:ignore="UselessParent">
 
-
-
                 <TextView
                     android:id="@+id/requestsTitle"
                     android:layout_width="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_marginStart="25dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
                     android:fontFamily="@font/gg_sans_extra_bold"
                     android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:text="Messages"
                     android:textColor="@color/white"
                     android:textSize="17sp" />
             </RelativeLayout>
         </RelativeLayout>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/addFriendsRecyclerView"
@@ -57,7 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:spanCount="1"
             card_view:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-            tools:itemCount="10"
+            tools:itemCount="15"
             tools:listitem="@layout/user_messages" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

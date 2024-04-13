@@ -30,8 +30,6 @@
                 android:paddingEnd="15dp"
                 android:paddingBottom="10dp">
 
-
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="wrap_content"
@@ -45,7 +43,7 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:src="@drawable/circular_border_red"
-                        android:visibility="invisible"
+                        android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="@+id/tvProfileImageCardView"
                         app:layout_constraintEnd_toEndOf="@+id/tvProfileImageCardView"
                         app:layout_constraintStart_toStartOf="@+id/tvProfileImageCardView"
@@ -158,10 +156,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/gg_sans_extra_bold"
+                                android:fontFamily="@font/gg_sans_bold"
                                 android:maxLines="1"
                                 android:text="Imtiaj Ahmed Anik"
-                                android:textColor="@color/white"
+                                android:textColor="#DEDDDD"
                                 android:textSize="16sp" />
 
                             <ImageView

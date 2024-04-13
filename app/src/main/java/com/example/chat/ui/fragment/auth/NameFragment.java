@@ -46,18 +46,29 @@ public class NameFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        binding. clickCreateAccountFragment.setClickable(true);
+        progressButton.buttonSet("Next");
+    }
+
+    @Override
     public void onClick(View view) {
         if (view.getId() == binding.clickCreateAccountFragment.getId()) {
-            this.binding.clickCreateAccountFragment.setClickable(false);
-            this.progressButton.buttonActivated();
-            this.progressButton.buttonFinished();
-            this.binding.clickCreateAccountFragment.setClickable(false);
-            Bundle data = new Bundle();
-            data.putString("mainVal", mainVal);
-            data.putString("name", binding.nameEditText.getText().toString().trim());
 
-            getParentFragmentManager().setFragmentResult("requestKey", data);
-            Navigation.findNavController(view).navigate(R.id.action_nameFragment_to_createAccountFragment, data);
+            if(!binding.nameEditText.getText().toString().trim().equals("")){
+                this.binding.clickCreateAccountFragment.setClickable(false);
+                this.progressButton.buttonActivated();
+                this.progressButton.buttonFinished();
+                this.binding.clickCreateAccountFragment.setClickable(false);
+                Bundle data = new Bundle();
+                data.putString("mainVal", mainVal);
+                data.putString("name", binding.nameEditText.getText().toString().trim());
+
+                getParentFragmentManager().setFragmentResult("requestKey", data);
+                Navigation.findNavController(view).navigate(R.id.action_nameFragment_to_createAccountFragment, data);
+            }
+
 
         } else if (view.getId() == binding.nameBackPressed.getId()) {
             requireActivity().onBackPressed();

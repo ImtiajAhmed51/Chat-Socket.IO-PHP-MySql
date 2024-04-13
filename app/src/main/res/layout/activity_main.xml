@@ -2,12 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout
         android:id="@+id/mainActivityContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/allBackgroundColor2"
         tools:context=".ui.activity.MainActivity">
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_home_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"

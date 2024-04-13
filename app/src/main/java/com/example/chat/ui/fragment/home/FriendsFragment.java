@@ -3,6 +3,7 @@ package com.example.chat.ui.fragment.home;
 import static com.example.chat.utils.Constant.binarySearch;
 import static com.example.chat.utils.Constant.findInsertionIndex;
 import static com.example.chat.utils.Constant.introSort;
+import static com.example.chat.utils.Constant.userUpdate;
 
 import android.os.Bundle;
 
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 public class FriendsFragment extends Fragment implements View.OnClickListener, ClickListener {
     private FragmentFriendsBinding binding;
     private UserAdapter userAdapter;
-    private ArrayList<User> userList=new ArrayList<>();
+    private final ArrayList<User> userList=new ArrayList<>();
     private OwnViewModel ownViewModel;
     private UserViewModel userViewModel;
     private static final long REFRESH_INTERVAL = 2000;
@@ -83,38 +84,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    ArrayList<User> existingData = userAdapter.getData();
-                    ArrayList<User> newUserIds = new ArrayList<>();
-
-                    int existingIndex, insertionIndex;
-
-                    for (User user : userList) {
-                        existingIndex = binarySearch(existingData, user.getUserId());
-                        newUserIds.add(user);
-
-                        if (existingIndex == -1) {
-                            // Element not found, insert at the correct position to maintain sorted order
-                            insertionIndex = findInsertionIndex(existingData, user.getUserId());
-                            existingData.add(insertionIndex, user);
-                            userAdapter.notifyItemInserted(insertionIndex);
-                        } else {
-                            User existingUser = existingData.get(existingIndex);
-                            if (!existingUser.addFriendsUserEqual(user)) {
-                                // Element found, update if necessary
-                                existingData.set(existingIndex, user);
-                                userAdapter.notifyItemChanged(existingIndex);
-                            }
-                        }
-                    }
-
-                    for (int i = existingData.size() - 1; i >= 0; i--) {
-                        User existingUser = existingData.get(i);
-                        int position=binarySearch(newUserIds,existingUser.getUserId());
-                        if (position==-1) {
-                            existingData.remove(i);
-                            userAdapter.notifyItemRemoved(i);
-                        }
-                    }
+                    userUpdate(userList,userAdapter);
                 }
             }
         });

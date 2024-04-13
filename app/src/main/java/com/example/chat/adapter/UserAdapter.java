@@ -74,6 +74,12 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void bindUserViewHolder(UserViewHolder holder, User currentItem) {
         DrawerUserBinding drawerUserBinding= holder.userBinding;
         if(type==1){
+            drawerUserBinding.clickDrawerUserMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                }
+            });
             Glide.with(activity).load(Constant.getResource(currentItem.getUserPicture())).into(drawerUserBinding.drawerUserImage);
             if(!currentItem.isUserSecurity()){
                 drawerUserBinding.drawerUserActiveStatus.setVisibility(View.VISIBLE);

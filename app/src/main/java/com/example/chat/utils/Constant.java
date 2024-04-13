@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.chat.R;
+import com.example.chat.adapter.UserAdapter;
 import com.example.chat.model.User;
 import com.example.chat.model.ValidationResult;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Constant {
@@ -64,25 +66,22 @@ public class Constant {
             "Home",
             "Add User"
     };
+
     public static String getTimeAgo(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date pastDate = dateFormat.parse(dateString);
             long currentTime = System.currentTimeMillis();
             long timeDifference = currentTime - pastDate.getTime();
-
             if (timeDifference < 0) {
-                // Handle future dates
                 return "In the future";
             }
-
             long seconds = timeDifference / 1000;
             long minutes = seconds / 60;
             long hours = minutes / 60;
             long days = hours / 24;
             long months = days / 30;
             long years = months / 12;
-
             if (years > 0) {
                 return years == 1 ? "1y" : years + "y";
             } else if (months >= 1 && months <= 11) {
@@ -100,6 +99,35 @@ public class Constant {
             e.printStackTrace();
             return "Invalid date";
         }
+    }
+    public static void userUpdate(ArrayList <User> userList, UserAdapter userAdapter) {
+        ArrayList<User> existingData = userAdapter.getData();
+        ArrayList<User> newUserIds = new ArrayList<>();
+        int existingIndex, insertionIndex;
+        for (User user : userList) {
+            existingIndex = binarySearch(existingData, user.getUserId());
+            newUserIds.add(user);
+            if (existingIndex == -1) {
+                insertionIndex = findInsertionIndex(existingData, user.getUserId());
+                existingData.add(insertionIndex, user);
+                userAdapter.notifyItemInserted(insertionIndex);
+            } else {
+                User existingUser = existingData.get(existingIndex);
+                if (!existingUser.addFriendsUserEqual(user)) {
+                    existingData.set(existingIndex, user);
+                    userAdapter.notifyItemChanged(existingIndex);
+                }
+            }
+        }
+        for (int i = existingData.size() - 1; i >= 0; i--) {
+            User existingUser = existingData.get(i);
+            int position = binarySearch(newUserIds, existingUser.getUserId());
+            if (position == -1) {
+                existingData.remove(i);
+                userAdapter.notifyItemRemoved(i);
+            }
+        }
+
     }
 
     public static Object getResource(String userPicture) {
@@ -121,7 +149,7 @@ public class Constant {
             case "8":
                 return R.drawable.frame8;
             case "null":
-                return R.drawable.logo;
+                return R.drawable.users;
             default:
                 return userPicture;
         }
@@ -163,23 +191,21 @@ public class Constant {
 
     private static void introSort(ArrayList<User> list, int low, int high, int maxDepth) {
         if (low < high) {
-            if (maxDepth == 0) {
+            if (maxDepth == 0)
                 heapSort(list, low, high);
-            } else {
+            else {
                 int pivotIndex = partition(list, low, high);
                 introSort(list, low, pivotIndex, maxDepth - 1);
                 introSort(list, pivotIndex + 1, high, maxDepth - 1);
             }
-        } else {
+        } else
             insertionSort(list, low, high);
-        }
     }
 
     private static void heapSort(ArrayList<User> list, int low, int high) {
         int n = high - low + 1;
-        for (int i = n / 2 - 1; i >= 0; i--) {
+        for (int i = n / 2 - 1; i >= 0; i--)
             heapify(list, n, i, low);
-        }
         for (int i = n - 1; i >= 0; i--) {
             Collections.swap(list, low, low + i);
             heapify(list, i, 0, low);
@@ -190,12 +216,10 @@ public class Constant {
         int largest = i;
         int leftChild = 2 * i + 1;
         int rightChild = 2 * i + 2;
-        if (leftChild < n && list.get(low + leftChild).getUserId() > list.get(low + largest).getUserId()) {
+        if (leftChild < n && list.get(low + leftChild).getUserId() > list.get(low + largest).getUserId())
             largest = leftChild;
-        }
-        if (rightChild < n && list.get(low + rightChild).getUserId() > list.get(low + largest).getUserId()) {
+        if (rightChild < n && list.get(low + rightChild).getUserId() > list.get(low + largest).getUserId())
             largest = rightChild;
-        }
         if (largest != i) {
             Collections.swap(list, low + i, low + largest);
             heapify(list, n, largest, low);
@@ -207,21 +231,21 @@ public class Constant {
         int i = low - 1;
         int j = high + 1;
         while (true) {
-            do {
+            do
                 i++;
-            } while (list.get(i).getUserId() < pivot.getUserId());
-            do {
+            while (list.get(i).getUserId() < pivot.getUserId());
+            do
                 j--;
-            } while (list.get(j).getUserId() > pivot.getUserId());
-            if (i >= j) {
+            while (list.get(j).getUserId() > pivot.getUserId());
+            if (i >= j)
                 return j;
-            }
             Collections.swap(list, i, j);
         }
     }
+
     private static void insertionSort(ArrayList<User> list, int low, int high) {
         for (int i = low + 1; i <= high; i++) {
-            User key =  list.get(i);
+            User key = list.get(i);
             int j = i - 1;
             while (j >= low && list.get(j).getUserId() > key.getUserId()) {
                 list.set(j + 1, list.get(j));
@@ -230,33 +254,33 @@ public class Constant {
             list.set(j + 1, key);
         }
     }
+
     public static int findInsertionIndex(ArrayList<User> list, long targetUserId) {
         int low = 0;
         int high = list.size() - 1;
         while (low <= high) {
             int mid = low + (high - low) / 2;
-            if (list.get(mid).getUserId() == targetUserId) {
+            if (list.get(mid).getUserId() == targetUserId)
                 return mid;
-            } else if (list.get(mid).getUserId() < targetUserId) {
+            else if (list.get(mid).getUserId() < targetUserId)
                 low = mid + 1;
-            } else {
+            else
                 high = mid - 1;
-            }
         }
         return low;
     }
+
     public static int binarySearch(ArrayList<User> list, long target) {
         int low = 0;
         int high = list.size() - 1;
         while (low <= high) {
             int mid = low + (high - low) / 2;
-            if (list.get(mid).getUserId() == target) {
+            if (list.get(mid).getUserId() == target)
                 return mid;
-            } else if (list.get(mid).getUserId() < target) {
+            else if (list.get(mid).getUserId() < target)
                 low = mid + 1;
-            } else {
+            else
                 high = mid - 1;
-            }
         }
         return -1;
     }
@@ -270,11 +294,13 @@ public class Constant {
         editor.putBoolean(DATA_LOGIN, status);
         editor.apply();
     }
+
     public static void setTopMargin(ViewGroup viewGroup, int topMargin) {
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewGroup.getLayoutParams();
         params.topMargin = topMargin;
         viewGroup.setLayoutParams(params);
     }
+
     public static void setBottomMargin(ViewGroup viewGroup, int bottomMargin) {
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewGroup.getLayoutParams();
         params.bottomMargin = bottomMargin;
@@ -353,6 +379,7 @@ public class Constant {
     public static boolean isValidEmail(String email) {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
+
     @SuppressLint("HardwareIds")
     public static String getSystemDetail(Context context) {
         return "Brand: " + Build.BRAND + "\n" +

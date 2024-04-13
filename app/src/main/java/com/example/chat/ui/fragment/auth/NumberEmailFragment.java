@@ -189,6 +189,8 @@ public class NumberEmailFragment extends Fragment implements View.OnClickListene
                 progressButton.buttonSet("Next");
             }
         } catch (Exception ex) {
+            binding.clickNameFragment.setClickable(true);
+            progressButton.buttonSet("Next");
             toastMessage(ex.getMessage());
         }
     }

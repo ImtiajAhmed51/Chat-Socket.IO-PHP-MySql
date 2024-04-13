@@ -8,15 +8,13 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/profileFragmentMainContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/allBackgroundColor2"
                 tools:context=".ui.fragment.home.UserAboutFragment">
-
                 <ImageView
                     android:id="@+id/profileUserCoverImage"
                     android:layout_width="match_parent"
@@ -26,7 +24,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
                 <LinearLayout
                     android:id="@+id/userProfileSettingsTopMargin"
                     android:layout_width="wrap_content"
@@ -46,7 +43,6 @@
                         app:cardBackgroundColor="#80000000"
                         app:cardCornerRadius="50dp"
                         app:cardElevation="0dp">
-
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

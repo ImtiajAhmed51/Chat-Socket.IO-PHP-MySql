@@ -290,14 +290,14 @@ public class User {
         }
 
         User otherUser = (User) obj;
-        return userId==(otherUser.userId)
-                && userDisplayName.equals(otherUser.userDisplayName)
-                && userName.equals(otherUser.userName)
-                && userPicture.equals(otherUser.userPicture)
-                && userVerified == otherUser.userVerified
-                && userRole.equals(otherUser.userRole)
-                && userActiveStatus.equals(otherUser.userActiveStatus)
-                && userSecurity==otherUser.userSecurity
-                && isButtonEnabled==otherUser.isButtonEnabled;
+        return getUserId()==(otherUser.getUserId())
+                && getUserDisplayName().equals(otherUser.getUserDisplayName())
+                && getUserName().equals(otherUser.getUserName())
+                && getUserPicture().equals(otherUser.getUserPicture())
+                && isUserVerified() == otherUser.isUserVerified()
+                && getUserRole().equals(otherUser.getUserRole())
+                && getUserActiveStatus().equals(otherUser.getUserActiveStatus())
+                && isUserSecurity()==otherUser.isUserSecurity()
+                && isButtonEnabled()==otherUser.isButtonEnabled();
     }
 }

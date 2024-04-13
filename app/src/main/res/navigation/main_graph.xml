@@ -14,6 +14,9 @@
             app:destination="@id/profileFragment"
 
             />
+        <action
+            android:id="@+id/action_mainFragment_to_chatUserFragment"
+            app:destination="@id/chatUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -63,6 +66,9 @@
             app:exitAnim="@anim/exit"
             app:popEnterAnim="@anim/pop_enter"
             app:popExitAnim="@anim/pop_exit"/>
+        <action
+            android:id="@+id/action_friendsFragment_to_chatUserFragment"
+            app:destination="@id/chatUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFriendsFragment"
@@ -80,4 +86,9 @@
         android:id="@+id/requestsFragment"
         android:name="com.example.chat.ui.fragment.home.RequestsFragment"
         android:label="RequestsFragment" />
+    <fragment
+        android:id="@+id/chatUserFragment"
+        android:name="com.example.chat.ui.fragment.home.ChatUserFragment"
+        android:label="fragment_chat_user"
+        tools:layout="@layout/fragment_chat_user" />
 </navigation>

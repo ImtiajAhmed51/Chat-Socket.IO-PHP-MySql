@@ -2,11 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/allBackgroundColor"
         tools:context=".ui.fragment.auth.ChooseProfilePictureFragment">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -105,23 +107,20 @@
                     android:layout_height="35dp"
                     android:layout_marginEnd="18dp"
                     android:layout_marginBottom="20dp"
-                    app:cardCornerRadius="250dp"
-                    app:cardElevation="0dp"
                     android:clickable="true"
-
+                    android:focusable="true"
                     android:foreground="?selectableItemBackground"
                     app:cardBackgroundColor="@color/transparent"
+                    app:cardCornerRadius="250dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
-                    app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-                    android:focusable="true">
-                    <ImageView
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout3">
 
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/add_round" />
-
                 </androidx.cardview.widget.CardView>
-
 
                 <TextView
                     android:layout_width="wrap_content"

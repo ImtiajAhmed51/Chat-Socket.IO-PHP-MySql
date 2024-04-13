@@ -129,6 +129,8 @@ public class DobFragment extends Fragment implements View.OnClickListener {
                     EncryptionUtils.encrypt(password)
             );
         } catch (Exception e) {
+            binding.clickProfilePictureFragment.setClickable(true);
+            progressButton.buttonSet("Create an account");
             toastMessage(e.getMessage());
         }
     }
