@@ -95,7 +95,8 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
             } else {
                 toastMessage("Read Phone State Permission Denied");
             }
-        } else if (requestCode == PermissionUtils.REQUEST_ACCESS_FINE_LOCATION) {
+        }
+        if (requestCode == PermissionUtils.REQUEST_ACCESS_FINE_LOCATION) {
             // Check if the ACCESS_FINE_LOCATION permission was granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted, proceed with your location-related code

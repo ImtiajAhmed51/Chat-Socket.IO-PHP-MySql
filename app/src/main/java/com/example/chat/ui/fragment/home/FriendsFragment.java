@@ -5,6 +5,7 @@ import static com.example.chat.utils.Constant.findInsertionIndex;
 import static com.example.chat.utils.Constant.introSort;
 import static com.example.chat.utils.Constant.userUpdate;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import com.example.chat.adapter.UserAdapter;
 import com.example.chat.databinding.FragmentFriendsBinding;
 import com.example.chat.inter.ClickListener;
 import com.example.chat.model.User;
+import com.example.chat.ui.activity.ChatUserActivity;
 import com.example.chat.ui.viewmodel.UserViewModel;
 import com.example.chat.ui.viewmodel.OwnViewModel;
 import com.example.chat.utils.BackgroundWorker;
@@ -41,7 +43,7 @@ import java.util.ArrayList;
 public class FriendsFragment extends Fragment implements View.OnClickListener, ClickListener {
     private FragmentFriendsBinding binding;
     private UserAdapter userAdapter;
-    private final ArrayList<User> userList=new ArrayList<>();
+    private final ArrayList<User> userList = new ArrayList<>();
     private OwnViewModel ownViewModel;
     private UserViewModel userViewModel;
     private static final long REFRESH_INTERVAL = 2000;
@@ -59,11 +61,12 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
         super.onCreate(savedInstanceState);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
-        userAdapter = new UserAdapter(requireActivity(),new ArrayList<>(), this, 5);
+        userAdapter = new UserAdapter(requireActivity(), new ArrayList<>(), this, 5);
         handler = new Handler(Looper.getMainLooper());
         refreshDataRunnable = this::refreshData;
         handler.post(refreshDataRunnable);
     }
+
     private void refreshData() {
 
         showAllUser();
@@ -84,7 +87,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    userUpdate(userList,userAdapter);
+                    userUpdate(userList, userAdapter);
                 }
             }
         });
@@ -99,6 +102,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
             Navigation.findNavController(requireView()).navigate(R.id.action_friendsFragment_to_addFriendsFragment);
         }
     }
+
     private void showAllUser() {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this::friendsShowAllUserResponse);
         try {
@@ -132,9 +136,11 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
             toastMessage(e.getMessage());
         }
     }
+
     private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -150,6 +156,22 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
 
     @Override
     public void onClickItem(User user, int position, int type, int buttonType) {
+        if (type == 5) {
+            Intent intent = new Intent(requireActivity(), ChatUserActivity.class);
+            Bundle b = new Bundle();
+            b.putLong("id", user.getId());
+            b.putLong("userId", user.getUserId());
+            b.putString("userDisplayName", user.getUserDisplayName());
+            b.putString("userName", user.getUserName());
+            b.putString("userPicture", user.getUserPicture());
+            b.putBoolean("userVerified", user.isUserVerified());
+            b.putString("userRole", user.getUserRole());
+            b.putString("userActiveStatus", user.getUserActiveStatus());
+            b.putBoolean("userSecurity", user.isUserSecurity());
+            intent.putExtras(b);
+            startActivity(intent);
+        }
+
 
     }
 }

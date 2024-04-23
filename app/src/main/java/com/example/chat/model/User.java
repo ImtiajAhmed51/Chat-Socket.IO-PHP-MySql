@@ -64,6 +64,26 @@ public class User {
 
     }
 
+    public User(long id, long userId,
+                String userDisplayName,
+                String userName,
+                String userPicture,
+                Boolean userVerified,
+                String userRole,
+                String userActiveStatus,
+                Boolean userSecurity) {
+        this.id=id;
+        this.userId = userId;
+        this.userDisplayName = userDisplayName;
+        this.userName = userName;
+        this.userPicture = userPicture;
+        this.userVerified = userVerified;
+        this.userRole=userRole;
+        this.userActiveStatus=userActiveStatus;
+        this.userSecurity=userSecurity;
+
+    }
+
 
     public String getRequestTime() {
         return requestTime;

@@ -96,8 +96,19 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClickItem(User user, int position, int type, int buttonType) {
         if(type==1){
-            startActivity(new Intent(requireActivity(), ChatUserActivity.class));
-            //Navigation.findNavController(binding.getRoot()).navigate(R.id.action_mainFragment_to_chatUserFragment);
+            Intent intent = new Intent(requireActivity(), ChatUserActivity.class);
+            Bundle b = new Bundle();
+            b.putLong("id", user.getId());
+            b.putLong("userId", user.getUserId());
+            b.putString("userDisplayName", user.getUserDisplayName());
+            b.putString("userName", user.getUserName());
+            b.putString("userPicture", user.getUserPicture());
+            b.putBoolean("userVerified", user.isUserVerified());
+            b.putString("userRole", user.getUserRole());
+            b.putString("userActiveStatus", user.getUserActiveStatus());
+            b.putBoolean("userSecurity", user.isUserSecurity());
+            intent.putExtras(b);
+            startActivity(intent);
         }
 
     }

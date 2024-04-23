@@ -48,7 +48,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ChooseProfilePictureFragment extends Fragment implements View.OnClickListener {
-
     private FragmentChooseProfilePictureBinding binding;
     private String userId = "", mainVal, pass;
     private ProgressButton progressButton;
@@ -61,6 +60,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         binding = FragmentChooseProfilePictureBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,6 +81,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         binding.skipClick.setOnClickListener(this);
         binding.addUserPicture.setOnClickListener(this);
     }
+
     private void initializeArguments() {
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -89,6 +90,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             pass = arguments.getString("pass");
         }
     }
+
     @Override
     public void onClick(View view) {
         int selectedImageResource = 0;
@@ -128,7 +130,6 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                 }
             }
 
-
         } else if (view.getId() == binding.skipClick.getId()) {
             selectedImage = null;
             binding.skipClick.setClickable(false);
@@ -138,9 +139,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         }
 
         if (view instanceof CardView && view.getId() != binding.addUserPicture.getId()) {
-
             resetBackgroundColors();
-
             ((CardView) view).setCardBackgroundColor(getResources().getColor(R.color.purple_500));
             binding.userProfileImage.setImageResource(selectedImageResource);
         }
@@ -216,6 +215,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         options.setToolbarTitle("Crop Image");
         return options;
     }
+
     public void pickImageFromGallery() {
         if (PermissionUtils.hasStoragePermissions(requireActivity())) {
             // Permissions already granted, proceed with your code
@@ -225,6 +225,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             PermissionUtils.requestStoragePermissions(this);
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -240,11 +241,13 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             }
         }
     }
+
     private void startImagePicker() {
         Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
         startActivityForResult(pickIntent, PICK_IMAGE);
     }
+
     private void login() {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this::processLoginResponse);
         try {
@@ -252,7 +255,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             String phoneNumberParam = isValidBangladeshiPhoneNumber(mainVal) ? EncryptionUtils.encrypt(mainVal) : EncryptionUtils.encrypt("");
             backgroundWorker.execute("Login", emailParam, phoneNumberParam, EncryptionUtils.encrypt(pass));
         } catch (Exception e) {
-            if(selectedImage != null){
+            if (selectedImage != null) {
                 binding.saveChooseProfilePictureClick.setClickable(true);
                 progressButton.buttonSet("Next");
             }
@@ -260,6 +263,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             toastMessage(e.getMessage());
         }
     }
+
     private void processChangePictureResponse(Object output) {
         try {
             JSONObject jsonResponse = new JSONObject((String) output);
@@ -271,13 +275,14 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                 toastMessage(jsonResponse.getString("message"));
             }
         } catch (Exception e) {
-            if(selectedImage != null){
+            if (selectedImage != null) {
                 binding.saveChooseProfilePictureClick.setClickable(true);
                 progressButton.buttonSet("Next");
             }
             toastMessage(e.getMessage());
         }
     }
+
     private void processLoginResponse(Object output) {
         try {
             JSONObject jsonResponse = new JSONObject((String) output);
@@ -304,12 +309,14 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             toastMessage(e.getMessage());
         }
     }
+
     private void startMainActivity(String jsonObject) {
         Intent intent = new Intent(requireActivity(), MainActivity.class);
         intent.putExtra("jsonObject", jsonObject);
         startActivity(intent);
         requireActivity().finish();
     }
+
     private void resetBackgroundColors() {
         CardView[] cardViews = {
                 binding.ProfileImageCardView1,
@@ -325,9 +332,11 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             cardView.setCardBackgroundColor(getResources().getColor(R.color.transparent));
         }
     }
+
     private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
+
     private void setClickListeners(CardView... cardViews) {
         for (CardView cardView : cardViews) {
             cardView.setOnClickListener(this);

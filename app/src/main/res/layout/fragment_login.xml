@@ -120,6 +120,7 @@
                             android:id="@+id/loginEmailNumberEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
                             android:layout_alignParentEnd="true"
                             android:layout_toEndOf="@+id/loginEmailNumberPrefixTextView"
                             android:fontFamily="@font/gg_sans_semi_bold"

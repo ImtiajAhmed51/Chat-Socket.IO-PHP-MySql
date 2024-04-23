@@ -50,6 +50,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         progressButton.buttonSet(LOGIN_BUTTON_TEXT);
         binding.clickLoginFragment.setOnClickListener(this);
         binding.loginBackPressed.setOnClickListener(this);
+
+
         setupTextChangeListeners();
     }
 
