@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.chat.adapter.ViewPagerAdapter;
 import com.example.chat.databinding.FragmentMainBinding;
+import com.example.chat.ui.design.CustomViewPager;
 import com.example.chat.ui.viewmodel.FragmentViewModel;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.DimensionUtils;
@@ -47,9 +48,11 @@ public class MainFragment extends Fragment {
         viewAdapter.addFragment(fragmentViewModel.getFragmentLiveData().getValue().get(2), "AddUserFragment");
         Constant.setBottomMargin(binding.tabs, DimensionUtils.getNavigationBarHeight(requireActivity()));
 
-        binding.viewPager.setOffscreenPageLimit(1);
+
         binding.viewPager.setAdapter(viewAdapter);
+        binding.viewPager.setOffscreenPageLimit(3);
         binding.tabs.setupWithViewPager(binding.viewPager);
+        binding.viewPager.setPageTransformer(false, new CustomViewPager(requireActivity()));
         binding.viewPager.setCurrentItem(1);
         for (int i = 0; i < binding.tabs.getTabCount(); i++) {
             TabLayout.Tab tab = binding.tabs.getTabAt(i);
