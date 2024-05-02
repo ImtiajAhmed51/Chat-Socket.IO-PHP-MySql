@@ -48,6 +48,7 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
         userAdapter = new UserAdapter(requireActivity(),new ArrayList<>(), this, 2);
+
         handler = new Handler(Looper.getMainLooper());
         refreshDataRunnable = this::refreshData;
         handler.post(refreshDataRunnable);
@@ -108,7 +109,8 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
                         jsonObj.getString("userSecurity").equals("Yes"),
-                        true));
+                        true,
+                        false));
             }
             introSort(userList);
             userViewModel.setUserList(userList);
@@ -152,8 +154,13 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
                 //int position = userAdapter.getData().indexOf(new User(Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("receiverUserId")))));
                 int position=binarySearch(userAdapter.getData(),Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("receiverUserId"))));
                 userAdapter.getData().get(position).setButtonEnabled(false);
-                userAdapter.notifyDataSetChanged();
+                userAdapter.getData().get(position).setRequestSuccess(true);
+                userAdapter.notifyItemChanged(position);
             } else {
+                int position=binarySearch(userAdapter.getData(),Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("receiverUserId"))));
+                userAdapter.getData().get(position).setButtonEnabled(true);
+                userAdapter.getData().get(position).setRequestSuccess(false);
+                userAdapter.notifyItemChanged(position);
             }
         } catch (Exception e) {
             toastMessage(e.getMessage());

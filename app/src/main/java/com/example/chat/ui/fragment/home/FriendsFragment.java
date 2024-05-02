@@ -128,7 +128,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
                         jsonObj.getString("userActiveStatus"),
                         jsonObj.getString("userSecurity").equals("Yes"),
                         jsonObj.getString("requestTime"),
-                        true));
+                        true,false));
             }
             introSort(userList);
             userViewModel.setUserList(userList);

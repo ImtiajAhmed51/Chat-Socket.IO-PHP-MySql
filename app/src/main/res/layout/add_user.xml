@@ -261,14 +261,13 @@
                             android:id="@+id/messageChatClick"
                             android:layout_width="34dp"
                             android:layout_height="34dp"
-
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
-                            android:visibility="visible"
-                            app:cardBackgroundColor="#373a43"
+                            android:visibility="gone"
+                            app:cardBackgroundColor="@color/teal_200"
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
 
@@ -287,18 +286,26 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:cardBackgroundColor="#373a43"
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
 
+                            <ProgressBar
+                                android:id="@+id/addRequestProgressClick"
+                                android:layout_width="20dp"
+                                android:layout_gravity="center"
+                                android:layout_height="20dp"/>
+
                             <TextView
+                                android:id="@+id/addRequestTextClick"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="7dp"
                                 android:layout_marginEnd="15dp"
                                 android:layout_marginBottom="7dp"
+                                android:visibility="invisible"
                                 android:fontFamily="@font/gg_sans_bold"
                                 android:text="Add"
                                 android:textColor="#b9babf" />

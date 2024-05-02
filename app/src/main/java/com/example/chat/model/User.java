@@ -5,9 +5,18 @@ public class User {
     private String  userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole,userActiveStatus,requestTime;
     private boolean isOnline, userVerified, userSecurity;
     private boolean isButtonEnabled=true;
+    private boolean requestSuccess=false;
 
     public String getUserActiveStatus() {
         return userActiveStatus;
+    }
+
+    public boolean isRequestSuccess() {
+        return requestSuccess;
+    }
+
+    public void setRequestSuccess(boolean requestSuccess) {
+        this.requestSuccess = requestSuccess;
     }
 
     public void setUserActiveStatus(String userActiveStatus) {
@@ -42,15 +51,17 @@ public class User {
         this.id = id;
     }
 
-    public User(long id, long userId,
+    public User(long id,
+                long userId,
                 String userDisplayName,
                 String userName,
                 String userPicture,
-                Boolean userVerified,
+                boolean userVerified,
                 String userRole,
                 String userActiveStatus,
-                Boolean userSecurity,
-                Boolean isButtonEnabled) {
+                boolean userSecurity,
+                boolean isButtonEnabled,
+                boolean requestSuccess) {
         this.id=id;
         this.userId = userId;
         this.userDisplayName = userDisplayName;
@@ -61,6 +72,7 @@ public class User {
         this.userActiveStatus=userActiveStatus;
         this.userSecurity=userSecurity;
         this.isButtonEnabled = isButtonEnabled;
+        this.requestSuccess=requestSuccess;
 
     }
 
@@ -68,10 +80,10 @@ public class User {
                 String userDisplayName,
                 String userName,
                 String userPicture,
-                Boolean userVerified,
+                boolean userVerified,
                 String userRole,
                 String userActiveStatus,
-                Boolean userSecurity) {
+                boolean userSecurity) {
         this.id=id;
         this.userId = userId;
         this.userDisplayName = userDisplayName;
@@ -97,11 +109,12 @@ public class User {
                 String userDisplayName,
                 String userName,
                 String userPicture,
-                Boolean userVerified,
+                boolean userVerified,
                 String userRole,
                 String userActiveStatus,
-                Boolean userSecurity, String requestTime,
-                Boolean isButtonEnabled) {
+                boolean userSecurity, String requestTime,
+                boolean isButtonEnabled,
+                boolean requestSuccess) {
         this.id=id;
         this.userId = userId;
         this.userDisplayName = userDisplayName;
@@ -113,6 +126,7 @@ public class User {
         this.userSecurity=userSecurity;
         this.requestTime=requestTime;
         this.isButtonEnabled = isButtonEnabled;
+        this.requestSuccess=requestSuccess;
 
     }
 
@@ -125,9 +139,9 @@ public class User {
                 String userNumber,
                 String userPicture,
                 String userGender,
-                Boolean userVerified,
+                boolean userVerified,
                 String userAccountOpenTime,
-                Boolean userSecurity,
+                boolean userSecurity,
                 String userRole,
                 String userActiveStatus) {
 

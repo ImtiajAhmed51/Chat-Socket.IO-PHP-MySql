@@ -99,12 +99,16 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             addUserBinding.cancelClick.setVisibility(View.GONE);
             addUserBinding.allUserRequestTime.setVisibility(View.GONE);
             addUserBinding.acceptClick.setVisibility(View.GONE);
-            addUserBinding.addRequestClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.GONE);
+            addUserBinding.addRequestClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.INVISIBLE);
+            addUserBinding.addRequestTextClick.setVisibility(currentItem.isRequestSuccess()? View.INVISIBLE : View.VISIBLE);
+            addUserBinding.addRequestProgressClick.setVisibility(currentItem.isRequestSuccess()?View.VISIBLE : View.INVISIBLE);
             addUserBinding.addRequestClick.setEnabled(currentItem.isButtonEnabled());
             addUserBinding.addRequestClick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     addUserBinding.addRequestClick.setEnabled(false);
+                    addUserBinding.addRequestProgressClick.setVisibility(View.VISIBLE);
+                    addUserBinding.addRequestTextClick.setVisibility(View.INVISIBLE);
                     itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
                 }
             });

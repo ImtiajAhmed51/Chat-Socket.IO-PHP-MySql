@@ -96,7 +96,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
                         jsonObj.getString("userActiveStatus"),
                         jsonObj.getString("userSecurity").equals("Yes"),
                         jsonObj.getString("requestTime"),
-                        true));
+                        true,false));
             }
             introSort(userList);
             userViewModel.setUserList(userList);
