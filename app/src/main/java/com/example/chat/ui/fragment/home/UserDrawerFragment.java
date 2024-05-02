@@ -112,4 +112,9 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
         }
 
     }
+
+    @Override
+    public void onClickGalleryImage(int position, int type) {
+
+    }
 }

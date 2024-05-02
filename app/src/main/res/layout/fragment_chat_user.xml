@@ -296,23 +296,36 @@
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/sendImage"
+                                app:layout_constraintEnd_toStartOf="@+id/pickImageGallery"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageView
-                                android:id="@+id/sendImage"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/pickImageGallery"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="10dp"
-                                android:layout_marginBottom="4.8dp"
-                                android:src="@drawable/ic_image"
-                                android:visibility="visible"
+                                android:layout_marginBottom="1dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/sendButton" />
+                                app:layout_constraintEnd_toStartOf="@+id/sendButton"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="?selectableItemBackground"
+                                card_view:cardBackgroundColor="@color/transparent"
+                                card_view:cardCornerRadius="50dp"
+                                card_view:cardElevation="0dp">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_margin="5dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/ic_image" />
+                            </androidx.cardview.widget.CardView>
+
 
                             <ImageView
                                 android:id="@+id/sendButton"
@@ -358,7 +371,7 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/recyclerViewId"
+                                android:id="@+id/recyclerGalleryImageView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/head"
@@ -377,6 +390,7 @@
                                 android:layout_marginTop="30dp"
                                 android:layout_marginBottom="30dp"
                                 android:gravity="center"
+                                android:fontFamily="@font/gg_sans_bold"
                                 android:text="No Photo message"
                                 android:textSize="18sp"
                                 android:visibility="gone" />

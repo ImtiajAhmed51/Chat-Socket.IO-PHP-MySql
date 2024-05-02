@@ -130,6 +130,11 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
         }
     }
 
+    @Override
+    public void onClickGalleryImage(int position, int type) {
+
+    }
+
     private void performBackgroundWork(String senderUserId, String receiverUserId) {
         try {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this::AddRequestUserResponse);

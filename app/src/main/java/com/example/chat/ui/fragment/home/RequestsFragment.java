@@ -171,6 +171,11 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
             performBackgroundWork(String.valueOf(user.getId()),type,buttonType);
     }
 
+    @Override
+    public void onClickGalleryImage(int position, int type) {
+
+    }
+
     private void performBackgroundWork(String friendUserId,int type,int buttonType) {
         try {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this::pendingRequestCancelUserResponse);

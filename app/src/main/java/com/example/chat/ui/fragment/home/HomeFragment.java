@@ -40,4 +40,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Clic
     public void onClickItem(User user, int position, int type,int buttonType) {
 
     }
+
+    @Override
+    public void onClickGalleryImage(int position, int type) {
+
+    }
 }
