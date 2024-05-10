@@ -2,6 +2,7 @@ package com.example.chat.ui.fragment.home;
 
 import static com.example.chat.utils.Constant.binarySearch;
 import static com.example.chat.utils.Constant.findInsertionIndex;
+import static com.example.chat.utils.Constant.friendUpdate;
 import static com.example.chat.utils.Constant.introSort;
 import static com.example.chat.utils.Constant.userUpdate;
 
@@ -87,7 +88,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    userUpdate(userList, userAdapter);
+                    friendUpdate(userList, userAdapter);
                 }
             }
         });
@@ -127,8 +128,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
                         jsonObj.getString("userSecurity").equals("Yes"),
-                        jsonObj.getString("requestTime"),
-                        true,false));
+                        jsonObj.getString("requestTime"),true));
             }
             introSort(userList);
             userViewModel.setUserList(userList);

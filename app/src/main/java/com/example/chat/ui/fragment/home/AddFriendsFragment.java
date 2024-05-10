@@ -108,9 +108,7 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
                         jsonObj.getString("userVerified").equals("Yes"),
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
-                        jsonObj.getString("userSecurity").equals("Yes"),
-                        true,
-                        false));
+                        jsonObj.getString("userSecurity").equals("Yes"),true));
             }
             introSort(userList);
             userViewModel.setUserList(userList);
@@ -184,7 +182,6 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
         if (view.getId() == binding.addFriendsBackPressed.getId()) {
             requireActivity().onBackPressed();
         } else if (view.getId()==binding.sentRequestsClick.getId()||view.getId()==binding.friendRequestsClick.getId()) {
-
             Bundle data = new Bundle();
             String title = null;
             int type=0;

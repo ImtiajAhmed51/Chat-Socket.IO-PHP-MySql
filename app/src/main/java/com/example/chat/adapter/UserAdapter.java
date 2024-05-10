@@ -72,19 +72,19 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void bindUserViewHolder(UserViewHolder holder, User currentItem) {
-        DrawerUserBinding drawerUserBinding= holder.userBinding;
-        if(type==1){
+        DrawerUserBinding drawerUserBinding = holder.userBinding;
+        if (type == 1) {
             drawerUserBinding.clickDrawerUserMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type, 0);
                 }
             });
             Glide.with(activity).load(Constant.getResource(currentItem.getUserPicture())).into(drawerUserBinding.drawerUserImage);
-            if(!currentItem.isUserSecurity()){
+            if (!currentItem.isUserSecurity()) {
                 drawerUserBinding.drawerUserActiveStatus.setVisibility(View.VISIBLE);
                 drawerUserBinding.drawerUserActiveStatus.setImageResource(Constant.getUserActiveStatus(currentItem.getUserActiveStatus()));
-            }else{
+            } else {
                 drawerUserBinding.drawerUserActiveStatus.setVisibility(View.INVISIBLE);
             }
 
@@ -94,14 +94,14 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void bindAddUserViewHolder(AddUserViewHolder holder, User currentItem) {
         AddUserBinding addUserBinding = holder.addUserBinding;
-        if(type==2){
+        if (type == 2) {
             addUserBinding.messageChatClick.setVisibility(View.GONE);
             addUserBinding.cancelClick.setVisibility(View.GONE);
             addUserBinding.allUserRequestTime.setVisibility(View.GONE);
             addUserBinding.acceptClick.setVisibility(View.GONE);
             addUserBinding.addRequestClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.INVISIBLE);
-            addUserBinding.addRequestTextClick.setVisibility(currentItem.isRequestSuccess()? View.INVISIBLE : View.VISIBLE);
-            addUserBinding.addRequestProgressClick.setVisibility(currentItem.isRequestSuccess()?View.VISIBLE : View.INVISIBLE);
+            addUserBinding.addRequestTextClick.setVisibility(currentItem.isRequestSuccess() ? View.INVISIBLE : View.VISIBLE);
+            addUserBinding.addRequestProgressClick.setVisibility(currentItem.isRequestSuccess() ? View.VISIBLE : View.INVISIBLE);
             addUserBinding.addRequestClick.setEnabled(currentItem.isButtonEnabled());
             addUserBinding.addRequestClick.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -109,12 +109,13 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     addUserBinding.addRequestClick.setEnabled(false);
                     addUserBinding.addRequestProgressClick.setVisibility(View.VISIBLE);
                     addUserBinding.addRequestTextClick.setVisibility(View.INVISIBLE);
-                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type, 0);
                 }
             });
-        } else if (type==3) {
+        } else if (type == 3) {
             addUserBinding.messageChatClick.setVisibility(View.GONE);
             addUserBinding.cancelClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.GONE);
+            addUserBinding.cancelImageClick.setVisibility(currentItem.isRequestSuccess() ? View.INVISIBLE : View.VISIBLE);
             addUserBinding.acceptClick.setVisibility(View.GONE);
             addUserBinding.addRequestClick.setVisibility(View.GONE);
             addUserBinding.cancelClick.setEnabled(currentItem.isButtonEnabled());
@@ -124,15 +125,28 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     addUserBinding.cancelClick.setEnabled(false);
-                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                    addUserBinding.cancelProgressClick.setVisibility(View.VISIBLE);
+                    addUserBinding.cancelImageClick.setVisibility(View.INVISIBLE);
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type, 0);
                 }
             });
-        }else if (type==4){
+        } else if (type == 4) {
+
+
+            addUserBinding.cancelClick.setVisibility(currentItem.isRequestSuccess() ? View.GONE : View.VISIBLE);
+            addUserBinding.acceptClick.setVisibility(currentItem.isRequestSuccess() ? View.GONE : View.VISIBLE);
+
             addUserBinding.allUserRequestTime.setVisibility(View.VISIBLE);
             addUserBinding.allUserRequestTime.setText(getTimeAgo(currentItem.getRequestTime()));
             addUserBinding.messageChatClick.setVisibility(View.GONE);
             addUserBinding.cancelClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.GONE);
             addUserBinding.acceptClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.GONE);
+            addUserBinding.cancelImageClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.INVISIBLE);
+            addUserBinding.acceptImageClick.setVisibility(currentItem.isButtonEnabled() ? View.VISIBLE : View.INVISIBLE);
+
+
+            addUserBinding.cancelProgressClick.setVisibility(currentItem.isButtonEnabled() ? View.INVISIBLE : View.VISIBLE);
+            addUserBinding.acceptProgressClick.setVisibility(currentItem.isButtonEnabled() ? View.INVISIBLE : View.VISIBLE);
             addUserBinding.cancelClick.setEnabled(currentItem.isButtonEnabled());
             addUserBinding.acceptClick.setEnabled(currentItem.isButtonEnabled());
             addUserBinding.addRequestClick.setVisibility(View.GONE);
@@ -141,7 +155,9 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View view) {
                     addUserBinding.cancelClick.setEnabled(false);
                     addUserBinding.acceptClick.setEnabled(false);
-                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,1);
+                    addUserBinding.acceptImageClick.setVisibility(View.INVISIBLE);
+                    addUserBinding.acceptProgressClick.setVisibility(View.VISIBLE);
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type, 1);
                 }
             });
             addUserBinding.cancelClick.setOnClickListener(new View.OnClickListener() {
@@ -149,11 +165,13 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View view) {
                     addUserBinding.cancelClick.setEnabled(false);
                     addUserBinding.acceptClick.setEnabled(false);
-                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                    addUserBinding.cancelImageClick.setVisibility(View.INVISIBLE);
+                    addUserBinding.cancelProgressClick.setVisibility(View.VISIBLE);
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type, 0);
                 }
             });
 
-        } else if (type==5) {
+        } else if (type == 5) {
             addUserBinding.messageChatClick.setVisibility(View.VISIBLE);
             addUserBinding.cancelClick.setVisibility(View.GONE);
             addUserBinding.acceptClick.setVisibility(View.GONE);
@@ -163,25 +181,44 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             addUserBinding.messageChatClick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type,0);
+                    itemClick.onClickItem(currentItem, holder.getAdapterPosition(), type, 0);
                 }
             });
+
+
+            addUserBinding.addUserNameAndUserId.setText(currentItem.getUserName() + "#" + String.valueOf(currentItem.getUserId()));
+            addUserBinding.activeStatusLayout.setVisibility(View.VISIBLE);
+            addUserBinding.addFriendsUserActiveStatus.setImageResource(Constant.getUserActiveStatusResource(currentItem.getUserActiveStatus()));
+
+
+            addUserBinding.userRole.setVisibility(View.VISIBLE);
+            addUserBinding.userRole.setImageResource(Constant.getUserActiveStatus(currentItem.getUserActiveStatus()));
+
+
         }
 
 
         Glide.with(activity).load(Constant.getResource(currentItem.getUserPicture())).into(addUserBinding.addUserPicture);
         addUserBinding.addUserDisplayName.setText(currentItem.getUserDisplayName());
         addUserBinding.allUserVerifiedId.setVisibility(currentItem.isUserVerified() ? View.VISIBLE : View.GONE);
-        addUserBinding.userRole.setVisibility(currentItem.getUserRole().equals("ADMIN") ? View.VISIBLE : View.INVISIBLE);
+        //addUserBinding.userRole.setVisibility(currentItem.getUserRole().equals("ADMIN") ? View.VISIBLE : View.INVISIBLE);
 
-        if(!currentItem.isUserSecurity()){
-            addUserBinding.addUserNameAndUserId.setText(currentItem.getUserName() + "#"+String.valueOf(currentItem.getUserId()));
-            addUserBinding.activeStatusLayout.setVisibility(View.VISIBLE);
-            addUserBinding.addFriendsUserActiveStatus.setImageResource(Constant.getUserActiveStatusResource(currentItem.getUserActiveStatus()));
-        }else{
-            addUserBinding.addUserNameAndUserId.setText("");
-            addUserBinding.activeStatusLayout.setVisibility(View.GONE);
+        addUserBinding.activeStatusLayout.setVisibility(View.VISIBLE);
+        addUserBinding.addFriendsUserActiveStatus.setImageResource(Constant.getUserActiveStatusResource(currentItem.getUserActiveStatus()));
+
+        if(type==2||type==3||type==4){
+            if (!currentItem.isUserSecurity()) {
+                addUserBinding.addUserNameAndUserId.setText(currentItem.getUserName() + "#" + String.valueOf(currentItem.getUserId()));
+
+
+                addUserBinding.userRole.setVisibility(View.VISIBLE);
+                addUserBinding.userRole.setImageResource(Constant.getUserActiveStatus(currentItem.getUserActiveStatus()));
+            } else {
+                addUserBinding.addUserNameAndUserId.setText("");
+                addUserBinding.userRole.setVisibility(View.INVISIBLE);
+            }
         }
+
 
     }
 

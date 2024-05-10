@@ -229,11 +229,20 @@
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
 
+                            <ProgressBar
+                                android:id="@+id/cancelProgressClick"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:visibility="invisible" />
+
                             <ImageView
+                                android:id="@+id/cancelImageClick"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/cancel" />
+                                android:src="@drawable/cancel"
+                                android:visibility="invisible" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -250,11 +259,20 @@
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
 
+                            <ProgressBar
+                                android:id="@+id/acceptProgressClick"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:visibility="invisible" />
+
                             <ImageView
+                                android:id="@+id/acceptImageClick"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_margin="4dp"
-                                android:src="@drawable/check" />
+                                android:src="@drawable/check"
+                                android:visibility="invisible" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -286,7 +304,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             app:cardBackgroundColor="#373a43"
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
@@ -294,8 +312,9 @@
                             <ProgressBar
                                 android:id="@+id/addRequestProgressClick"
                                 android:layout_width="20dp"
+                                android:layout_height="20dp"
                                 android:layout_gravity="center"
-                                android:layout_height="20dp"/>
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/addRequestTextClick"
@@ -305,10 +324,10 @@
                                 android:layout_marginTop="7dp"
                                 android:layout_marginEnd="15dp"
                                 android:layout_marginBottom="7dp"
-                                android:visibility="invisible"
                                 android:fontFamily="@font/gg_sans_bold"
                                 android:text="Add"
-                                android:textColor="#b9babf" />
+                                android:textColor="#b9babf"
+                                android:visibility="invisible" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
                 </LinearLayout>

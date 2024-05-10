@@ -51,50 +51,6 @@ public class User {
         this.id = id;
     }
 
-    public User(long id,
-                long userId,
-                String userDisplayName,
-                String userName,
-                String userPicture,
-                boolean userVerified,
-                String userRole,
-                String userActiveStatus,
-                boolean userSecurity,
-                boolean isButtonEnabled,
-                boolean requestSuccess) {
-        this.id=id;
-        this.userId = userId;
-        this.userDisplayName = userDisplayName;
-        this.userName = userName;
-        this.userPicture = userPicture;
-        this.userVerified = userVerified;
-        this.userRole=userRole;
-        this.userActiveStatus=userActiveStatus;
-        this.userSecurity=userSecurity;
-        this.isButtonEnabled = isButtonEnabled;
-        this.requestSuccess=requestSuccess;
-
-    }
-
-    public User(long id, long userId,
-                String userDisplayName,
-                String userName,
-                String userPicture,
-                boolean userVerified,
-                String userRole,
-                String userActiveStatus,
-                boolean userSecurity) {
-        this.id=id;
-        this.userId = userId;
-        this.userDisplayName = userDisplayName;
-        this.userName = userName;
-        this.userPicture = userPicture;
-        this.userVerified = userVerified;
-        this.userRole=userRole;
-        this.userActiveStatus=userActiveStatus;
-        this.userSecurity=userSecurity;
-
-    }
 
 
     public String getRequestTime() {
@@ -112,9 +68,7 @@ public class User {
                 boolean userVerified,
                 String userRole,
                 String userActiveStatus,
-                boolean userSecurity, String requestTime,
-                boolean isButtonEnabled,
-                boolean requestSuccess) {
+                boolean userSecurity, String requestTime,boolean isButtonEnabled) {
         this.id=id;
         this.userId = userId;
         this.userDisplayName = userDisplayName;
@@ -125,11 +79,46 @@ public class User {
         this.userActiveStatus=userActiveStatus;
         this.userSecurity=userSecurity;
         this.requestTime=requestTime;
-        this.isButtonEnabled = isButtonEnabled;
-        this.requestSuccess=requestSuccess;
+        this.isButtonEnabled=isButtonEnabled;
 
     }
-
+    public User(long id, long userId,
+                String userDisplayName,
+                String userName,
+                String userPicture,
+                boolean userVerified,
+                String userRole,
+                String userActiveStatus,
+                boolean userSecurity,boolean isButtonEnabled) {
+        this.id=id;
+        this.userId = userId;
+        this.userDisplayName = userDisplayName;
+        this.userName = userName;
+        this.userPicture = userPicture;
+        this.userVerified = userVerified;
+        this.userRole=userRole;
+        this.userActiveStatus=userActiveStatus;
+        this.userSecurity=userSecurity;
+        this.isButtonEnabled=isButtonEnabled;
+    }
+    public User(long id, long userId,
+                String userDisplayName,
+                String userName,
+                String userPicture,
+                boolean userVerified,
+                String userRole,
+                String userActiveStatus,
+                boolean userSecurity) {
+        this.id=id;
+        this.userId = userId;
+        this.userDisplayName = userDisplayName;
+        this.userName = userName;
+        this.userPicture = userPicture;
+        this.userVerified = userVerified;
+        this.userRole=userRole;
+        this.userActiveStatus=userActiveStatus;
+        this.userSecurity=userSecurity;
+    }
 
     public User(long userId,
                 String userDisplayName,
@@ -318,7 +307,7 @@ public class User {
 
     }
 
-    public boolean addFriendsUserEqual(Object obj) {
+    public boolean UserEqual(Object obj) {
         if (!(obj instanceof User)) {
             return false;
         }
@@ -333,5 +322,19 @@ public class User {
                 && getUserActiveStatus().equals(otherUser.getUserActiveStatus())
                 && isUserSecurity()==otherUser.isUserSecurity()
                 && isButtonEnabled()==otherUser.isButtonEnabled();
+    }
+    public boolean friendUserEqual(Object obj) {
+        if (!(obj instanceof User)) {
+            return false;
+        }
+
+        User otherUser = (User) obj;
+        return getUserId()==(otherUser.getUserId())
+                && getUserDisplayName().equals(otherUser.getUserDisplayName())
+                && getUserName().equals(otherUser.getUserName())
+                && getUserPicture().equals(otherUser.getUserPicture())
+                && isUserVerified() == otherUser.isUserVerified()
+                && getUserRole().equals(otherUser.getUserRole())
+                && getUserActiveStatus().equals(otherUser.getUserActiveStatus());
     }
 }

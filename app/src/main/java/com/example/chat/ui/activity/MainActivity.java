@@ -219,8 +219,7 @@ public class MainActivity extends AppCompatActivity {
                         jsonObj.getString("userVerified").equals("Yes"),
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
-                        jsonObj.getString("userSecurity").equals("Yes"),
-                        true,false));
+                        jsonObj.getString("userSecurity").equals("Yes"),true));
             }
             introSort(userList);
             userViewModel.setUserList(userList);

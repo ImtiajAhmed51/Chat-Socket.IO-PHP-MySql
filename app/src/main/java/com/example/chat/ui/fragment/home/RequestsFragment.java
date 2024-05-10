@@ -1,4 +1,5 @@
 package com.example.chat.ui.fragment.home;
+
 import static com.example.chat.utils.Constant.binarySearch;
 import static com.example.chat.utils.Constant.findInsertionIndex;
 import static com.example.chat.utils.Constant.introSort;
@@ -40,7 +41,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
     private String title;
     private int intType;
     private UserAdapter userAdapter;
-    private ArrayList<User> userList=new ArrayList<>();
+    private ArrayList<User> userList = new ArrayList<>();
     private OwnViewModel ownViewModel;
     private UserViewModel userViewModel;
     private static final long REFRESH_INTERVAL = 2000;
@@ -53,7 +54,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
         initializeArguments();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
-        userAdapter = new UserAdapter(requireActivity(),new ArrayList<>(), this, intType);
+        userAdapter = new UserAdapter(requireActivity(), new ArrayList<>(), this, intType);
         handler = new Handler(Looper.getMainLooper());
         refreshDataRunnable = this::refreshData;
         handler.post(refreshDataRunnable);
@@ -61,14 +62,15 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
 
 
     private void refreshData() {
-        if(intType==3){
+        if (intType == 3) {
             showAllUser("PendingRequestShowAllUser");
             handler.postDelayed(refreshDataRunnable, REFRESH_INTERVAL);
-        } else if (intType==4) {
+        } else if (intType == 4) {
             showAllUser("SentRequestShowAllUser");
             handler.postDelayed(refreshDataRunnable, REFRESH_INTERVAL);
         }
     }
+
     private void showAllUser(String type) {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this::showAllUserResponse);
         try {
@@ -95,8 +97,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
                         jsonObj.getString("userSecurity").equals("Yes"),
-                        jsonObj.getString("requestTime"),
-                        true,false));
+                        jsonObj.getString("requestTime"),true));
             }
             introSort(userList);
             userViewModel.setUserList(userList);
@@ -104,6 +105,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
             toastMessage(e.getMessage());
         }
     }
+
     private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
@@ -132,13 +134,14 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    userUpdate(userList,userAdapter);
+                    userUpdate(userList, userAdapter);
                 }
             }
         });
 
 
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -150,6 +153,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
         super.onResume();
         handler.postDelayed(refreshDataRunnable, REFRESH_INTERVAL);
     }
+
     private void initializeArguments() {
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -161,14 +165,14 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==binding.requestsBackPressed.getId()){
+        if (view.getId() == binding.requestsBackPressed.getId()) {
             requireActivity().onBackPressed();
         }
     }
 
 
-    public void onClickItem(User user, int position, int type,int buttonType) {
-            performBackgroundWork(String.valueOf(user.getId()),type,buttonType);
+    public void onClickItem(User user, int position, int type, int buttonType) {
+        performBackgroundWork(String.valueOf(user.getId()), type, buttonType);
     }
 
     @Override
@@ -176,14 +180,14 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
 
     }
 
-    private void performBackgroundWork(String friendUserId,int type,int buttonType) {
+    private void performBackgroundWork(String friendUserId, int type, int buttonType) {
         try {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this::pendingRequestCancelUserResponse);
-            if(type==3&&buttonType==0){
+            if (type == 3 && buttonType == 0) {
                 backgroundWorker.execute("PendingRequestCancelUser", friendUserId);
-            } else if (type==4&&buttonType==0) {
+            } else if (type == 4 && buttonType == 0) {
                 backgroundWorker.execute("SentRequestCancelUser", friendUserId);
-            } else if (type==4&&buttonType==1) {
+            } else if (type == 4 && buttonType == 1) {
                 backgroundWorker.execute("SentRequestAcceptUser", friendUserId);
             }
 
@@ -197,11 +201,18 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
             JSONObject jsonResponse = new JSONObject((String) output);
             if (jsonResponse.getBoolean("success")) {
 
-                int position=binarySearch(userAdapter.getData(),Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("userId"))));
+                int position = binarySearch(userAdapter.getData(), Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("userId"))));
                 userAdapter.getData().get(position).setButtonEnabled(false);
-                userAdapter.notifyDataSetChanged();
+                userAdapter.getData().get(position).setRequestSuccess(true);
+                userAdapter.notifyItemChanged(position);
             } else {
+                int position = binarySearch(userAdapter.getData(), Integer.parseInt(EncryptionUtils.decrypt(jsonResponse.getString("userId"))));
+                userAdapter.getData().get(position).setButtonEnabled(true);
+                userAdapter.getData().get(position).setRequestSuccess(false);
+                userAdapter.notifyItemChanged(position);
             }
+
+
         } catch (Exception e) {
             toastMessage(e.getMessage());
         }
