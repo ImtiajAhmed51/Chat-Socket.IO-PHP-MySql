@@ -1,7 +1,6 @@
 package com.example.chat.ui.fragment.home;
 
 import static com.example.chat.utils.Constant.binarySearch;
-import static com.example.chat.utils.Constant.findInsertionIndex;
 import static com.example.chat.utils.Constant.introSort;
 import static com.example.chat.utils.Constant.userUpdate;
 
@@ -12,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -97,7 +97,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
                         jsonObj.getString("userSecurity").equals("Yes"),
-                        jsonObj.getString("requestTime"),true));
+                        jsonObj.getString("requestTime")));
             }
             introSort(userList);
             userViewModel.setUserList(userList);
@@ -128,13 +128,19 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
         binding.requestsTitle.setText(title);
         binding.requestsBackPressed.setOnClickListener(this);
 
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-        binding.addFriendsRecyclerView.setAdapter(userAdapter);
+                binding.addFriendsRecyclerView.setAdapter(userAdapter);
+            }
+        }, 450);
+        ((SimpleItemAnimator) binding.addFriendsRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+
         userViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    userUpdate(userList, userAdapter);
+                    userUpdate(userList, userAdapter, 1);
                 }
             }
         });
@@ -173,6 +179,10 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
 
     public void onClickItem(User user, int position, int type, int buttonType) {
         performBackgroundWork(String.valueOf(user.getId()), type, buttonType);
+        userAdapter.getData().get(position).setButtonEnabled(false);
+        userAdapter.getData().get(position).setRequestSuccess(false);
+        userAdapter.notifyItemChanged(position);
+
     }
 
     @Override

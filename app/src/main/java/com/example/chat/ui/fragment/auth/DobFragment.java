@@ -1,23 +1,29 @@
 package com.example.chat.ui.fragment.auth;
+
 import static com.example.chat.utils.Constant.isValidBangladeshiPhoneNumber;
 import static com.example.chat.utils.Constant.isValidEmail;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
 import com.example.chat.R;
 import com.example.chat.databinding.FragmentDobBinding;
 import com.example.chat.ui.design.ProgressButton;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.EncryptionUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +33,7 @@ import java.util.Random;
 public class DobFragment extends Fragment implements View.OnClickListener {
     private FragmentDobBinding binding;
     private ProgressButton progressButton;
-    private String name="", mainVal="", userName="", password="", gen="", dob="";
+    private String name = "", mainVal = "", userName = "", password = "", gen = "", dob = "";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,11 +79,11 @@ public class DobFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==binding.dobEditText.getId()){
+        if (view.getId() == binding.dobEditText.getId()) {
             showDatePicker();
-        } else if (view.getId()==binding.clickProfilePictureFragment.getId()) {
+        } else if (view.getId() == binding.clickProfilePictureFragment.getId()) {
             handleProfilePictureClick();
-        } else if (view.getId()==binding.dobBackPressed.getId()) {
+        } else if (view.getId() == binding.dobBackPressed.getId()) {
             requireActivity().onBackPressed();
         }
     }
@@ -105,7 +111,7 @@ public class DobFragment extends Fragment implements View.OnClickListener {
 
     private void handleProfilePictureClick() {
 
-        if (dob.equals("")){
+        if (dob.equals("")) {
             return;
         }
         binding.clickProfilePictureFragment.setClickable(false);
@@ -142,12 +148,12 @@ public class DobFragment extends Fragment implements View.OnClickListener {
                 progressButton.buttonFinished();
                 String message = jsonResponse.getString("message");
                 String name = EncryptionUtils.decrypt(jsonResponse.getString("name"));
-                String userId =EncryptionUtils.decrypt(jsonResponse.getString("userId"));
+                String userId = EncryptionUtils.decrypt(jsonResponse.getString("userId"));
                 Bundle data = new Bundle();
                 data.putString("userId", userId);
                 data.putString("mainVal", mainVal);
                 data.putString("pass", password);
-                toastMessage(message+" "+name);
+                toastMessage(message + " " + name);
                 Navigation.findNavController(requireView()).navigate(R.id.action_dobFragment_to_chooseProfilePictureFragment, data);
             } else {
                 binding.clickProfilePictureFragment.setClickable(true);

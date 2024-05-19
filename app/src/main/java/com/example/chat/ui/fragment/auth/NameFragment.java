@@ -48,7 +48,7 @@ public class NameFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        binding. clickCreateAccountFragment.setClickable(true);
+        binding.clickCreateAccountFragment.setClickable(true);
         progressButton.buttonSet("Next");
     }
 
@@ -56,7 +56,7 @@ public class NameFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view.getId() == binding.clickCreateAccountFragment.getId()) {
 
-            if(!binding.nameEditText.getText().toString().trim().equals("")){
+            if (!binding.nameEditText.getText().toString().trim().equals("")) {
                 this.binding.clickCreateAccountFragment.setClickable(false);
                 this.progressButton.buttonActivated();
                 this.progressButton.buttonFinished();

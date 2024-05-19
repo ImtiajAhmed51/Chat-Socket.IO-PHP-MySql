@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:shape="rectangle">
-    <corners android:topLeftRadius="5dp" android:topRightRadius="5dp"/>
-    <gradient android:startColor="#23232F" android:endColor="#23232F" android:angle="0" android:type="linear" android:centerX="0%"/>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:shape="rectangle">
+    <corners
+        android:topLeftRadius="5dp"
+        android:topRightRadius="5dp" />
+    <gradient
+        android:angle="0"
+        android:centerX="0%"
+        android:endColor="#23232F"
+        android:startColor="#23232F"
+        android:type="linear" />
 </shape>

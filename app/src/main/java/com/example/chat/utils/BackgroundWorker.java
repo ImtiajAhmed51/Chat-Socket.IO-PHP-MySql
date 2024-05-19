@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class BackgroundWorker extends AsyncTask<String, String, String> {
     private final AsyncResponse asyncResponse;
-    private final String[] listKey = {"userId", "userDisplayName", "userName", "userDob", "userEmail", "userNumber", "userGender", "userPassword", "userPicture", "receiverUserId", "userActiveStatus","friendId"};
+    private final String[] listKey = {"userId", "userDisplayName", "userName", "userDob", "userEmail", "userNumber", "userGender", "userPassword", "userPicture", "receiverUserId", "userActiveStatus", "friendId"};
 
     public interface AsyncResponse {
         void onFinish(Object obj);

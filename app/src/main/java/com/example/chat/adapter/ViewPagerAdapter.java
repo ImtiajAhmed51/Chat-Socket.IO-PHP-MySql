@@ -61,6 +61,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return fragmentList.size();
     }
+
     private float dpToScreenWidthFraction() {
         float pixels = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,

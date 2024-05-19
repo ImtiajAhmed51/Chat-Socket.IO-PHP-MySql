@@ -297,7 +297,7 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?selectableItemBackground"
-                                app:cardBackgroundColor="#373948"
+                                app:cardBackgroundColor="@color/primaryColor"
                                 app:cardCornerRadius="25dp"
                                 card_view:cardElevation="0dp">
 
@@ -333,7 +333,7 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?selectableItemBackground"
-                                app:cardBackgroundColor="#373948"
+                                app:cardBackgroundColor="@color/primaryColor"
                                 app:cardCornerRadius="25dp"
                                 card_view:cardElevation="0dp">
 

@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.net.ssl.HttpsURLConnection;
 
 public class RequestHandler {
@@ -47,6 +48,7 @@ public class RequestHandler {
             return "Server Connection Failed";
         }
     }
+
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;

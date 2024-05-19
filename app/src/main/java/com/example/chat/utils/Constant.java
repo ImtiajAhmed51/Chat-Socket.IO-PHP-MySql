@@ -101,36 +101,8 @@ public class Constant {
         }
     }
 
-    public static void friendUpdate(ArrayList <User> userList, UserAdapter userAdapter) {
-        ArrayList<User> existingData = userAdapter.getData();
-        ArrayList<User> newUserIds = new ArrayList<>();
-        int existingIndex, insertionIndex;
-        for (User user : userList) {
-            existingIndex = binarySearch(existingData, user.getUserId());
-            newUserIds.add(user);
-            if (existingIndex == -1) {
-                insertionIndex = findInsertionIndex(existingData, user.getUserId());
-                existingData.add(insertionIndex, user);
-                userAdapter.notifyItemInserted(insertionIndex);
-            } else {
-                User existingUser = existingData.get(existingIndex);
-                if (!existingUser.friendUserEqual(user)) {
-                    existingData.set(existingIndex, user);
-                    userAdapter.notifyItemChanged(existingIndex);
-                }
-            }
-        }
-        for (int i = existingData.size() - 1; i >= 0; i--) {
-            User existingUser = existingData.get(i);
-            int position = binarySearch(newUserIds, existingUser.getUserId());
-            if (position == -1) {
-                existingData.remove(i);
-                userAdapter.notifyItemRemoved(i);
-            }
-        }
 
-    }
-    public static void userUpdate(ArrayList <User> userList, UserAdapter userAdapter) {
+    public static void userUpdate(ArrayList <User> userList, UserAdapter userAdapter,int type) {
         ArrayList<User> existingData = userAdapter.getData();
         ArrayList<User> newUserIds = new ArrayList<>();
         int existingIndex, insertionIndex;
@@ -143,10 +115,19 @@ public class Constant {
                 userAdapter.notifyItemInserted(insertionIndex);
             } else {
                 User existingUser = existingData.get(existingIndex);
-                if (!existingUser.UserEqual(user)) {
-                    existingData.set(existingIndex, user);
-                    userAdapter.notifyItemChanged(existingIndex);
+
+                if(type==1){
+                    if (!existingUser.UserEqual(user)) {
+                        existingData.set(existingIndex, user);
+                        userAdapter.notifyItemChanged(existingIndex);
+                    }
+                } else if (type==2) {
+                    if (!existingUser.friendUserEqual(user)) {
+                        existingData.set(existingIndex, user);
+                        userAdapter.notifyItemChanged(existingIndex);
+                    }
                 }
+
             }
         }
         for (int i = existingData.size() - 1; i >= 0; i--) {

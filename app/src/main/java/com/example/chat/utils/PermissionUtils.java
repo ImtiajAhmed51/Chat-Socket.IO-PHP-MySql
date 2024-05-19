@@ -1,7 +1,9 @@
 package com.example.chat.utils;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -9,6 +11,7 @@ public class PermissionUtils {
     public static final int REQUEST_READ_PHONE_STATE = 1;
     public static final int REQUEST_ACCESS_FINE_LOCATION = 3;
     public static final int REQUEST_STORAGE_PERMISSIONS = 4;
+
     public static boolean hasReadPhoneStatePermission(Context context) {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE)
                 == PackageManager.PERMISSION_GRANTED;

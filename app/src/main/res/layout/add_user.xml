@@ -218,8 +218,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cancelClick"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:layout_gravity="center"
                             android:clickable="true"
                             android:focusable="true"
@@ -247,8 +247,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/acceptClick"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
                             android:clickable="true"

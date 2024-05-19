@@ -38,18 +38,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class LocationFragment extends Fragment implements View.OnClickListener{
+public class LocationFragment extends Fragment implements View.OnClickListener {
     private FragmentLocationBinding binding;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Handler handler = new Handler();
     private Runnable runnable;
     private int delay = 2000;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentLocationBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -77,6 +79,7 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
             PermissionUtils.requestReadPhoneStatePermission(this);
         }
     }
+
     private void performActionWithPhoneStatePermission() {
         binding.networkConnectionText.setText(NetworkUtils.getConnectionQuality(requireActivity()));
 
@@ -109,9 +112,10 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    private void toastMessage(String message){
+    private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
+
     private void performActionWithLocationPermission() {
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -135,8 +139,8 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
                                 location.getLatitude(), location.getLongitude(), 1
                         );
 
-                        binding.latitudeText.setText(String.valueOf( addresses.get(0).getLatitude()));
-                        binding.longitudeText.setText(String.valueOf( addresses.get(0).getLongitude()));
+                        binding.latitudeText.setText(String.valueOf(addresses.get(0).getLatitude()));
+                        binding.longitudeText.setText(String.valueOf(addresses.get(0).getLongitude()));
                         binding.countryNameText.setText(addresses.get(0).getCountryName());
                         binding.localityText.setText(addresses.get(0).getLocality());
                         binding.addressText.setText(addresses.get(0).getAddressLine(0));
@@ -185,7 +189,7 @@ public class LocationFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if (view.getId()==binding.locationBackPressed.getId()) {
+        if (view.getId() == binding.locationBackPressed.getId()) {
             requireActivity().onBackPressed();
         }
     }

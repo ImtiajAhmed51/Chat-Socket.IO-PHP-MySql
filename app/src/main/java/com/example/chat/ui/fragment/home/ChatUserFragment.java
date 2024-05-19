@@ -1,9 +1,11 @@
 package com.example.chat.ui.fragment.home;
+
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -32,7 +34,8 @@ import java.util.ArrayList;
 public class ChatUserFragment extends Fragment implements View.OnClickListener, ClickListener {
     private FragmentChatUserBinding binding;
 
-    private ArrayList<String> pictureList=new ArrayList<>();
+    private ArrayList<String> pictureList = new ArrayList<>();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,16 +54,16 @@ public class ChatUserFragment extends Fragment implements View.OnClickListener, 
         b.getString("userDisplayName");
 
 
-
         binding.pickImageGallery.setOnClickListener(this);
     }
+
     private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==binding.pickImageGallery.getId()){
+        if (v.getId() == binding.pickImageGallery.getId()) {
             if (binding.imageViewGallery.getVisibility() == View.GONE) {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
@@ -71,6 +74,7 @@ public class ChatUserFragment extends Fragment implements View.OnClickListener, 
             pickImageFromGallery();
         }
     }
+
     public void pickImageFromGallery() {
         if (PermissionUtils.hasStoragePermissions(requireActivity())) {
             // Permissions already granted, proceed with your code
@@ -81,11 +85,12 @@ public class ChatUserFragment extends Fragment implements View.OnClickListener, 
         }
         prepareRecyclerView();
     }
+
     private void prepareRecyclerView() {
         if (requireActivity().getCurrentFocus() != null) {
             ((InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(binding.getRoot().getWindowToken(), 0);
         }
-        GalleryCustomAdapter galleryCustomAdapter = new GalleryCustomAdapter(requireActivity(),pictureList, this,1);
+        GalleryCustomAdapter galleryCustomAdapter = new GalleryCustomAdapter(requireActivity(), pictureList, this, 1);
 
         binding.recyclerGalleryImageView.setHasFixedSize(true);
         binding.recyclerGalleryImageView.setLayoutManager(new GridLayoutManager(getContext(), 4));
@@ -99,6 +104,7 @@ public class ChatUserFragment extends Fragment implements View.OnClickListener, 
         binding.messagePicture.setVisibility(View.VISIBLE);
         binding.messagePicture.setText("Do not have any picture in your phone.");
     }
+
     private void getPicturePaths() {
 
         String[] projection = {MediaStore.Images.Media.DATA};
@@ -124,6 +130,7 @@ public class ChatUserFragment extends Fragment implements View.OnClickListener, 
 
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

@@ -1,11 +1,11 @@
 package com.example.chat.model;
 
 public class User {
-    private  long id,userId;
-    private String  userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage,userRole,userActiveStatus,requestTime;
+    private long id, userId;
+    private String userDisplayName, mainVal, userPassword, userDob, userEmail, userNumber, userPicture, userName, userGender, lastMessage, userAccountOpenTime, lastTimeMessage, userRole, userActiveStatus, requestTime;
     private boolean isOnline, userVerified, userSecurity;
-    private boolean isButtonEnabled=true;
-    private boolean requestSuccess=false;
+    private boolean isButtonEnabled = true;
+    private boolean requestSuccess = false;
 
     public String getUserActiveStatus() {
         return userActiveStatus;
@@ -52,7 +52,6 @@ public class User {
     }
 
 
-
     public String getRequestTime() {
         return requestTime;
     }
@@ -61,47 +60,76 @@ public class User {
         this.requestTime = requestTime;
     }
 
-    public User(long id, long userId,
+    public User(long id,
+                long userId,
                 String userDisplayName,
                 String userName,
                 String userPicture,
                 boolean userVerified,
                 String userRole,
                 String userActiveStatus,
-                boolean userSecurity, String requestTime,boolean isButtonEnabled) {
-        this.id=id;
+                boolean userSecurity, String requestTime, boolean isButtonEnabled) {
+        this.id = id;
         this.userId = userId;
         this.userDisplayName = userDisplayName;
         this.userName = userName;
         this.userPicture = userPicture;
         this.userVerified = userVerified;
-        this.userRole=userRole;
-        this.userActiveStatus=userActiveStatus;
-        this.userSecurity=userSecurity;
-        this.requestTime=requestTime;
-        this.isButtonEnabled=isButtonEnabled;
+        this.userRole = userRole;
+        this.userActiveStatus = userActiveStatus;
+        this.userSecurity = userSecurity;
+        this.requestTime = requestTime;
+        this.isButtonEnabled = isButtonEnabled;
 
     }
-    public User(long id, long userId,
+
+    public User(long id,
+                long userId,
                 String userDisplayName,
                 String userName,
                 String userPicture,
                 boolean userVerified,
                 String userRole,
                 String userActiveStatus,
-                boolean userSecurity,boolean isButtonEnabled) {
-        this.id=id;
+                boolean userSecurity,
+                String requestTime) {
+        this.id = id;
         this.userId = userId;
         this.userDisplayName = userDisplayName;
         this.userName = userName;
         this.userPicture = userPicture;
         this.userVerified = userVerified;
-        this.userRole=userRole;
-        this.userActiveStatus=userActiveStatus;
-        this.userSecurity=userSecurity;
-        this.isButtonEnabled=isButtonEnabled;
+        this.userRole = userRole;
+        this.userActiveStatus = userActiveStatus;
+        this.userSecurity = userSecurity;
+        this.requestTime = requestTime;
+
     }
-    public User(long id, long userId,
+
+    public User(long id,
+                long userId,
+                String userDisplayName,
+                String userName,
+                String userPicture,
+                boolean userVerified,
+                String userRole,
+                String userActiveStatus,
+                boolean userSecurity,
+                boolean isButtonEnabled) {
+        this.id = id;
+        this.userId = userId;
+        this.userDisplayName = userDisplayName;
+        this.userName = userName;
+        this.userPicture = userPicture;
+        this.userVerified = userVerified;
+        this.userRole = userRole;
+        this.userActiveStatus = userActiveStatus;
+        this.userSecurity = userSecurity;
+        this.isButtonEnabled = isButtonEnabled;
+    }
+
+    public User(long id,
+                long userId,
                 String userDisplayName,
                 String userName,
                 String userPicture,
@@ -109,15 +137,15 @@ public class User {
                 String userRole,
                 String userActiveStatus,
                 boolean userSecurity) {
-        this.id=id;
+        this.id = id;
         this.userId = userId;
         this.userDisplayName = userDisplayName;
         this.userName = userName;
         this.userPicture = userPicture;
         this.userVerified = userVerified;
-        this.userRole=userRole;
-        this.userActiveStatus=userActiveStatus;
-        this.userSecurity=userSecurity;
+        this.userRole = userRole;
+        this.userActiveStatus = userActiveStatus;
+        this.userSecurity = userSecurity;
     }
 
     public User(long userId,
@@ -145,8 +173,8 @@ public class User {
         this.userVerified = userVerified;
         this.userAccountOpenTime = userAccountOpenTime;
         this.userSecurity = userSecurity;
-        this.userRole=userRole;
-        this.userActiveStatus=userActiveStatus;
+        this.userRole = userRole;
+        this.userActiveStatus = userActiveStatus;
 
     }
 
@@ -283,16 +311,17 @@ public class User {
         if (!(anObject instanceof User)) {
             return false;
         }
-        return ((User) anObject).getUserId()==(getUserId());
+        return ((User) anObject).getUserId() == (getUserId());
     }
-    public boolean allEquals(Object obj){
+
+    public boolean allEquals(Object obj) {
         if (!(obj instanceof User)) {
             return false;
         }
 
         User otherUser = (User) obj;
-        return  getUserId()==(otherUser.getUserId())
-                &&  getUserDisplayName().equals(otherUser.getUserDisplayName())
+        return getUserId() == (otherUser.getUserId())
+                && getUserDisplayName().equals(otherUser.getUserDisplayName())
                 && getUserName().equals(otherUser.getUserName())
                 && getUserDob().equals(otherUser.getUserDob())
                 && getUserEmail().equals(otherUser.getUserEmail())
@@ -300,8 +329,8 @@ public class User {
                 && getUserAccountOpenTime().equals(otherUser.getUserAccountOpenTime())
                 && getUserPicture().equals(otherUser.getUserPicture())
                 && getUserGender().equals(otherUser.getUserGender())
-                && isUserVerified()==otherUser.isUserVerified()
-                && isUserSecurity()==otherUser.isUserSecurity()
+                && isUserVerified() == otherUser.isUserVerified()
+                && isUserSecurity() == otherUser.isUserSecurity()
                 && getUserRole().equals(otherUser.getUserRole())
                 && getUserActiveStatus().equals(otherUser.getUserActiveStatus());
 
@@ -313,23 +342,23 @@ public class User {
         }
 
         User otherUser = (User) obj;
-        return getUserId()==(otherUser.getUserId())
+        return getUserId() == (otherUser.getUserId())
                 && getUserDisplayName().equals(otherUser.getUserDisplayName())
                 && getUserName().equals(otherUser.getUserName())
                 && getUserPicture().equals(otherUser.getUserPicture())
                 && isUserVerified() == otherUser.isUserVerified()
                 && getUserRole().equals(otherUser.getUserRole())
                 && getUserActiveStatus().equals(otherUser.getUserActiveStatus())
-                && isUserSecurity()==otherUser.isUserSecurity()
-                && isButtonEnabled()==otherUser.isButtonEnabled();
+                && isUserSecurity() == otherUser.isUserSecurity();
     }
+
     public boolean friendUserEqual(Object obj) {
         if (!(obj instanceof User)) {
             return false;
         }
 
         User otherUser = (User) obj;
-        return getUserId()==(otherUser.getUserId())
+        return getUserId() == (otherUser.getUserId())
                 && getUserDisplayName().equals(otherUser.getUserDisplayName())
                 && getUserName().equals(otherUser.getUserName())
                 && getUserPicture().equals(otherUser.getUserPicture())

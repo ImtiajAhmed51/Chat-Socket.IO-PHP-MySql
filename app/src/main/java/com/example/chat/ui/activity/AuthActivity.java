@@ -2,8 +2,6 @@ package com.example.chat.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingComponent;
-import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
@@ -33,6 +31,7 @@ public class AuthActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
         NavDestination currentDestination = navController.getCurrentDestination();

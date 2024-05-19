@@ -1,7 +1,5 @@
 package com.example.chat.ui.fragment.home;
 
-import static com.example.chat.utils.Constant.binarySearch;
-import static com.example.chat.utils.Constant.findInsertionIndex;
 import static com.example.chat.utils.Constant.getResource;
 import static com.example.chat.utils.Constant.userUpdate;
 
@@ -14,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +59,7 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
 
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userAdapter = new UserAdapter(requireActivity(),new ArrayList<>(), this, 1);
+        userAdapter = new UserAdapter(requireActivity(), new ArrayList<>(), this, 1);
 
 
         ownViewModel.getUserLiveData().observe(requireActivity(), new Observer<User>() {
@@ -72,17 +71,16 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
             }
         });
         binding.drawerRecyclerView.setAdapter(userAdapter);
+        ((SimpleItemAnimator) binding.drawerRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         userViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    userUpdate(userList,userAdapter);
+                    userUpdate(userList, userAdapter, 2);
                 }
             }
         });
     }
-
-
 
 
     @Override
@@ -95,7 +93,7 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClickItem(User user, int position, int type, int buttonType) {
-        if(type==1){
+        if (type == 1) {
             Intent intent = new Intent(requireActivity(), ChatUserActivity.class);
             Bundle b = new Bundle();
             b.putLong("id", user.getId());

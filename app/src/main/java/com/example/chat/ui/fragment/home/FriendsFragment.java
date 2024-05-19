@@ -1,8 +1,5 @@
 package com.example.chat.ui.fragment.home;
 
-import static com.example.chat.utils.Constant.binarySearch;
-import static com.example.chat.utils.Constant.findInsertionIndex;
-import static com.example.chat.utils.Constant.friendUpdate;
 import static com.example.chat.utils.Constant.introSort;
 import static com.example.chat.utils.Constant.userUpdate;
 
@@ -15,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -82,13 +80,19 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
         binding.friendsBackPressed.setOnClickListener(this);
         binding.addFriendsPressed.setOnClickListener(this);
 
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-        binding.friendsRecyclerView.setAdapter(userAdapter);
+                binding.friendsRecyclerView.setAdapter(userAdapter);
+            }
+        }, 450);
+        ((SimpleItemAnimator)binding.friendsRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+
         userViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    friendUpdate(userList, userAdapter);
+                    userUpdate(userList, userAdapter,2);
                 }
             }
         });
@@ -99,7 +103,6 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
         if (view.getId() == binding.friendsBackPressed.getId()) {
             requireActivity().onBackPressed();
         } else if (view.getId() == binding.addFriendsPressed.getId()) {
-
             Navigation.findNavController(requireView()).navigate(R.id.action_friendsFragment_to_addFriendsFragment);
         }
     }
@@ -128,7 +131,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
                         jsonObj.getString("userSecurity").equals("Yes"),
-                        jsonObj.getString("requestTime"),true));
+                        jsonObj.getString("requestTime")));
             }
             introSort(userList);
             userViewModel.setUserList(userList);
@@ -171,8 +174,6 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
             intent.putExtras(b);
             startActivity(intent);
         }
-
-
     }
 
     @Override

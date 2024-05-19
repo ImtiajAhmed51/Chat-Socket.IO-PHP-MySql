@@ -1,7 +1,9 @@
 package com.example.chat.utils;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+
 public class EncryptionUtils {
 
     private static final byte[] keyValue =

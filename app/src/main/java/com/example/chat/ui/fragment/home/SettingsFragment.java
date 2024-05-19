@@ -35,41 +35,50 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Constant.setTopMargin(binding.settingsFragmentMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
+
         binding.settingsBackPressed.setOnClickListener(this);
         binding.userSettingsLogOut.setOnClickListener(this);
+        dialogCreate();
     }
 
+    private void dialogCreate() {
+        customDialog = new Dialog(requireActivity());
+        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customDialog.setContentView(R.layout.logout_dialog);
+
+
+        AppCompatButton logOut = customDialog.findViewById(R.id.logOutClick);
+        AppCompatButton cancelLogOut = customDialog.findViewById(R.id.cancelLogOutClick);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutUser();
+            }
+        });
+        cancelLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialog.dismiss();
+            }
+        });
+        customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        customDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        customDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+    }
 
     @Override
     public void onClick(View view) {
-        if (view.getId()==binding.settingsBackPressed.getId()){
+        if (view.getId() == binding.settingsBackPressed.getId()) {
             requireActivity().onBackPressed();
-        }else if (view.getId()==binding.userSettingsLogOut.getId()){
-            customDialog = new Dialog(requireActivity());
-            customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            customDialog.setContentView(R.layout.logout_dialog);
-
-
-            AppCompatButton logOut=customDialog.findViewById(R.id.logOutClick);
-            AppCompatButton cancelLogOut=customDialog.findViewById(R.id.cancelLogOutClick);
-            logOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    logoutUser();
-                }
-            });
-            cancelLogOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    customDialog.dismiss();
-                }
-            });
-            customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            customDialog.getWindow().getAttributes().windowAnimations =  R.style.DialogAnimation;
-            customDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } else if (view.getId() == binding.userSettingsLogOut.getId()) {
+            if (customDialog.isShowing()) {
+                return;
+            }
             customDialog.show();
         }
     }
+
     private void logoutUser() {
         customDialog.dismiss();
         Constant.clearData(requireActivity());

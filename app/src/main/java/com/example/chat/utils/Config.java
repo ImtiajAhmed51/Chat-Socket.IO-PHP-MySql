@@ -1,7 +1,7 @@
 package com.example.chat.utils;
 
 public class Config {
-    private static final String main_URL = "https://imtiajahmedanik.000webhostapp.com/Chat/";
+    private static final String main_URL = "https://imtiajahmed.xyz/Chat/";
     public static final String CREATE_AN_ACCOUNT_URL = main_URL + "createAccount.php";
     public static final String EMAIL_NUMBER_CHECK_URL = main_URL + "emailNumberCheck.php";
     public static final String USERNAME_CHECK_URL = main_URL + "userNameCheck.php";
