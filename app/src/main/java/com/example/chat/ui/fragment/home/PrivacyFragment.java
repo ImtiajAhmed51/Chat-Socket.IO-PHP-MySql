@@ -1,24 +1,17 @@
 package com.example.chat.ui.fragment.home;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.example.chat.R;
 import com.example.chat.databinding.FragmentPrivacyBinding;
 import com.example.chat.model.User;
 import com.example.chat.ui.viewmodel.OwnViewModel;
@@ -44,9 +37,9 @@ public class PrivacyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Constant.setTopMargin(binding.privacyFragmentMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
+        Constant.setTopMargin(binding.privacyFragmentTopMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
 
-
+        Constant.setBottomMargin(binding.privacyFragmentBottomMargin, DimensionUtils.getNavigationBarHeight(requireActivity()));
         privacyRadio = new RadioButton[]{binding.radioPrivacyModeOn,
                 binding.radioPrivacyModeOff};
 
@@ -89,6 +82,7 @@ public class PrivacyFragment extends Fragment implements View.OnClickListener {
 
 
     }
+
     private String getUserPrivacyModeValue(int index) {
         switch (index) {
             case 0:
@@ -106,6 +100,7 @@ public class PrivacyFragment extends Fragment implements View.OnClickListener {
             radioButtons[i].setChecked(i == selectedIndex);
         }
     }
+
     private void userPrivacyModeChange(String status) {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this::userPrivacyModeChangeResponse);
         try {
@@ -115,6 +110,7 @@ public class PrivacyFragment extends Fragment implements View.OnClickListener {
             toastMessage(e.getMessage());
         }
     }
+
     private void userPrivacyModeChangeResponse(Object output) {
         try {
             JSONObject jsonResponse = new JSONObject((String) output);
@@ -125,13 +121,14 @@ public class PrivacyFragment extends Fragment implements View.OnClickListener {
             toastMessage(e.getMessage());
         }
     }
+
     private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
-        if(binding.privacyBackPressed.getId()==v.getId()){
+        if (binding.privacyBackPressed.getId() == v.getId()) {
             requireActivity().onBackPressed();
         }
     }

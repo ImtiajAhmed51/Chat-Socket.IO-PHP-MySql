@@ -35,8 +35,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Constant.setTopMargin(binding.settingsFragmentMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
+        Constant.setTopMargin(binding.settingsFragmentTopMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
 
+        Constant.setBottomMargin(binding.settingsFragmentBottomMargin,DimensionUtils.getNavigationBarHeight(requireActivity()));
         binding.settingsBackPressed.setOnClickListener(this);
         binding.userSettingsLogOut.setOnClickListener(this);
         binding.privacyModeClick.setOnClickListener(this);

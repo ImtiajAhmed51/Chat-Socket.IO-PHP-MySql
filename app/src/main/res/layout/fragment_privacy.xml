@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/privacyFragmentBottomMargin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/allBackgroundColor2"
@@ -22,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
-                android:id="@+id/privacyFragmentMargin"
+                android:id="@+id/privacyFragmentTopMargin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
