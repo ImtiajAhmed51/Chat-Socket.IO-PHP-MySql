@@ -13,6 +13,7 @@ public class Config {
     public static final String SENT_REQUEST_ALL_USER_URL = main_URL + "sentRequest.php";
     public static final String ADD_REQUEST_USER_URL = main_URL + "addRequest.php";
     public static final String USER_ACTIVE_STATUS_CHANGE_URL = main_URL + "userActiveStatusChange.php";
+    public static final String USER_PRIVACY_MODE_CHANGE_URL = main_URL + "userPrivacyMode.php";
     public static final String PENDING_REQUEST_CANCEL_USER_URL=main_URL + "pendingRequestCancel.php";
     public static final String SENT_REQUEST_CANCEL_USER_URL=main_URL + "sentRequestCancel.php";
     public static final String SENT_REQUEST_ACCEPT_USER_URL=main_URL + "sentRequestAccept.php";

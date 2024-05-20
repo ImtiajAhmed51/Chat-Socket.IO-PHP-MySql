@@ -6,7 +6,20 @@ import java.util.HashMap;
 
 public class BackgroundWorker extends AsyncTask<String, String, String> {
     private final AsyncResponse asyncResponse;
-    private final String[] listKey = {"userId", "userDisplayName", "userName", "userDob", "userEmail", "userNumber", "userGender", "userPassword", "userPicture", "receiverUserId", "userActiveStatus", "friendId"};
+    private final String[] listKey = {
+            "userId",
+            "userDisplayName",
+            "userName",
+            "userDob",
+            "userEmail",
+            "userNumber",
+            "userGender",
+            "userPassword",
+            "userPicture",
+            "receiverUserId",
+            "userActiveStatus",
+            "friendId",
+            "userPrivacyMode"};
 
     public interface AsyncResponse {
         void onFinish(Object obj);
@@ -74,6 +87,11 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                 url = Config.USER_ACTIVE_STATUS_CHANGE_URL;
                 data.put(this.listKey[0], params[1]);
                 data.put(this.listKey[10], params[2]);
+                break;
+            case "UserPrivacyMode":
+                url = Config.USER_PRIVACY_MODE_CHANGE_URL;
+                data.put(this.listKey[0], params[1]);
+                data.put(this.listKey[12], params[2]);
                 break;
             case "PendingRequestCancelUser":
                 url = Config.PENDING_REQUEST_CANCEL_USER_URL;

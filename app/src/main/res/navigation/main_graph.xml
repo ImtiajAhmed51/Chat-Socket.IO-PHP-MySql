@@ -46,7 +46,15 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.chat.ui.fragment.home.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyFragment"
+            app:destination="@id/privacyFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"/>
+    </fragment>
     <fragment
         android:id="@+id/locationFragment"
         android:name="com.example.chat.ui.fragment.home.LocationFragment"
@@ -80,4 +88,8 @@
         android:id="@+id/requestsFragment"
         android:name="com.example.chat.ui.fragment.home.RequestsFragment"
         android:label="RequestsFragment" />
+    <fragment
+        android:id="@+id/privacyFragment"
+        android:name="com.example.chat.ui.fragment.home.PrivacyFragment"
+        android:label="PrivacyFragment" />
 </navigation>

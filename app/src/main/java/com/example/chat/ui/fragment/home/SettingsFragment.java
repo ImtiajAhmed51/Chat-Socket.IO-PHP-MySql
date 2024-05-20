@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         binding.settingsBackPressed.setOnClickListener(this);
         binding.userSettingsLogOut.setOnClickListener(this);
+        binding.privacyModeClick.setOnClickListener(this);
         dialogCreate();
     }
 
@@ -76,6 +78,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 return;
             }
             customDialog.show();
+        }else if(binding.privacyModeClick.getId()==view.getId()){
+            Navigation.findNavController(requireView()).navigate(R.id.action_settingsFragment_to_privacyFragment);
         }
     }
 

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/allBackgroundColor2"
-        tools:context=".ui.fragment.home.SettingsFragment">
+        tools:context=".ui.fragment.home.PrivacyFragment">
 
         <RelativeLayout
             android:id="@+id/linearLayout6"
@@ -22,12 +22,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
-                android:id="@+id/settingsFragmentMargin"
+                android:id="@+id/privacyFragmentMargin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/settingsBackPressed"
+                    android:id="@+id/privacyBackPressed"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="10dp"
@@ -52,11 +52,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/settingsBackPressed"
-                    android:layout_alignBottom="@+id/settingsBackPressed"
+                    android:layout_alignTop="@+id/privacyBackPressed"
+                    android:layout_alignBottom="@+id/privacyBackPressed"
                     android:fontFamily="@font/gg_sans_extra_bold"
                     android:gravity="center"
-                    android:text="Settings"
+                    android:text="Privacy"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
             </RelativeLayout>
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gg_sans_bold"
-                android:text="Account Settings"
+                android:text="Privacy Settings"
                 android:textColor="@color/secondary1Color"
                 android:textSize="14sp"
                 card_view:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,7 @@
                     android:layout_height="match_parent">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/userProfileLocation"
+                        android:id="@+id/cardPrivacyModeOn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -122,8 +122,9 @@
                             <ImageView
                                 android:layout_width="26dp"
                                 android:layout_height="26dp"
+                                android:layout_marginStart="5dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/account" />
+                                android:src="@drawable/lock" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -131,7 +132,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/gg_sans_semi_bold"
-                                android:text="Account"
+                                android:text="On"
                                 android:textColor="#EAEAEA"
                                 android:textSize="16sp" />
 
@@ -140,9 +141,11 @@
                                 android:layout_height="match_parent"
                                 android:gravity="right">
 
-                                <ImageView
+                                <RadioButton
+                                    android:id="@+id/radioPrivacyModeOn"
                                     android:layout_width="26dp"
                                     android:layout_height="26dp"
+                                    android:layout_marginEnd="5dp"
                                     android:gravity="center"
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/right" />
@@ -151,7 +154,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/privacyModeClick"
+                        android:id="@+id/cardPrivacyModeOff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -162,7 +165,7 @@
                         card_view:layout_constraintBottom_toBottomOf="parent"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/userProfileLocation">
+                        card_view:layout_constraintTop_toBottomOf="@+id/cardPrivacyModeOn">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -173,10 +176,10 @@
                             android:paddingBottom="15dp">
 
                             <ImageView
-                                android:layout_width="17dp"
+                                android:layout_width="26dp"
                                 android:layout_height="26dp"
                                 android:layout_marginStart="5dp"
-                                android:src="@drawable/secure" />
+                                android:src="@drawable/unlock" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -184,7 +187,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginStart="13dp"
                                 android:fontFamily="@font/gg_sans_semi_bold"
-                                android:text="Privacy"
+                                android:text="Off"
                                 android:textColor="#EAEAEA"
                                 android:textSize="16sp" />
 
@@ -193,10 +196,12 @@
                                 android:layout_height="match_parent"
                                 android:gravity="right">
 
-                                <ImageView
+                                <RadioButton
+                                    android:id="@+id/radioPrivacyModeOff"
                                     android:layout_width="26dp"
                                     android:layout_height="26dp"
                                     android:layout_gravity="center"
+                                    android:layout_marginEnd="5dp"
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/right" />
                             </LinearLayout>
@@ -205,44 +210,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/userSettingsLogOut"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                app:cardBackgroundColor="@color/allBackgroundColor4"
-                app:cardCornerRadius="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/userDrawerCardjView"
-                card_view:cardElevation="0dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingStart="10dp"
-                    android:paddingTop="17dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="17dp">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/logout" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/gg_sans_extra_bold"
-                        android:text="Log Out"
-                        android:textColor="#ca696f"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
