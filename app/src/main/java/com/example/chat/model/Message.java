@@ -79,14 +79,14 @@ public class Message extends User {
                    boolean messageSent,
                    boolean messageUnsend) {
         super(user.getId(), user.getUserId(), user.getUserDisplayName(), user.getUserName(), user.getUserPicture(), user.isUserVerified(), user.getUserRole(), user.getUserActiveStatus(), user.isUserSecurity());
-        this.messageId=messageId;
-        this.messageReplyId=messageReplyId;
-        this.messageText=messageText;
-        this.messagePhoto=messagePhoto;
-        this.messageTime=messageTime;
-        this.messageSeen=messageSeen;
-        this.messageSent=messageSent;
-        this.messageUnsend=messageUnsend;
+        this.messageId = messageId;
+        this.messageReplyId = messageReplyId;
+        this.messageText = messageText;
+        this.messagePhoto = messagePhoto;
+        this.messageTime = messageTime;
+        this.messageSeen = messageSeen;
+        this.messageSent = messageSent;
+        this.messageUnsend = messageUnsend;
     }
 
 }

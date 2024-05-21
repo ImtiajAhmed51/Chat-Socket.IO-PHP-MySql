@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
     private void friendsShowAllUserResponse(Object output) {
         try {
             JSONArray jsonArr = new JSONArray((String) output);
@@ -219,13 +218,16 @@ public class MainActivity extends AppCompatActivity {
                         jsonObj.getString("userVerified").equals("Yes"),
                         jsonObj.getString("userRole"),
                         jsonObj.getString("userActiveStatus"),
-                        jsonObj.getString("userSecurity").equals("Yes"),true));
+                        jsonObj.getString("userSecurity").equals("Yes"),
+                        jsonObj.getString("requestTime")));
             }
             introSort(userList);
             userViewModel.setUserList(userList);
         } catch (Exception e) {
+            toastMessage(e.getMessage());
         }
     }
+
 
     @Override
     protected void onDestroy() {

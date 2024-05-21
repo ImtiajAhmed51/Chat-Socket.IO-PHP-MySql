@@ -14,6 +14,7 @@ import com.example.chat.databinding.ActivityMainBinding;
 public class ChatUserActivity extends AppCompatActivity {
 
     private ActivityChatUserBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +23,7 @@ public class ChatUserActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
     }
+
     private void setWindowColors(int colorResId) {
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, colorResId));

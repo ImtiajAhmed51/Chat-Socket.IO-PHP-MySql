@@ -37,7 +37,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         Constant.setTopMargin(binding.settingsFragmentTopMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
 
-        Constant.setBottomMargin(binding.settingsFragmentBottomMargin,DimensionUtils.getNavigationBarHeight(requireActivity()));
+        Constant.setBottomMargin(binding.settingsFragmentBottomMargin, DimensionUtils.getNavigationBarHeight(requireActivity()));
         binding.settingsBackPressed.setOnClickListener(this);
         binding.userSettingsLogOut.setOnClickListener(this);
         binding.privacyModeClick.setOnClickListener(this);
@@ -79,7 +79,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 return;
             }
             customDialog.show();
-        }else if(binding.privacyModeClick.getId()==view.getId()){
+        } else if (binding.privacyModeClick.getId() == view.getId()) {
             Navigation.findNavController(requireView()).navigate(R.id.action_settingsFragment_to_privacyFragment);
         }
     }

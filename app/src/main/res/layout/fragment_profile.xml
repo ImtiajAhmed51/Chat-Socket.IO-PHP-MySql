@@ -305,9 +305,11 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:padding="10dp">
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp">
 
                                     <ImageView
+                                        android:layout_marginTop="2dp"
                                         android:layout_width="18dp"
                                         android:layout_height="18dp"
                                         android:src="@drawable/status" />
@@ -316,9 +318,10 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="5dp"
+                                        android:layout_marginBottom="1dp"
                                         android:fontFamily="@font/gg_sans_extra_bold"
                                         android:text="Edit Status"
-                                        android:textColor="#EAEAEA"
+                                        android:textColor="@color/white"
                                         android:textSize="14sp" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -341,7 +344,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
-                                    android:padding="10dp">
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp">
 
                                     <ImageView
                                         android:layout_width="18dp"
@@ -354,7 +358,7 @@
                                         android:layout_marginStart="5dp"
                                         android:fontFamily="@font/gg_sans_extra_bold"
                                         android:text="Edit Profile"
-                                        android:textColor="#EAEAEA"
+                                        android:textColor="@color/white"
                                         android:textSize="14sp" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>

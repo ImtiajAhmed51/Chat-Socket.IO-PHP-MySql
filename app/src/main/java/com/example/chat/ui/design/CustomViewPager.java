@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
-public class CustomViewPager extends ViewPager implements ViewPager.PageTransformer{
+public class CustomViewPager extends ViewPager implements ViewPager.PageTransformer {
 
     private boolean isPagingEnabled = true;
     private static final float MIN_SCALE = 1.f;

@@ -42,12 +42,7 @@ import java.util.ArrayList;
 public class FriendsFragment extends Fragment implements View.OnClickListener, ClickListener {
     private FragmentFriendsBinding binding;
     private UserAdapter userAdapter;
-    private final ArrayList<User> userList = new ArrayList<>();
-    private OwnViewModel ownViewModel;
     private UserViewModel userViewModel;
-    private static final long REFRESH_INTERVAL = 2000;
-    private Handler handler;
-    private Runnable refreshDataRunnable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,19 +53,10 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userAdapter = new UserAdapter(requireActivity(), new ArrayList<>(), this, 5);
-        handler = new Handler(Looper.getMainLooper());
-        refreshDataRunnable = this::refreshData;
-        handler.post(refreshDataRunnable);
     }
 
-    private void refreshData() {
-
-        showAllUser();
-        handler.postDelayed(refreshDataRunnable, REFRESH_INTERVAL);
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -85,14 +71,14 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
 
                 binding.friendsRecyclerView.setAdapter(userAdapter);
             }
-        }, 450);
-        ((SimpleItemAnimator)binding.friendsRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        }, 200);
+        ((SimpleItemAnimator) binding.friendsRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         userViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    userUpdate(userList, userAdapter,2);
+                    userUpdate(userList, userAdapter, 2);
                 }
             }
         });
@@ -107,54 +93,16 @@ public class FriendsFragment extends Fragment implements View.OnClickListener, C
         }
     }
 
-    private void showAllUser() {
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this::friendsShowAllUserResponse);
-        try {
-            backgroundWorker.execute("FriendsShowAllUser", EncryptionUtils.encrypt(String.valueOf(ownViewModel.getUserLiveData().getValue().getUserId())));
-        } catch (Exception e) {
-            toastMessage(e.getMessage());
-        }
-    }
-
-    private void friendsShowAllUserResponse(Object output) {
-        try {
-            JSONArray jsonArr = new JSONArray((String) output);
-            userList.clear();
-            for (int i = 0; i < jsonArr.length(); i++) {
-                JSONObject jsonObj = jsonArr.getJSONObject(i);
-                userList.add(0, new User(jsonObj.getInt("id"),
-                        Integer.parseInt(EncryptionUtils.decrypt(jsonObj.getString("userId"))),
-                        EncryptionUtils.decrypt(jsonObj.getString("userDisplayName")),
-                        EncryptionUtils.decrypt(jsonObj.getString("userName")),
-                        jsonObj.getString("userPicture"),
-                        jsonObj.getString("userVerified").equals("Yes"),
-                        jsonObj.getString("userRole"),
-                        jsonObj.getString("userActiveStatus"),
-                        jsonObj.getString("userSecurity").equals("Yes"),
-                        jsonObj.getString("requestTime")));
-            }
-            introSort(userList);
-            userViewModel.setUserList(userList);
-        } catch (Exception e) {
-            toastMessage(e.getMessage());
-        }
-    }
-
-    private void toastMessage(String message) {
-        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onPause() {
         super.onPause();
-        handler.removeCallbacks(refreshDataRunnable);
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        handler.postDelayed(refreshDataRunnable, REFRESH_INTERVAL);
     }
 
     @Override

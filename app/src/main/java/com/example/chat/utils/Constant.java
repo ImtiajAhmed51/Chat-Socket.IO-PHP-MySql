@@ -102,7 +102,7 @@ public class Constant {
     }
 
 
-    public static void userUpdate(ArrayList <User> userList, UserAdapter userAdapter,int type) {
+    public static void userUpdate(ArrayList<User> userList, UserAdapter userAdapter, int type) {
         ArrayList<User> existingData = userAdapter.getData();
         ArrayList<User> newUserIds = new ArrayList<>();
         int existingIndex, insertionIndex;
@@ -116,12 +116,12 @@ public class Constant {
             } else {
                 User existingUser = existingData.get(existingIndex);
 
-                if(type==1){
+                if (type == 1) {
                     if (!existingUser.UserEqual(user)) {
                         existingData.set(existingIndex, user);
                         userAdapter.notifyItemChanged(existingIndex);
                     }
-                } else if (type==2) {
+                } else if (type == 2) {
                     if (!existingUser.friendUserEqual(user)) {
                         existingData.set(existingIndex, user);
                         userAdapter.notifyItemChanged(existingIndex);

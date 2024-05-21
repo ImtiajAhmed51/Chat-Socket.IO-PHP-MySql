@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
 import com.example.chat.databinding.FragmentPrivacyBinding;
 import com.example.chat.model.User;
 import com.example.chat.ui.viewmodel.OwnViewModel;
@@ -42,22 +43,16 @@ public class PrivacyFragment extends Fragment implements View.OnClickListener {
         Constant.setBottomMargin(binding.privacyFragmentBottomMargin, DimensionUtils.getNavigationBarHeight(requireActivity()));
         privacyRadio = new RadioButton[]{binding.radioPrivacyModeOn,
                 binding.radioPrivacyModeOff};
-
-
         ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
         ownViewModel.getUserLiveData().observe(requireActivity(), user -> {
             if (getActivity() != null) {
                 updateUI(user);
             }
         });
-
-
         binding.privacyBackPressed.setOnClickListener(this);
     }
 
     private void updateUI(User user) {
-
-
         if (user.isUserSecurity()) {
             privacyRadio[0].setChecked(true);
             privacyRadio[1].setChecked(false);
@@ -65,7 +60,6 @@ public class PrivacyFragment extends Fragment implements View.OnClickListener {
             privacyRadio[0].setChecked(false);
             privacyRadio[1].setChecked(true);
         }
-
         for (int i = 0; i < privacyRadio.length; i++) {
             final int index = i;
             privacyRadio[i].setOnClickListener(new View.OnClickListener() {

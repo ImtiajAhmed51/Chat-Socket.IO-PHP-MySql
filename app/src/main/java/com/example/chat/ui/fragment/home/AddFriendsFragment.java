@@ -84,15 +84,15 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
             public void run() {
                 binding.addFriendsRecyclerView.setAdapter(userAdapter);
             }
-        }, 450);
-        ((SimpleItemAnimator)binding.addFriendsRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        }, 200);
+        ((SimpleItemAnimator) binding.addFriendsRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
 
         userViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> userList) {
                 if (getActivity() != null) {
-                    userUpdate(userList,userAdapter,1);
+                    userUpdate(userList, userAdapter, 1);
                 }
             }
         });

@@ -128,24 +128,24 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             addUserBinding.acceptClick.setVisibility(View.GONE);
             addUserBinding.addRequestClick.setVisibility(View.GONE);
             addUserBinding.cancelClick.setEnabled(currentItem.isButtonEnabled());
-            if(currentItem.isButtonEnabled() && !currentItem.isRequestSuccess()){
-                addUserBinding.cancelImageClick.setVisibility(View.VISIBLE );
+            if (currentItem.isButtonEnabled() && !currentItem.isRequestSuccess()) {
+                addUserBinding.cancelImageClick.setVisibility(View.VISIBLE);
                 addUserBinding.cancelImageClick.setImageResource(R.drawable.cancel);
-                addUserBinding.cancelProgressClick.setVisibility(View.INVISIBLE );
+                addUserBinding.cancelProgressClick.setVisibility(View.INVISIBLE);
             }
 
 
             if (!currentItem.isButtonEnabled() && !currentItem.isRequestSuccess()) {
-                addUserBinding.cancelProgressClick.setVisibility(View.VISIBLE );
-                addUserBinding.cancelImageClick.setVisibility(View.INVISIBLE );
+                addUserBinding.cancelProgressClick.setVisibility(View.VISIBLE);
+                addUserBinding.cancelImageClick.setVisibility(View.INVISIBLE);
 
             }
 
 
             if (!currentItem.isButtonEnabled() && currentItem.isRequestSuccess()) {
-                addUserBinding.cancelImageClick.setVisibility(View.VISIBLE );
+                addUserBinding.cancelImageClick.setVisibility(View.VISIBLE);
                 addUserBinding.cancelImageClick.setImageResource(R.drawable.check);
-                addUserBinding.cancelProgressClick.setVisibility(View.INVISIBLE );
+                addUserBinding.cancelProgressClick.setVisibility(View.INVISIBLE);
             }
             addUserBinding.cancelClick.setOnClickListener(new View.OnClickListener() {
                 @Override
