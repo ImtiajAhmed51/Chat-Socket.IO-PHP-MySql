@@ -47,13 +47,13 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
                 updateUI(user);
             }
         });
-        binding.nameEditText.setText(ownViewModel.getUserLiveData().getValue().getUserDisplayName());
+
     }
     private void updateUI(User user) {
         Glide.with(requireActivity()).load(Constant.getResource(user.getUserPicture())).into(binding.profileUserImage);
         Glide.with(requireActivity()).load(Constant.getResource(user.getUserPicture())).into(binding.profileUserCoverImage);
         binding.userProfileDisplayName.setText(user.getUserDisplayName());
-
+        binding.nameEditText.setText(user.getUserDisplayName());
         binding.userProfilePrivacy.setImageResource(user.isUserSecurity() ? R.drawable.lock : R.drawable.unlock);
         binding.userProfileEditUserName.setText(user.getUserName());
 

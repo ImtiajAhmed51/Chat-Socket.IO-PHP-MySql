@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.Manifest;
@@ -31,8 +32,10 @@ import android.Manifest;
 import com.bumptech.glide.Glide;
 import com.example.chat.R;
 import com.example.chat.databinding.FragmentChooseProfilePictureBinding;
+import com.example.chat.model.User;
 import com.example.chat.ui.activity.MainActivity;
 import com.example.chat.ui.design.ProgressButton;
+import com.example.chat.ui.viewmodel.OwnViewModel;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
 import com.example.chat.utils.DimensionUtils;
@@ -55,6 +58,8 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
     private ProgressButton progressButton;
     private static final int PICK_IMAGE = 1;
     private String selectedImage = null;
+    private OwnViewModel ownViewModel;
+    private CardView[] cardViews;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -69,13 +74,8 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         initializeArguments();
         binding.chooseProfilePictureBackPressed.setVisibility(type == 1 ? View.INVISIBLE : View.VISIBLE);
         binding.skipClick.setVisibility(type == 1 ? View.VISIBLE : View.INVISIBLE);
-        binding.frameColorChange.setBackgroundColor(type == 1?(getResources().getColor(R.color.allBackgroundColor)):(getResources().getColor(R.color.allBackgroundColor2)));
-        if (type == 2) {
-            Constant.setTopMargin(binding.chooseProfilePictureMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
-            Constant.setBottomMargin(binding.chooseProfilePictureMargin, DimensionUtils.getNavigationBarHeight(requireActivity()));
-        }
-
-        setClickListeners(
+        binding.frameColorChange.setBackgroundColor(type == 1 ? (getResources().getColor(R.color.allBackgroundColor)) : (getResources().getColor(R.color.allBackgroundColor2)));
+        cardViews = new CardView[]{
                 binding.ProfileImageCardView1,
                 binding.ProfileImageCardView2,
                 binding.ProfileImageCardView3,
@@ -84,12 +84,28 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                 binding.ProfileImageCardView6,
                 binding.ProfileImageCardView7,
                 binding.ProfileImageCardView8
-        );
+        };
+        if (type == 2) {
+            Constant.setTopMargin(binding.chooseProfilePictureMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
+            Constant.setBottomMargin(binding.chooseProfilePictureMargin, DimensionUtils.getNavigationBarHeight(requireActivity()));
+            ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
+            userId = String.valueOf(ownViewModel.getUserLiveData().getValue().getUserId());
+            ownViewModel.getUserLiveData().observe(requireActivity(), user -> {
+                if (getActivity() != null) {
+                    updateUI(user);
+                }
+            });
+
+        }
+
         progressButton = new ProgressButton(requireActivity(), binding.saveChooseProfilePictureClick);
         progressButton.buttonSet("Next");
         binding.saveChooseProfilePictureClick.setOnClickListener(this);
         binding.skipClick.setOnClickListener(this);
         binding.addUserPicture.setOnClickListener(this);
+        binding.chooseProfilePictureBackPressed.setOnClickListener(this);
+
+        setClickListeners(cardViews);
 
 
     }
@@ -109,35 +125,49 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         }
     }
 
+    private void updateUI(User user) {
+        Glide.with(requireActivity()).load(Constant.getResource(user.getUserPicture())).into(binding.userProfileImage);
+        try {
+            int pos = Integer.parseInt(user.getUserPicture());
+            selectedImage(pos);
+        } catch (NumberFormatException nfe) {
+
+        }
+    }
+
     @Override
     public void onClick(View view) {
-        int selectedImageResource = 0;
         if (view.getId() == binding.ProfileImageCardView1.getId()) {
             selectedImage = "1";
-            selectedImageResource = R.drawable.frame1;
+            selectedImage(Integer.parseInt(selectedImage));
         } else if (view.getId() == binding.ProfileImageCardView2.getId()) {
             selectedImage = "2";
-            selectedImageResource = R.drawable.frame2;
+            selectedImage(Integer.parseInt(selectedImage));
         } else if (view.getId() == binding.ProfileImageCardView3.getId()) {
             selectedImage = "3";
-            selectedImageResource = R.drawable.frame3;
+            selectedImage(Integer.parseInt(selectedImage));
         } else if (view.getId() == binding.ProfileImageCardView4.getId()) {
             selectedImage = "4";
-            selectedImageResource = R.drawable.frame4;
+            selectedImage(Integer.parseInt(selectedImage));
         } else if (view.getId() == binding.ProfileImageCardView5.getId()) {
             selectedImage = "5";
-            selectedImageResource = R.drawable.frame5;
+            selectedImage(Integer.parseInt(selectedImage));
         } else if (view.getId() == binding.ProfileImageCardView6.getId()) {
             selectedImage = "6";
-            selectedImageResource = R.drawable.frame6;
+            selectedImage(Integer.parseInt(selectedImage));
         } else if (view.getId() == binding.ProfileImageCardView7.getId()) {
             selectedImage = "7";
-            selectedImageResource = R.drawable.frame7;
+            selectedImage(Integer.parseInt(selectedImage));
         } else if (view.getId() == binding.ProfileImageCardView8.getId()) {
             selectedImage = "8";
-            selectedImageResource = R.drawable.frame8;
+            selectedImage(Integer.parseInt(selectedImage));
         } else if (view.getId() == binding.saveChooseProfilePictureClick.getId()) {
             if (selectedImage != null) {
+                if (type == 2) {
+                    if (selectedImage.equals(ownViewModel.getUserLiveData().getValue().getUserPicture())) {
+                        return;
+                    }
+                }
                 binding.saveChooseProfilePictureClick.setClickable(false);
                 progressButton.buttonActivated();
                 BackgroundWorker backgroundWorker = new BackgroundWorker(this::processChangePictureResponse);
@@ -154,14 +184,51 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
             login();
         } else if (view.getId() == binding.addUserPicture.getId()) {
             pickImageFromGallery();
-        }
-
-        if (view instanceof CardView && view.getId() != binding.addUserPicture.getId()) {
-            resetBackgroundColors();
-            ((CardView) view).setCardBackgroundColor(getResources().getColor(R.color.purple_500));
-            binding.userProfileImage.setImageResource(selectedImageResource);
+        } else if (view.getId() == binding.chooseProfilePictureBackPressed.getId()) {
+            requireActivity().onBackPressed();
         }
     }
+
+    private void selectedImage(int picturePos) {
+
+
+        if (0 < picturePos && picturePos < 9) {
+            binding.userProfileImage.setImageResource(selectedImageResource(picturePos));
+        }
+
+        for (int i = 0; i < cardViews.length; i++) {
+            if (picturePos == i + 1) {
+                cardViews[i].setCardBackgroundColor(getResources().getColor(R.color.purple_500));
+            } else {
+                cardViews[i].setCardBackgroundColor(getResources().getColor(R.color.transparent));
+            }
+        }
+    }
+
+    private int selectedImageResource(int position) {
+        switch (position) {
+            case 1:
+                return R.drawable.frame1;
+            case 2:
+                return R.drawable.frame2;
+            case 3:
+                return R.drawable.frame3;
+            case 4:
+                return R.drawable.frame4;
+            case 5:
+                return R.drawable.frame5;
+            case 6:
+                return R.drawable.frame6;
+            case 7:
+                return R.drawable.frame7;
+            case 8:
+                return R.drawable.frame8;
+            default:
+
+        }
+        return 0;
+    }
+
 
     private String bitmapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -182,7 +249,7 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
                 Bitmap image2 = getResizedBitmap(image, CropImageView.DEFAULT_IMAGE_TO_CROP_BOUNDS_ANIM_DURATION);
                 Glide.with(requireActivity()).load(image2).into(binding.userProfileImage);
                 selectedImage = bitmapToString(image2);
-                resetBackgroundColors();
+                selectedImage(9);
             }
         }
     }
@@ -286,7 +353,14 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         try {
             JSONObject jsonResponse = new JSONObject((String) output);
             if (jsonResponse.getBoolean("success")) {
-                login();
+                if (type == 1) {
+                    login();
+                } else if (type == 2) {
+                    toastMessage(jsonResponse.getString("message"));
+                    progressButton.buttonFinished();
+                    requireActivity().onBackPressed();
+                }
+
             } else {
                 binding.saveChooseProfilePictureClick.setClickable(true);
                 progressButton.buttonSet("Next");
@@ -335,27 +409,13 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         requireActivity().finish();
     }
 
-    private void resetBackgroundColors() {
-        CardView[] cardViews = {
-                binding.ProfileImageCardView1,
-                binding.ProfileImageCardView2,
-                binding.ProfileImageCardView3,
-                binding.ProfileImageCardView4,
-                binding.ProfileImageCardView5,
-                binding.ProfileImageCardView6,
-                binding.ProfileImageCardView7,
-                binding.ProfileImageCardView8
-        };
-        for (CardView cardView : cardViews) {
-            cardView.setCardBackgroundColor(getResources().getColor(R.color.transparent));
-        }
-    }
 
     private void toastMessage(String message) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void setClickListeners(CardView... cardViews) {
+
         for (CardView cardView : cardViews) {
             cardView.setOnClickListener(this);
         }
