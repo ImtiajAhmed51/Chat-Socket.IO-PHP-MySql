@@ -69,8 +69,8 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         initializeArguments();
         binding.chooseProfilePictureBackPressed.setVisibility(type == 1 ? View.INVISIBLE : View.VISIBLE);
         binding.skipClick.setVisibility(type == 1 ? View.VISIBLE : View.INVISIBLE);
+        binding.frameColorChange.setBackgroundColor(type == 1?(getResources().getColor(R.color.allBackgroundColor)):(getResources().getColor(R.color.allBackgroundColor2)));
         if (type == 2) {
-            binding.skipClick.setVisibility(View.INVISIBLE);
             Constant.setTopMargin(binding.chooseProfilePictureMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
             Constant.setBottomMargin(binding.chooseProfilePictureMargin, DimensionUtils.getNavigationBarHeight(requireActivity()));
         }

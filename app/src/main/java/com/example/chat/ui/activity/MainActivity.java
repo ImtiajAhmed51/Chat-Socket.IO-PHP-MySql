@@ -175,21 +175,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void processLoginResponse(Object output) {
         try {
-            JSONObject jsonResponse = new JSONObject((String) output);
-            if (jsonResponse.getBoolean("success")) {
-                User user = decryptUserData(jsonResponse);
-                if (ownViewModel.getUserLiveData() != null) {
-                    if (!user.allEquals(ownViewModel.getUserLiveData().getValue())) {
-                        ownViewModel.setUserLive(user);
+            if (Constant.getDataLogin(MainActivity.this)) {
+                JSONObject jsonResponse = new JSONObject((String) output);
+                if (jsonResponse.getBoolean("success")) {
+                    User user = decryptUserData(jsonResponse);
+                    if (ownViewModel.getUserLiveData() != null) {
+                        if (!user.allEquals(ownViewModel.getUserLiveData().getValue())) {
+                            ownViewModel.setUserLive(user);
+                        }
                     }
+                    showAllUser();
+                } else {
+                    handler.removeCallbacks(refreshDataRunnable);
+                    toastMessage(jsonResponse.getString("message"));
+                    Constant.clearData(MainActivity.this);
+                    startActivity(new Intent(MainActivity.this, AuthActivity.class));
+                    finish();
                 }
-                showAllUser();
-            } else {
-                toastMessage(jsonResponse.getString("message"));
-                Constant.clearData(MainActivity.this);
-                startActivity(new Intent(MainActivity.this, AuthActivity.class));
-                finish();
             }
+
         } catch (Exception e) {
 //            toastMessage(e.getMessage());
 //            startActivity(new Intent(MainActivity.this, AuthActivity.class));
