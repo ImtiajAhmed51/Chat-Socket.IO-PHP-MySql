@@ -150,6 +150,7 @@ public class DobFragment extends Fragment implements View.OnClickListener {
                 String name = EncryptionUtils.decrypt(jsonResponse.getString("name"));
                 String userId = EncryptionUtils.decrypt(jsonResponse.getString("userId"));
                 Bundle data = new Bundle();
+                data.putInt("type",1);
                 data.putString("userId", userId);
                 data.putString("mainVal", mainVal);
                 data.putString("pass", password);

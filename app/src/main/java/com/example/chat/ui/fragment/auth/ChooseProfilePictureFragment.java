@@ -35,6 +35,7 @@ import com.example.chat.ui.activity.MainActivity;
 import com.example.chat.ui.design.ProgressButton;
 import com.example.chat.utils.BackgroundWorker;
 import com.example.chat.utils.Constant;
+import com.example.chat.utils.DimensionUtils;
 import com.example.chat.utils.EncryptionUtils;
 import com.example.chat.utils.PermissionUtils;
 import com.yalantis.ucrop.UCrop;
@@ -50,6 +51,7 @@ import java.io.InputStream;
 public class ChooseProfilePictureFragment extends Fragment implements View.OnClickListener {
     private FragmentChooseProfilePictureBinding binding;
     private String userId = "", mainVal, pass;
+    private int type;
     private ProgressButton progressButton;
     private static final int PICK_IMAGE = 1;
     private String selectedImage = null;
@@ -65,6 +67,14 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeArguments();
+        binding.chooseProfilePictureBackPressed.setVisibility(type == 1 ? View.INVISIBLE : View.VISIBLE);
+        binding.skipClick.setVisibility(type == 1 ? View.VISIBLE : View.INVISIBLE);
+        if (type == 2) {
+            binding.skipClick.setVisibility(View.INVISIBLE);
+            Constant.setTopMargin(binding.chooseProfilePictureMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
+            Constant.setBottomMargin(binding.chooseProfilePictureMargin, DimensionUtils.getNavigationBarHeight(requireActivity()));
+        }
+
         setClickListeners(
                 binding.ProfileImageCardView1,
                 binding.ProfileImageCardView2,
@@ -80,14 +90,22 @@ public class ChooseProfilePictureFragment extends Fragment implements View.OnCli
         binding.saveChooseProfilePictureClick.setOnClickListener(this);
         binding.skipClick.setOnClickListener(this);
         binding.addUserPicture.setOnClickListener(this);
+
+
     }
 
     private void initializeArguments() {
         Bundle arguments = getArguments();
         if (arguments != null) {
-            userId = arguments.getString("userId");
-            mainVal = arguments.getString("mainVal");
-            pass = arguments.getString("pass");
+            type = arguments.getInt("type");
+            if (type == 1) {
+                userId = arguments.getString("userId");
+                mainVal = arguments.getString("mainVal");
+                pass = arguments.getString("pass");
+            } else if (type == 2) {
+
+            }
+
         }
     }
 

@@ -84,7 +84,7 @@ public class AddFriendsFragment extends Fragment implements ClickListener, View.
             public void run() {
                 binding.addFriendsRecyclerView.setAdapter(userAdapter);
             }
-        }, 200);
+        }, 250);
         ((SimpleItemAnimator) binding.addFriendsRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
 

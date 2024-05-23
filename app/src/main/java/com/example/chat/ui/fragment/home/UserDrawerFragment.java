@@ -86,7 +86,6 @@ public class UserDrawerFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if (view.getId() == binding.userProfileClick.getId()) {
-
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_mainFragment_to_profileFragment);
         }
     }

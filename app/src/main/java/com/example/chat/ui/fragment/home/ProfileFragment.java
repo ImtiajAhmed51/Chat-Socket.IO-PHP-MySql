@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         binding.profileUserImageClick.setOnClickListener(this);
         binding.userProfileSettings.setOnClickListener(this);
         binding.userProfileFriends.setOnClickListener(this);
+        binding.editProfileClick.setOnClickListener(this);
         ownViewModel = new ViewModelProvider(requireActivity()).get(OwnViewModel.class);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         Constant.setTopMargin(binding.userProfileSettingsTopMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
@@ -152,6 +153,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         } else if (view.getId() == binding.profileUserImageClick.getId() || view.getId() == binding.onlineStatusChangeClick.getId()) {
             showDialog();
             dialog.show();
+        } else if (view.getId()==binding.editProfileClick.getId()) {
+            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_profileEditFragment);
         }
     }
 

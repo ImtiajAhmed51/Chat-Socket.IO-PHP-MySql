@@ -133,7 +133,7 @@ public class RequestsFragment extends Fragment implements View.OnClickListener, 
 
                 binding.addFriendsRecyclerView.setAdapter(userAdapter);
             }
-        }, 200);
+        }, 250);
         ((SimpleItemAnimator) binding.addFriendsRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         userViewModel.getUserListLiveData().observe(requireActivity(), new Observer<ArrayList<User>>() {
