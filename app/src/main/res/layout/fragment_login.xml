@@ -119,7 +119,7 @@
                         <EditText
                             android:id="@+id/loginEmailNumberEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:gravity="center_vertical"
                             android:layout_alignParentEnd="true"
                             android:layout_toEndOf="@+id/loginEmailNumberPrefixTextView"
@@ -156,7 +156,7 @@
                     <EditText
                         android:id="@+id/passwordEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:background="@drawable/custom_edit_text"
                         android:fontFamily="@font/gg_sans_semi_bold"
                         android:inputType="textPassword"

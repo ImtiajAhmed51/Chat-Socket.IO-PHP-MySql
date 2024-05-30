@@ -47,6 +47,7 @@
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/gg_sans_normal"
                 android:text="Skip"
+                android:visibility="invisible"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -74,7 +74,7 @@
                     <EditText
                         android:id="@+id/userNameEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:background="@drawable/custom_edit_text"
                         android:fontFamily="@font/gg_sans_semi_bold"
                         android:paddingStart="20dp"
@@ -229,7 +229,7 @@
                     <EditText
                         android:id="@+id/passwordEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:background="@drawable/custom_edit_text"
                         android:fontFamily="@font/gg_sans_semi_bold"
                         android:inputType="textPassword"

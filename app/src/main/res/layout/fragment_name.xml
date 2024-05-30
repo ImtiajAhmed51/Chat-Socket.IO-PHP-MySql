@@ -81,7 +81,7 @@
                     <EditText
                         android:id="@+id/nameEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:background="@drawable/custom_edit_text"
                         android:fontFamily="@font/gg_sans_semi_bold"
                         android:inputType="textCapWords"

@@ -12,6 +12,8 @@ import android.util.Patterns;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.RequiresApi;
+
 import com.bumptech.glide.Glide;
 import com.example.chat.R;
 import com.example.chat.adapter.UserAdapter;
@@ -21,10 +23,15 @@ import com.example.chat.model.ValidationResult;
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,21 +74,36 @@ public class Constant {
             "Add User"
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static String getTimeAgo(String dateString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dateFormat = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        }
         try {
-            Date pastDate = dateFormat.parse(dateString);
-            long currentTime = System.currentTimeMillis();
-            long timeDifference = currentTime - pastDate.getTime();
-            if (timeDifference < 0) {
+            LocalDateTime pastDate = null;
+            LocalDateTime currentDate = null;
+            Duration duration = null;
+            long seconds = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                pastDate = LocalDateTime.parse(dateString, dateFormat);
+                currentDate = LocalDateTime.now();
+                duration = Duration.between(pastDate, currentDate);
+                seconds = duration.getSeconds();
+
+            }
+
+
+            if (seconds < 0) {
                 return "In the future";
             }
-            long seconds = timeDifference / 1000;
-            long minutes = seconds / 60;
-            long hours = minutes / 60;
-            long days = hours / 24;
+
+            long minutes = TimeUnit.SECONDS.toMinutes(seconds);
+            long hours = TimeUnit.SECONDS.toHours(seconds);
+            long days = TimeUnit.SECONDS.toDays(seconds);
             long months = days / 30;
-            long years = months / 12;
+            long years = days / 365;
+
             if (years > 0) {
                 return years == 1 ? "1y" : years + "y";
             } else if (months >= 1 && months <= 11) {
@@ -95,7 +117,7 @@ public class Constant {
             } else {
                 return seconds == 1 ? "1s" : seconds + "s";
             }
-        } catch (ParseException e) {
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
             return "Invalid date";
         }

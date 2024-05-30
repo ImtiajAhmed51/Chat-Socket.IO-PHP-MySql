@@ -148,7 +148,7 @@
                         <EditText
                             android:id="@+id/numberEmailEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:layout_alignParentEnd="true"
                             android:layout_toEndOf="@+id/prefixTextView"
                             android:fontFamily="@font/gg_sans_semi_bold"

@@ -58,6 +58,7 @@ public class LocationFragment extends Fragment implements View.OnClickListener {
 
         Constant.setTopMargin(binding.locationFragmentMargin, DimensionUtils.getStatusBarHeight(requireActivity()));
 
+        Constant.setBottomMargin(binding.bottomMargin,DimensionUtils.getNavigationBarHeight(requireActivity()));
         binding.deviceInformationText.setText(Constant.getSystemDetail(requireActivity()));
         binding.locationBackPressed.setOnClickListener(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
