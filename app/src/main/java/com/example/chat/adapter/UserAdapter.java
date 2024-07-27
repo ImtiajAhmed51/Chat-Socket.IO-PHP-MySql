@@ -96,7 +96,11 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void bindAddUserViewHolder(AddUserViewHolder holder, User currentItem) {
         AddUserBinding addUserBinding = holder.addUserBinding;
         if (type == 2) {
+            addUserBinding.cancelClick.setVisibility(View.GONE);
+            addUserBinding.acceptClick.setVisibility(View.GONE);
+            addUserBinding.messageChatClick.setVisibility(View.GONE);
             addUserBinding.addRequestClick.setVisibility(View.VISIBLE);
+            addUserBinding.messageChatClick.setVisibility(View.GONE);
             addUserBinding.addRequestClick.setEnabled(currentItem.isButtonEnabled());
             if (currentItem.isButtonEnabled() && !currentItem.isRequestSuccess()) {
                 addUserBinding.addRequestTextClick.setVisibility(View.VISIBLE);
@@ -195,6 +199,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             addUserBinding.acceptClick.setVisibility(View.GONE);
             addUserBinding.addRequestClick.setVisibility(View.GONE);
             addUserBinding.allUserRequestTime.setVisibility(View.VISIBLE);
+
             addUserBinding.allUserRequestTime.setText(getTimeAgo(currentItem.getRequestTime()));
             addUserBinding.messageChatClick.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -210,7 +215,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         Glide.with(activity).load(Constant.getResource(currentItem.getUserPicture())).into(addUserBinding.addUserPicture);
         addUserBinding.addUserDisplayName.setText(currentItem.getUserDisplayName());
-        addUserBinding.allUserVerifiedId.setVisibility(currentItem.isUserVerified() ? View.VISIBLE : View.GONE);
+        addUserBinding.allUserVerifiedId.setVisibility(currentItem.isUserVerified() ? View.VISIBLE : View.INVISIBLE);
         addUserBinding.activeStatusLayout.setVisibility(View.VISIBLE);
         addUserBinding.addFriendsUserActiveStatus.setImageResource(Constant.getUserActiveStatusResource(currentItem.getUserActiveStatus()));
         if (type == 2 || type == 3 || type == 4) {

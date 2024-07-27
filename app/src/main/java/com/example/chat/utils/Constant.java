@@ -115,7 +115,7 @@ public class Constant {
             } else if (minutes > 0) {
                 return minutes == 1 ? "1m" : minutes + "m";
             } else {
-                return seconds == 1 ? "1s" : seconds + "s";
+                return "just now";
             }
         } catch (DateTimeParseException e) {
             e.printStackTrace();

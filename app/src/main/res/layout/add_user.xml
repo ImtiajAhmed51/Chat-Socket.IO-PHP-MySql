@@ -129,7 +129,7 @@
                         android:id="@+id/linearLayout7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="6"
+                        android:layout_weight="5"
                         android:orientation="vertical"
                         android:weightSum="2"
                         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
@@ -144,15 +144,17 @@
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
+                            android:weightSum="20"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
                             app:layout_constraintTop_toTopOf="@+id/constraintLayout2">
 
                             <TextView
                                 android:id="@+id/addUserDisplayName"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
+                                android:layout_weight="4"
                                 android:ellipsize="end"
                                 android:fontFamily="@font/gg_sans_extra_bold"
                                 android:maxLines="1"
@@ -162,23 +164,25 @@
 
                             <ImageView
                                 android:id="@+id/allUserVerifiedId"
-                                android:layout_width="14dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="14dp"
                                 android:layout_gravity="center"
                                 android:layout_marginStart="5dp"
+                                android:layout_weight="9"
                                 android:src="@drawable/verified"
-                                android:visibility="gone" />
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/allUserRequestTime"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
+                                android:layout_weight="7"
                                 android:fontFamily="@font/gg_sans_semi_bold"
                                 android:text="1mon"
                                 android:textColor="#DFDFDF"
                                 android:textSize="11sp"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -210,7 +214,7 @@
                         android:id="@+id/linearLayout8"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="14"
+                        android:layout_weight="15"
                         android:gravity="end"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -224,7 +228,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:cardBackgroundColor="#373a43"
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
@@ -242,7 +246,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/cancel"
-                                android:visibility="invisible" />
+                                android:visibility="visible" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -254,7 +258,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:cardBackgroundColor="#373a43"
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
@@ -272,7 +276,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_margin="4dp"
                                 android:src="@drawable/check"
-                                android:visibility="invisible" />
+                                android:visibility="visible" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -304,7 +308,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?selectableItemBackground"
-                            android:visibility="invisible"
+                            android:visibility="gone"
                             app:cardBackgroundColor="#373a43"
                             app:cardCornerRadius="25dp"
                             app:cardElevation="0dp">
