@@ -102,6 +102,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             addUserBinding.addRequestClick.setVisibility(View.VISIBLE);
             addUserBinding.messageChatClick.setVisibility(View.GONE);
             addUserBinding.addRequestClick.setEnabled(currentItem.isButtonEnabled());
+            addUserBinding.allUserRequestTime.setVisibility(View.INVISIBLE);
             if (currentItem.isButtonEnabled() && !currentItem.isRequestSuccess()) {
                 addUserBinding.addRequestTextClick.setVisibility(View.VISIBLE);
                 addUserBinding.addRequestProgressClick.setVisibility(View.INVISIBLE);
@@ -132,6 +133,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             addUserBinding.acceptClick.setVisibility(View.GONE);
             addUserBinding.addRequestClick.setVisibility(View.GONE);
             addUserBinding.cancelClick.setEnabled(currentItem.isButtonEnabled());
+            addUserBinding.allUserRequestTime.setText(getTimeAgo(currentItem.getRequestTime()));
             if (currentItem.isButtonEnabled() && !currentItem.isRequestSuccess()) {
                 addUserBinding.cancelImageClick.setVisibility(View.VISIBLE);
                 addUserBinding.cancelImageClick.setImageResource(R.drawable.cancel);

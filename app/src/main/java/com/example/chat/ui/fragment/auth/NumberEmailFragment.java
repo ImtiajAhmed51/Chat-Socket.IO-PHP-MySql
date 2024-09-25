@@ -173,6 +173,7 @@ public class NumberEmailFragment extends Fragment implements View.OnClickListene
 
     private void processEmailNumberCheckResponse(Object object) {
         try {
+
             JSONObject jsonResponse = new JSONObject((String) object);
             if (jsonResponse.getBoolean("success")) {
                 progressButton.buttonFinished();
