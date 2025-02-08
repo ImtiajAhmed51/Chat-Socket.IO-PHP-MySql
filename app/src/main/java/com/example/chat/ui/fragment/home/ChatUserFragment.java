@@ -53,6 +53,8 @@ public class ChatUserFragment extends Fragment implements View.OnClickListener, 
         binding.chatUserActiveStatus.setImageResource(Constant.getUserActiveStatus(b.getString("userActiveStatus")));
         b.getString("userDisplayName");
 
+        binding.chatUserBackPressed.setOnClickListener(this);
+
 
         binding.pickImageGallery.setOnClickListener(this);
     }
@@ -72,6 +74,9 @@ public class ChatUserFragment extends Fragment implements View.OnClickListener, 
                 }, 20);
             }
             pickImageFromGallery();
+        } else if (v.getId()==binding.chatUserBackPressed.getId()) {
+            requireActivity().onBackPressed();
+
         }
     }
 

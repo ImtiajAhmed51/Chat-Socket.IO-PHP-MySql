@@ -1,6 +1,7 @@
 package com.example.chat.adapter;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.util.TypedValue;
 
 import androidx.fragment.app.Fragment;
@@ -63,10 +64,22 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     private float dpToScreenWidthFraction() {
+        // Get the current orientation
+        int orientation = activity.getResources().getConfiguration().orientation;
+        float dpValue = 74; // Keep 74 as the base dp value for portrait
+
+        // Use different scaling factor for landscape mode
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            float aspectRatio = (float) activity.getResources().getDisplayMetrics().widthPixels /
+                    (float) activity.getResources().getDisplayMetrics().heightPixels;
+            dpValue = dpValue * aspectRatio; // Scale dp based on the aspect ratio in landscape
+        }
+
         float pixels = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                (float) 74,
+                dpValue,
                 activity.getResources().getDisplayMetrics());
+
         return pixels / (float) activity.getResources().getDisplayMetrics().widthPixels;
     }
 

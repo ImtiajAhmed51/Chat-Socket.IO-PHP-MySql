@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/chat_user_graph"
-    app:startDestination="@id/chatUserFragment2">
+    app:startDestination="@id/chatUserFragment">
 
     <fragment
-        android:id="@+id/chatUserFragment2"
+        android:id="@+id/chatUserFragment"
         android:name="com.example.chat.ui.fragment.home.ChatUserFragment"
         android:label="fragment_chat_user"
         tools:layout="@layout/fragment_chat_user" />

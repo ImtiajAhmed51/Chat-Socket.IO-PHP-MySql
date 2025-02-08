@@ -61,7 +61,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/requestsBackPressed"
+                        android:id="@+id/chatUserBackPressed"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_marginStart="10dp"
@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_toEndOf="@+id/requestsBackPressed">
+                        android:layout_toEndOf="@+id/chatUserBackPressed">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/typingUserPicture2"
@@ -150,11 +150,12 @@
 
                         <LinearLayout
                             android:id="@+id/linearLayout2"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="@+id/typingUserPicture2"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/typingUserPicture2"
                             app:layout_constraintTop_toTopOf="@+id/typingUserPicture2">
 
@@ -167,7 +168,9 @@
                                     android:id="@+id/chatUserDisplayName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:ellipsize="end"
                                     android:fontFamily="@font/gg_sans_bold"
+                                    android:maxLines="1"
                                     android:text="User Name"
                                     android:textColor="@color/white"
                                     android:textSize="16sp" />
@@ -326,20 +329,19 @@
                             </androidx.cardview.widget.CardView>
 
 
-
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/sendButton"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
-                                android:layout_marginEnd="1dp"
-                                android:layout_marginBottom="0dp"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginEnd="1dp"
+                                android:layout_marginBottom="0dp"
                                 android:clickable="true"
                                 android:focusable="true"
                                 android:foreground="?selectableItemBackground"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 card_view:cardBackgroundColor="@color/transparent"
                                 card_view:cardCornerRadius="50dp"
                                 card_view:cardElevation="0dp">
